@@ -43,17 +43,15 @@ function handleAPI(){
   })
   const getAPI = () => {
     return fetch('https:api.lymlive.com.au/v2/auth/check.iris')
-      .then(response => response.json())
-      .then((responseData) => {
-        console.log(
-            "POST Response",
-            "Response: " + JSON.stringify(responseData)
-        )
+      .then(response => response)
+      .then((response) => {
+        console.log(response)
       })
       .catch(error => {
         console.error(error);
       });
   };
+
   let data = getAPI();
   console.log(data);
 }
