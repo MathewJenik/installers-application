@@ -40,16 +40,24 @@ function handleAPI(){
     body: JSON.stringify({
         email: '20674250@student.westernsydney.edu.au'
     })
-})
-
-    .then((response) => response.json())
-    .then((responseData) => {
+  })
+  const getAPI = () => {
+    return fetch('https:api.lymlive.com.au/v2/auth/check.iris')
+      .then(response => response.json())
+      .then((responseData) => {
         console.log(
             "POST Response",
-            "Response Body -> " + JSON.stringify(responseData)
+            "Response: " + JSON.stringify(responseData)
         )
-    })
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+  let data = getAPI();
+  console.log(data);
 }
+
 
 var normalPress = false;
 var inversePress = false;
@@ -59,22 +67,22 @@ var rightPress = false;
 function pressNormal(): boolean {
   normalPress = true;
   handleAPI();
-  Alert.alert("Normal");
+  console.log('normal')
   return normalPress;
 }
 function pressInverse(): boolean {
   inversePress = true;
-  Alert.alert("Inverse");
+  console.log('Inverse')
   return inversePress;
 }
 function pressLeft(): boolean {
   leftPress = true;
-  Alert.alert("Left");
+  console.log('Left')
   return leftPress;
 }
 function pressRight(): boolean {
   rightPress = true;
-  Alert.alert("Right");
+  console.log('Right')
   return rightPress;
 }
 
@@ -119,15 +127,12 @@ export default class Orientation extends React.Component {
 
 const styles = StyleSheet.create({
   button: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 32,
-    borderRadius: 10,
-    elevation: 5,
-    backgroundColor: 'brown',
-    marginVertical: 10,
-    marginHorizontal: 10,
+    paddingVertical: 16,
+    paddingHorizontal: 24,
+    borderRadius: 15,
+    backgroundColor: 'green',
+    marginVertical: 14,
+    marginHorizontal: 30,
   },
   text: {
     fontSize: 20,
