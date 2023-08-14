@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+
 import {
     SafeAreaView,
     ScrollView,
@@ -20,13 +21,35 @@ enum orientation {
 	left = 'left'
 }
 
-//Display payload
-let player_id: number = -1;
-let client_id: number = -1;
-let session_id: number = -1;
+type login = {
+  error: boolean,
+  errorMsg: string,
+  valid: boolean,
+  next: any,
+  email: string
+}
 
-let API: [number, number, number]
-API = [player_id, client_id, session_id]
+function handleAPI(){
+  //Display payload
+  fetch("https:api.lymlive.com.au/v2/auth/check.iris", {
+    method: 'POST',
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        email: '20674250@student.westernsydney.edu.au'
+    })
+})
+
+    .then((response) => response.json())
+    .then((responseData) => {
+        console.log(
+            "POST Response",
+            "Response Body -> " + JSON.stringify(responseData)
+        )
+    })
+}
 
 var normalPress = false;
 var inversePress = false;
@@ -35,6 +58,7 @@ var rightPress = false;
 
 function pressNormal(): boolean {
   normalPress = true;
+  handleAPI();
   Alert.alert("Normal");
   return normalPress;
 }
@@ -54,8 +78,8 @@ function pressRight(): boolean {
   return rightPress;
 }
 
-export function Button(props){
-  const { onPress, title = 'click' } = props;
+export function Button(props: any){
+  const { onPress, title = '' } = props;
   return (
     <Pressable style={styles.button} onPress={onPress}>
       <Text style={styles.text}>{title}</Text>
