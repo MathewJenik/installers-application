@@ -8,10 +8,8 @@ import {
     useColorScheme,
     View,
     Alert,
-    Button
+    Pressable,
 } from 'react-native';
-
-
 
 //Display orientation input
 enum orientation {
@@ -30,27 +28,39 @@ let session_id: number = -1;
 let API: [number, number, number]
 API = [player_id, client_id, session_id]
 
-var upPress = false;
+var normalPress = false;
+var inversePress = false;
+var leftPress = false;
+var rightPress = false;
 
 function pressNormal(): boolean {
-  upPress = true;
-  Alert.alert("true");
-  return upPress;
+  normalPress = true;
+  Alert.alert("Normal");
+  return normalPress;
 }
 function pressInverse(): boolean {
-  upPress = true;
-  Alert.alert("true");
-  return upPress;
+  inversePress = true;
+  Alert.alert("Inverse");
+  return inversePress;
 }
 function pressLeft(): boolean {
-  upPress = true;
-  Alert.alert("true");
-  return upPress;
+  leftPress = true;
+  Alert.alert("Left");
+  return leftPress;
 }
 function pressRight(): boolean {
-  upPress = true;
-  Alert.alert("true");
-  return upPress;
+  rightPress = true;
+  Alert.alert("Right");
+  return rightPress;
+}
+
+export function Button(props){
+  const { onPress, title = 'click' } = props;
+  return (
+    <Pressable style={styles.button} onPress={onPress}>
+      <Text style={styles.text}>{title}</Text>
+    </Pressable>
+  );
 }
 
 export default class Orientation extends React.Component { 
@@ -60,22 +70,22 @@ export default class Orientation extends React.Component {
           <View>
             <Button
               title="Normal"
-              onPress={() => console.log(pressNormal)} />
+              onPress={() => pressNormal()} />
           </View>
           
           <View style={{ flexDirection:"row"}}>
               <Button
                 title="Left"
-                onPress={() => console.log(pressLeft)} />
+                onPress={() => pressLeft()} />
               <Button
                 title="Right"
-                onPress={() => console.log(pressRight)} />
+                onPress={() => pressRight()} />
             </View>
             
             <View>
               <Button
                 title="Inverse"
-                onPress={() => console.log(pressInverse)} />
+                onPress={() => pressInverse()} />
             </View>
 
           </View>
@@ -84,13 +94,25 @@ export default class Orientation extends React.Component {
   }
 
 const styles = StyleSheet.create({
-  buttonStyle: {
-    backgroundColor: '#31C283',
+  button: {
+    alignItems: 'center',
     justifyContent: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 32,
+    borderRadius: 10,
+    elevation: 5,
+    backgroundColor: 'brown',
+    marginVertical: 10,
+    marginHorizontal: 10,
+  },
+  text: {
+    fontSize: 20,
+    lineHeight: 20,
+    fontWeight: 'bold',
+    letterSpacing: 0.25,
+    color: 'white',
   },
   viewStyle:{
     alignItems: 'center',
-    fontSize: 30,
-    color: "green"
   }
 })
