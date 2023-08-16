@@ -26,17 +26,22 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import LoginModule from './components/loginModule/LoginModule';
+import {NavigationContainer} from '@react-navigation/native';
+
 
 
 function App(): JSX.Element {
 
 
   return (
+
     <SafeAreaView>
       <ScrollView>
         <Actions></Actions>
       </ScrollView>
     </SafeAreaView>
+    
   );
 }
 
