@@ -9,7 +9,6 @@ export default class LoginModule extends React.Component {
       <View style={styles.container}>
         <Image source={require('../../Images/Lymlive_Iris_login.png')} />
         <TextInput style={styles.textInput} placeholder='Email'></TextInput>
-        {/*<Button onPress={Req.login} title="Login" ></Button>*/}
         <Pressable style={styles.loginButton} onPress={Req.login}><Text style={styles.loginText}>Login</Text></Pressable>
       </View> 
     );
@@ -18,22 +17,6 @@ export default class LoginModule extends React.Component {
 
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
   textInput: {
     borderColor: 'lightblue',
     borderStyle: 'solid',
@@ -60,8 +43,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
 
     flex:1,
-    justifyContent: "center", //Centered vertically
-    alignItems: "center", //Centered horizontally
+    justifyContent: "center",
+    alignItems: "center",
     paddingVertical: 10,
     paddingHorizontal: 130,
 
