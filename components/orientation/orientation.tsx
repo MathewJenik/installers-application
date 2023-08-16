@@ -1,5 +1,9 @@
 import React, {useState, useEffect} from 'react';
-
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import {faArrowUp} from '@fortawesome/free-solid-svg-icons/faArrowUp'
+import {faArrowRight} from '@fortawesome/free-solid-svg-icons/faArrowRight'
+import {faArrowLeft} from '@fortawesome/free-solid-svg-icons/faArrowLeft'
+import {faArrowDown} from '@fortawesome/free-solid-svg-icons/faArrowDown'
 import {
     SafeAreaView,
     ScrollView,
@@ -11,6 +15,7 @@ import {
     Alert,
     Pressable,
 } from 'react-native';
+
 
 //Display orientation input
 enum orientation {
@@ -56,6 +61,36 @@ function handleAPI(){
   console.log(data);
 }
 
+function displayAPI(){
+  //Display payload
+  fetch("https:api.lymlive.com.au/v2/installers/actions/screen__rotate.iris", {
+    method: 'POST',
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      player__id: 0,
+      client__id: 0,
+      orientation: 0,
+      session_id: '',
+    })
+  })
+  const getAPI = () => {
+    return fetch('https:api.lymlive.com.au/v2/installers/actions/screen__rotate.iris')
+      .then(response => response)
+      .then((response) => {
+        console.log(response)
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+
+  let data = getAPI();
+  console.log(data);
+}
+
 
 var normalPress = false;
 var inversePress = false;
@@ -85,10 +120,10 @@ function pressRight(): boolean {
 }
 
 export function Button(props: any){
-  const { onPress, title = '' } = props;
+  const { onPress, title = '',  icon, direction = ''} = props;
   return (
     <Pressable style={styles.button} onPress={onPress}>
-      <Text style={styles.text}>{title}</Text>
+    <Text style={styles.text}><FontAwesomeIcon icon= {icon} style={{color: "#85c0f9",}}/>{title}</Text>
     </Pressable>
   );
 }
@@ -99,21 +134,25 @@ export default class Orientation extends React.Component {
         <View style={styles.viewStyle}>
           <View>
             <Button
+              icon={faArrowUp}
               title="Normal"
               onPress={() => pressNormal()} />
           </View>
           
-          <View style={{ flexDirection:"row"}}>
+          <View style={{flexDirection:"row"}}>
               <Button
+                icon={faArrowLeft}
                 title="Left"
                 onPress={() => pressLeft()} />
               <Button
+                icon={faArrowRight}
                 title="Right"
                 onPress={() => pressRight()} />
             </View>
             
             <View>
               <Button
+                icon={faArrowDown}
                 title="Inverse"
                 onPress={() => pressInverse()} />
             </View>
@@ -128,8 +167,9 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingHorizontal: 24,
     borderRadius: 15,
-    backgroundColor: 'green',
     marginVertical: 14,
+    borderWidth: 3,
+    borderColor: '#85c0f9',
     marginHorizontal: 30,
   },
   text: {
@@ -137,7 +177,9 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     fontWeight: 'bold',
     letterSpacing: 0.25,
-    color: 'white',
+    color: '#85c0f9',
+    paddingLeft: 5,
+    
   },
   viewStyle:{
     alignItems: 'center',
