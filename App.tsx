@@ -6,8 +6,7 @@
  */
 
 import React, { useState } from 'react' ;
-
-import type {PropsWithChildren} from 'react';
+import type { PropsWithChildren } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -18,8 +17,9 @@ import {
   View,
   Button,
   TextInput,
- 
+  Alert,
 } from 'react-native';
+
 
 import {
   Colors,
@@ -28,91 +28,34 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import SearchField from './Components/Search/Search';
 
+import Orientations from './components/orientation/orientation';
+import Actions from './components/actions/Actions';
+import SearchField from './components/search/Search';
+import LoginModule from './components/loginModule/LoginModule';
+import {NavigationContainer} from '@react-navigation/native';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
 
 function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-
-
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
+    <NavigationContainer>
+      <SafeAreaView style={{backgroundColor: '#e0e0e0'}}>
+        <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
-      />
-      
-
-      <SearchField />
-
-      
-    </SafeAreaView>
+        />
+        <ScrollView>
+          <SearchField />
+          <Actions></Actions>
+          <Orientations></Orientations>
+          <LoginModule />
+        </ScrollView>
+        
+      </SafeAreaView>
+    </NavigationContainer>
+    
   );
 }
 
- 
-
-
-
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-
-
-  
-});
 
 export default App;
