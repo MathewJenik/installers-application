@@ -2,19 +2,43 @@ import React from 'react';
 import { Button, Image, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import Req from '../../request/Request';
+import { useNavigation } from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 
+export type RootStackParamList = {
+  Login: undefined;
+  Admin: undefined;
+};
+
+type loginProp = StackNavigationProp<RootStackParamList, "Login">;
+
+function LoginModule() {
+  const navigation = useNavigation<loginProp>();
+
+  return (
+    <View style={styles.container}>
+      <Image source={require('../../Images/Lymlive_Iris_login.png')} />
+      <TextInput style={styles.textInput} placeholder='Email'></TextInput>
+      <Pressable style={styles.loginButton} onPress={() => navigation.navigate('Admin')}><Text style={styles.loginText}>Login</Text></Pressable>
+    </View> 
+  );
+
+}
+
+export default LoginModule;
+/*
 export default class LoginModule extends React.Component { 
   render() { 
     return (
       <View style={styles.container}>
         <Image source={require('../../Images/Lymlive_Iris_login.png')} />
         <TextInput style={styles.textInput} placeholder='Email'></TextInput>
-        <Pressable style={styles.loginButton} onPress={Req.login}><Text style={styles.loginText}>Login</Text></Pressable>
+        <Pressable style={styles.loginButton} onPress={() => navigation.navigate('Admin')}><Text style={styles.loginText}>Login</Text></Pressable>
       </View> 
     );
   }
 }
-
+*/
 
 const styles = StyleSheet.create({
   textInput: {
@@ -33,7 +57,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    padding: 20,
+    paddingVertical: 150,
     backgroundColor: 'white'
   },
 
@@ -45,8 +69,8 @@ const styles = StyleSheet.create({
     flex:1,
     justifyContent: "center",
     alignItems: "center",
-    paddingVertical: 10,
-    paddingHorizontal: 130,
+    paddingHorizontal: 13,
+    paddingBottom: 0
 
 
 
@@ -59,8 +83,9 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     margin: 'auto',
-    fontSize: 15
-
+    fontSize: 15,
+    paddingHorizontal: 100,
+    paddingTop: 20
 
   }
 
