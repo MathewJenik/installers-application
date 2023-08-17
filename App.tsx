@@ -46,23 +46,6 @@ function App(): JSX.Element {
         <Stack.Screen name="Login" component={LoginModule} />
         <Stack.Screen name="Admin" component={AdminModule} />
       </Stack.Navigator>
-
-{/*
-
-<SafeAreaView style={{backgroundColor: '#e0e0e0'}}>
-        <ScrollView>
-          <SearchField onPress={function (): void {
-            throw new Error('Function not implemented.');
-          } } title={''} />
-          <Actions></Actions>
-          <Orientations></Orientations>
-          <LoginModule />
-        </ScrollView>
-        
-      </SafeAreaView>
-      
-
-  */}
       
     </NavigationContainer>
     
