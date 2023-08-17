@@ -1,5 +1,5 @@
 /**
- * Sample React Native App
+ * Lymlive Installers Mobile Application
  * https://github.com/facebook/react-native
  *
  * @format
@@ -19,8 +19,8 @@ import {
   Button
 } from 'react-native';
 
-import Orientations from './components/orientation/orientation';
-import Actions from './components/Actions/Actions';
+import Orientations from './components/orientation/Orientation';
+import Actions from './components/actions/Actions';
 
 
 import {
