@@ -14,6 +14,7 @@ import {
     Alert,
     Pressable,
 } from 'react-native';
+import CustomButton from '../customButton/CustomButton';
 
 export function Button(props: any) {
     const { onPress, title = '', icon } = props;
@@ -60,7 +61,11 @@ export default class Actions extends React.Component {
     render() {
         return (
             <View style={styles.viewStyle}>
+
+                <CustomButton title="Mark player as installed" onPress={() => {}} color="#36bf00" iconName="wrench"/>
+                <CustomButton title="Re-sync" onPress={() => {}} iconName="cloud-download" />
                 <View style={{ flexDirection: 'row' }}>
+                
                     <View style={styles.redButton}>
                         <Button
                             icon={faHeartPulse}
