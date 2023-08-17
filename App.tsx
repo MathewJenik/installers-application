@@ -5,7 +5,7 @@
  * @format
  */
 
-import React from 'react';
+import React, { useState } from 'react' ;
 import type { PropsWithChildren } from 'react';
 import {
   SafeAreaView,
@@ -15,12 +15,10 @@ import {
   Text,
   useColorScheme,
   View,
+  Button,
+  TextInput,
   Alert,
-  Button
 } from 'react-native';
-
-import Orientations from './components/orientation/orientation';
-import Actions from './components/Actions/Actions';
 
 
 import {
@@ -30,15 +28,24 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+
+import Orientations from './components/orientation/orientation';
+import Actions from './components/actions/Actions';
+import SearchField from './components/search/Search';
 import LoginModule from './components/loginModule/LoginModule';
 import {NavigationContainer} from '@react-navigation/native';
 
-function App(): JSX.Element {
 
+function App(): JSX.Element {
   return (
     <NavigationContainer>
       <SafeAreaView style={{backgroundColor: '#e0e0e0'}}>
+        <StatusBar
+        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+        backgroundColor={backgroundStyle.backgroundColor}
+        />
         <ScrollView>
+          <SearchField />
           <Actions></Actions>
           <Orientations></Orientations>
           <LoginModule />
@@ -49,5 +56,6 @@ function App(): JSX.Element {
     
   );
 }
+
 
 export default App;
