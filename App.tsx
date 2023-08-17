@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import type {PropsWithChildren} from 'react';
+import type { PropsWithChildren } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -20,6 +20,8 @@ import {
 } from 'react-native';
 
 import Orientations from './components/orientation/orientation';
+import Actions from './components/Actions/Actions';
+
 
 import {
   Colors,
@@ -28,18 +30,22 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import LoginModule from './components/loginModule/LoginModule';
+import {NavigationContainer} from '@react-navigation/native';
 
 function App(): JSX.Element {
 
   return (
     <SafeAreaView style={{backgroundColor: '#e0e0e0'}}>
       <ScrollView>
+        <Actions></Actions>
         <Orientations></Orientations>
+
       </ScrollView>
       
     </SafeAreaView>
+    
   );
 }
-
 
 export default App;
