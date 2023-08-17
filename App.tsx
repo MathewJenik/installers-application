@@ -32,7 +32,7 @@ import LoginModule from './components/loginModule/LoginModule';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AdminModule from './components/adminModule/AdminModule';
-import React = require('react');
+import React from 'react';
 
 const Stack = createNativeStackNavigator();
 
@@ -44,8 +44,6 @@ function App(): JSX.Element {
         <Stack.Screen name="Login" component={LoginModule} />
         <Stack.Screen name="Admin" component={AdminModule} />
       </Stack.Navigator>
-
-      
     </NavigationContainer>
     
   );
