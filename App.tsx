@@ -17,7 +17,7 @@ import {
   View,
 } from 'react-native';
 
-import Actions from './Components/Actions/Actions';
+import Actions from './components/actions/Actions';
 
 import {
   Colors,
@@ -35,12 +35,14 @@ function App(): JSX.Element {
 
 
   return (
-
-    <SafeAreaView>
-      <ScrollView>
-        <Actions></Actions>
-      </ScrollView>
-    </SafeAreaView>
+    <NavigationContainer>
+      <SafeAreaView>
+        <ScrollView>
+          <Actions></Actions>
+          <LoginModule />
+        </ScrollView>
+      </SafeAreaView>
+    </NavigationContainer>
     
   );
 }
