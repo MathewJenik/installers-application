@@ -1,35 +1,55 @@
-import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet} from "react-native";
-import CustomButton from "./Components/CustomButton";
+/**
+ * Lymlive Installers Mobile 
+ *
+ * @format
+ */
 
-const App = () => {
-  const handleButtonPress = () => {
-    console.log('Button Pressed');
-  }
+import React from 'react';
+import type { PropsWithChildren } from 'react';
+import {
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  useColorScheme,
+  View,
+  Alert,
+  Button
+} from 'react-native';
 
-  return(
-    <View style={styles.container}>
-      <View style={styles.box}>
-        <CustomButton title="Mark player as installed" onPress={handleButtonPress} color="#36bf00" iconName="wrench"/>
-        <CustomButton title="Re-sync" onPress={handleButtonPress} iconName="cloud-download" />
-      </View>
-    </View>
+
+
+import {
+  Colors,
+  DebugInstructions,
+  Header,
+  LearnMoreLinks,
+  ReloadInstructions,
+} from 'react-native/Libraries/NewAppScreen';
+import Orientations from './components/orientation/Orientation';
+import Actions from './components/actions/Actions';
+import SearchField from './components/search/Search';
+import LoginModule from './components/loginModule/LoginModule';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import AdminModule from './components/adminModule/AdminModule';
+
+const Stack = createNativeStackNavigator();
+
+
+function App(): JSX.Element {
+
+  return (
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Screen name="Login" component={LoginModule} />
+        <Stack.Screen name="Admin" component={AdminModule} />
+      </Stack.Navigator>
+      
+    </NavigationContainer>
+    
   );
-};
-
-const styles = StyleSheet.create({
-  container:{
-    flex: 1,
-    justifyContent: 'center',
-    backgroundColor: '#c8ccc9',
-  },
-  box: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    padding: 30,
-    margin: 15,
-  },
-})
+}
 
 export default App;
