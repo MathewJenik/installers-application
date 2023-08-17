@@ -1,6 +1,5 @@
 /**
- * Lymlive Installers Mobile Application
- * https://github.com/facebook/react-native
+ * Lymlive Installers Mobile 
  *
  * @format
  */
@@ -19,8 +18,6 @@ import {
   Button
 } from 'react-native';
 
-import Orientations from './components/orientation/Orientation';
-import Actions from './components/actions/Actions';
 
 
 import {
@@ -30,6 +27,9 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import Orientations from './components/orientation/orientation';
+import Actions from './components/actions/Actions';
+import SearchField from './components/search/Search';
 import LoginModule from './components/loginModule/LoginModule';
 import {NavigationContainer} from '@react-navigation/native';
 
@@ -39,6 +39,9 @@ function App(): JSX.Element {
     <NavigationContainer>
       <SafeAreaView style={{backgroundColor: '#e0e0e0'}}>
         <ScrollView>
+          <SearchField onPress={function (): void {
+            throw new Error('Function not implemented.');
+          } } title={''} />
           <Actions></Actions>
           <Orientations></Orientations>
           <LoginModule />
