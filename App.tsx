@@ -15,9 +15,13 @@ import {
   Text,
   useColorScheme,
   View,
+  Alert,
+  Button
 } from 'react-native';
 
-import Actions from './Components/Actions/Actions';
+import Orientations from './components/orientation/orientation';
+import Actions from './components/Actions/Actions';
+
 
 import {
   Colors,
@@ -29,17 +33,16 @@ import {
 import LoginModule from './components/loginModule/LoginModule';
 import {NavigationContainer} from '@react-navigation/native';
 
-
-
 function App(): JSX.Element {
 
-
   return (
-
-    <SafeAreaView>
+    <SafeAreaView style={{backgroundColor: '#e0e0e0'}}>
       <ScrollView>
         <Actions></Actions>
+        <Orientations></Orientations>
+
       </ScrollView>
+      
     </SafeAreaView>
     
   );
