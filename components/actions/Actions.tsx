@@ -92,7 +92,7 @@ handleAPI();
 
 function handleAPI() {
     //Display payload
-    fetch("https:api.lymlive.com.au/v2/auth/check.iris", {
+    fetch("https:api.lymlive.com.au/v1/auth/check.iris", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -103,7 +103,7 @@ function handleAPI() {
         })
     })
     const getAPI = () => {
-        return fetch('https:api.lymlive.com.au/v2/auth/check.iris')
+        return fetch('https:api.lymlive.com.au/v1/auth/check.iris')
             .then(response => response)
             .then((response) => {
                 console.log(response)
