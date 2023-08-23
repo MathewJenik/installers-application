@@ -4,7 +4,7 @@ class Requests {
     const loginReqOptions = {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({email: "test@gmail.com"})
+        body: JSON.stringify({email: "20141064@student.westernsydney.edu.au"})
     };
 
     return fetch("https://api.lymlive.com.au/v1/auth/check.iris/", loginReqOptions)

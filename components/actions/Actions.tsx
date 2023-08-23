@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faHeartPulse } from '@fortawesome/free-solid-svg-icons';
+import { faHeartPulse, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { faRotateLeft } from '@fortawesome/free-solid-svg-icons';
 
 import {
@@ -15,6 +15,7 @@ import {
     Pressable,
 } from 'react-native';
 import CustomButton from '../customButton/CustomButton';
+import Req from '../../request/Request'
 
 export function Button(props: any) {
     const { onPress, title = '', icon } = props;
@@ -70,7 +71,7 @@ export default class Actions extends React.Component {
                         <Button
                             icon={faHeartPulse}
                             title="Ping"
-                            onPress={() => Alert.alert('Ping')}
+                            onPress={() => Req.login()}
                         />
                     </View>
 
@@ -78,7 +79,7 @@ export default class Actions extends React.Component {
                         <Button
                             icon={faRotateLeft}
                             title="Reboot"
-                            onPress={() => Alert.alert('Reboot')}
+                            onPress={() =>  console.log('reboot')}
                         />
                     </View>
 
