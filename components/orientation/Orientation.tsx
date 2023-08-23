@@ -15,6 +15,7 @@ import {
     Alert,
     Pressable,
 } from 'react-native';
+import CustomButton from '../customButton/CustomButton';
 
 
 //Display orientation input
@@ -120,11 +121,9 @@ function pressRight(): boolean {
 }
 
 export function Button(props: any){
-  const { onPress, title = '',  icon, direction = ''} = props;
+  const { onPress, title = '',  icon, direction = '', iconName = ''} = props;
   return (
-    <Pressable style={styles.button} onPress={onPress}>
-    <Text style={styles.text}><FontAwesomeIcon icon= {icon} style={{color: "#85c0f9",}}/>{title}</Text>
-    </Pressable>
+      <CustomButton color='#85c0f9' iconName={iconName} onPress={onPress} title={title}></CustomButton>
   );
 }
 
@@ -136,6 +135,7 @@ export default class Orientation extends React.Component {
             <Button
               icon={faArrowUp}
               title="Normal"
+              iconName='arrow-up'
               onPress={() => pressNormal()} />
           </View>
           
@@ -143,10 +143,12 @@ export default class Orientation extends React.Component {
               <Button
                 icon={faArrowLeft}
                 title="Left"
+                iconName='arrow-left'
                 onPress={() => pressLeft()} />
               <Button
                 icon={faArrowRight}
                 title="Right"
+                iconName='arrow-right'
                 onPress={() => pressRight()} />
             </View>
             
@@ -154,6 +156,7 @@ export default class Orientation extends React.Component {
               <Button
                 icon={faArrowDown}
                 title="Inverse"
+                iconName='arrow-down'
                 onPress={() => pressInverse()} />
             </View>
 

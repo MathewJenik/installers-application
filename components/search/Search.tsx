@@ -35,7 +35,9 @@ const SearchField: React.FC<CustomButtonProps> = ({onPress, title, color ='#04ab
                 </View >
                 <View >
 
-                <Pressable style={styles.searchBtn} onPress={onPress}> 
+
+
+                <Pressable style={styles.searchBtn} onPress={onPress}>
                 <View style={styles.clearContainer}>
                 <Text style={styles.iconMargin}><FontAwesomeIcon icon={faMagnifyingGlass} style={styles.icon}/>
                 </Text>
@@ -63,14 +65,7 @@ const SearchField: React.FC<CustomButtonProps> = ({onPress, title, color ='#04ab
                 {/* <Button title="Clear" color={"orange"} /> */}
                 </View>
 
-
-
-               
-                
-
             </View>
-
-
     
         );
         
