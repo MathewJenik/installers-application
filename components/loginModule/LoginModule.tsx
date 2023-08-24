@@ -13,25 +13,60 @@ export type RootStackParamList = {
 
 type loginProp = StackNavigationProp<RootStackParamList, "Login">;
 
-async function login(nav: any, userEmail: string) {
+enum AuthMethod {
+  none = '',
+  azure = 'azure',
+  adhoc = 'iris'
+}
+
+const loginAdhoc = async (userEmail: string, userPasword: string) => {
+
+  var results = await Req.loginAdhoc(userEmail, userPasword);
+
+  console.log("EMAIL:", userEmail);
+  
+  console.log("Password:", userPasword);
+
+  console.log("ADHOC RESTULTS: ", results);
+
+}
+
+const loginCheck = async (nav: any, userEmail: string, showFields: boolean) => {
   
   var results = await Req.loginCheck(userEmail);
-
+  
+  
+  console.log("EMAILCHECK:", userEmail);
+  
   if (results.error == true) {
 
     ToastAndroid.showWithGravity(results.errorMsg, ToastAndroid.LONG, ToastAndroid.CENTER);
+
+    return false;
   } else {
 
     
     if (results.valid == true) {
 
-      nav.navigate('Admin');
+      // complete the adhoc login proccess
+      if (results.next == AuthMethod.adhoc) {
+
+        //loginAdhoc();
+      } else if (results.next == AuthMethod.azure) {
+        nav.navigate('Admin');
+      }
+
+
+      return true;
+      // complete the microsoft SSO login process
+
+      //nav.navigate('Admin');
 
     } else {
 
-      
-
+      return false;
     }
+
 
   }
   
@@ -48,13 +83,31 @@ async function login(nav: any, userEmail: string) {
 function LoginModule(): any {
   const navigation = useNavigation<loginProp>();
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  
+  const [userChecked, setUserChecked] = useState(Boolean);
 
   return (
     <View style={styles.container}>
       <Image source={require('../../Images/Lymlive_Iris_login.png')} />
       <TextInput onChangeText={t => setEmail(t)} style={styles.textInput} placeholder='Email'></TextInput>
-      {/*<Pressable style={styles.loginButton} onPress={() => navigation.navigate('Admin')}><Text style={styles.loginText}>Login</Text></Pressable>*/}
-      <CustomButton onPress={() => {login(navigation, email)}} title={'Login'} />
+      {userChecked ?
+      (
+        <TextInput onChangeText={t => setPassword(t)} style={styles.textInput}  placeholder='Password' secureTextEntry={false}/>
+      ) : null}
+    
+      <CustomButton onPress={async () => {
+        //navigation.navigate('Admin');
+        
+        setUserChecked((Boolean)(await loginCheck(navigation, email, userChecked)));
+        console.log("THE BOOLEAN RETURN VALUE: ", userChecked);
+        if (userChecked == true) {
+          loginAdhoc(email, password);
+          
+        }
+         
+        }} title={'Login'} />
+        
     </View>
   );
 
