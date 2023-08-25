@@ -5,10 +5,12 @@ import Req from '../../request/Request';
 import { useNavigation } from '@react-navigation/native';
 import {StackNavigationProp, useCardAnimation} from '@react-navigation/stack';
 import CustomButton from '../customButton/CustomButton';
+import EncryptedStorage from 'react-native-encrypted-storage';
 
 export type RootStackParamList = {
   Login: undefined;
   Admin: undefined;
+  App: undefined;
 };
 
 type loginProp = StackNavigationProp<RootStackParamList, "Login">;
@@ -24,10 +26,38 @@ const loginAdhoc = async (userEmail: string, userPasword: string) => {
   var results = await Req.loginAdhoc(userEmail, userPasword);
 
   console.log("EMAIL:", userEmail);
-  
+
   console.log("Password:", userPasword);
 
   console.log("ADHOC RESTULTS: ", results);
+
+
+  // if there isnt an error, store the required details
+  if (results.error == false) {
+    
+    try {
+      await EncryptedStorage.setItem(
+        "session_id",
+        results.session_id
+      );
+      await EncryptedStorage.setItem(
+        "user_email",
+        userEmail
+      );
+      await EncryptedStorage.setItem(
+        "user_password",
+        userPasword
+      );
+
+      // Congrats! You've just stored your first value!
+      } catch (error) {
+          // There was an error on the native side
+      }
+
+      return true;
+    } else {
+      return false;
+    }
 
 }
 
@@ -70,17 +100,16 @@ const loginCheck = async (nav: any, userEmail: string, showFields: boolean) => {
 
   }
   
-
-  console.log("TESTING : ", results);
   
 }
 
 /**
- *
+ * Component
  *
  * @return {*} 
  */
 function LoginModule(): any {
+
   const navigation = useNavigation<loginProp>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -89,23 +118,26 @@ function LoginModule(): any {
 
   return (
     <View style={styles.container}>
+
       <Image source={require('../../Images/Lymlive_Iris_login.png')} />
       <TextInput onChangeText={t => setEmail(t)} style={styles.textInput} placeholder='Email'></TextInput>
       {userChecked ?
       (
-        <TextInput onChangeText={t => setPassword(t)} style={styles.textInput}  placeholder='Password' secureTextEntry={false}/>
+        <TextInput onChangeText={t => setPassword(t)} style={styles.textInput}  placeholder='Password' secureTextEntry={true}/>
       ) : null}
     
       <CustomButton onPress={async () => {
         //navigation.navigate('Admin');
-        
+        console.log(email)
         setUserChecked((Boolean)(await loginCheck(navigation, email, userChecked)));
-        console.log("THE BOOLEAN RETURN VALUE: ", userChecked);
         if (userChecked == true) {
-          loginAdhoc(email, password);
-          
+          var response = loginAdhoc(email, password);
+          if (await response == true) {
+            navigation.navigate('Admin');
+
+          }
         }
-         
+        
         }} title={'Login'} />
         
     </View>

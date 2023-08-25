@@ -8,8 +8,6 @@ enum AuthMethod {
 
 class Requests {
 
-
-
   /**
    *
    * @param {string} userEmail
@@ -32,12 +30,9 @@ class Requests {
         return json;
       })
       .catch(error => {
-      
         console.error(error);
-
       });    
     };
-
 
     loginAdhoc(userEmail: String, userPassword: String) {
       

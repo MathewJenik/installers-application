@@ -15,6 +15,7 @@ import {
     Pressable,
 } from 'react-native';
 import CustomButton from '../customButton/CustomButton';
+import ViewContainer from '../viewContainer/ViewContainer';
 
 export function Button(props: any) {
     const { onPress, title = '', icon } = props;
@@ -62,21 +63,22 @@ export default class Actions extends React.Component {
         return (
             <View style={styles.viewStyle}>
 
-                <CustomButton title="Mark player as installed" onPress={() => {}} color="#36bf00" iconName="wrench"/>
-                <CustomButton title="Re-sync" onPress={() => {}} iconName="cloud-download" />
-                <View style={{ flexDirection: 'row' }}>
-                
-                    <View>
-                        <CustomButton color='#d32f2f' title="Ping" onPress={() => {}} iconName="heart-pulse" />
-                        
-                    </View>
+                <ViewContainer title={'Actions'} colour='white' titleColour='white' >
+                    
+                    <CustomButton title="Mark player as installed" onPress={() => {}} color="#36bf00" iconName="wrench"/>
+                    <CustomButton title="Re-sync" onPress={() => {}} iconName="cloud-download" />
+                    <View style={{ flexDirection: 'row' }}>
+                    
+                        <View>
+                            <CustomButton color='#d32f2f' title="Ping" onPress={() => {}} faIcon={faHeartPulse}/>
+                        </View>
 
-                    <View>
-                        <CustomButton color='#85c0f9' title="Ping" onPress={() => {}} iconName="rotate-left" />
-                        
+                        <View>
+                            <CustomButton color='#85c0f9' title="Reboot" onPress={() => {}} iconName="rotate-left" />
+                        </View>
                     </View>
+                </ViewContainer>
 
-                </View>
             </View>
         );
     }
