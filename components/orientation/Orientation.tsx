@@ -15,6 +15,9 @@ import {
     Alert,
     Pressable,
 } from 'react-native';
+import CustomButton from '../customButton/CustomButton';
+import ViewContainer from '../viewContainer/ViewContainer';
+import constants from '../../constants';
 
 
 //Display orientation input
@@ -120,57 +123,49 @@ function pressRight(): boolean {
 }
 
 export function Button(props: any){
-  const { onPress, title = '',  icon, direction = ''} = props;
+  const { onPress, title = '',  icon, direction = '', iconName = ''} = props;
   return (
-    <Pressable style={styles.button} onPress={onPress}>
-    <Text style={styles.text}><FontAwesomeIcon icon= {icon} style={{color: "#85c0f9",}}/>{title}</Text>
-    </Pressable>
+    <CustomButton color='#85c0f9' iconName={iconName} onPress={onPress} title={title}></CustomButton>
   );
 }
 
 export default class Orientation extends React.Component { 
-    render() { 
-      return (
-        <View style={styles.viewStyle}>
-          <View>
-            <Button
-              icon={faArrowUp}
-              title="Normal"
-              onPress={() => pressNormal()} />
+  render() { 
+    return (
+
+    
+      <View style={styles.viewStyle}>
+        <ViewContainer title={'Orientations'} colour='white' titleColour='white' >
+          <View  style={styles.button}>
+            <CustomButton onPress={() => pressNormal()} title={'Normal'} iconName='arrow-up' />
           </View>
           
-          <View style={{flexDirection:"row"}}>
-              <Button
-                icon={faArrowLeft}
-                title="Left"
-                onPress={() => pressLeft()} />
-              <Button
-                icon={faArrowRight}
-                title="Right"
-                onPress={() => pressRight()} />
-            </View>
-            
-            <View>
-              <Button
-                icon={faArrowDown}
-                title="Inverse"
-                onPress={() => pressInverse()} />
-            </View>
+          <View style={{flexDirection:"row", marginHorizontal: constants.FONTSIZE.EM/2}}>
+            <CustomButton onPress={() => pressNormal()} title={'Left '} iconName='arrow-left' />
+            <CustomButton onPress={() => pressNormal()} title={'Right'} iconName='arrow-right' />
 
           </View>
-      );
-    }
+            
+          <View style={styles.button}>
+            <CustomButton onPress={() => pressNormal()} title={'Inverse'} iconName='arrow-down' />
+          </View>
+
+
+
+        </ViewContainer>
+      </View>
+      
+    );
   }
+}
 
 const styles = StyleSheet.create({
   button: {
-    paddingVertical: 16,
-    paddingHorizontal: 24,
     borderRadius: 15,
-    marginVertical: 14,
-    borderWidth: 3,
+    marginVertical: constants.BUTTON.VERTICALPADDING,
     borderColor: '#85c0f9',
     marginHorizontal: 30,
+    alignSelf: 'center'
   },
   text: {
     fontSize: 20,
@@ -184,4 +179,5 @@ const styles = StyleSheet.create({
   viewStyle:{
     alignItems: 'center',
   }
+  
 })
