@@ -16,10 +16,6 @@ import Help from '../help/Help';
 
 type navProp = StackNavigationProp<RootStackParamList, "Admin">;
 
-
-//
-
-
 async function LogOut() {
   console.log("LOGGIN OUT");
   
@@ -35,14 +31,10 @@ async function LogOut() {
   
 }
 
-
 //
 
 function AdminModule() {
-
   const [showingData, setShowingData] = useState(false);
-  //LogOut();
-
 
   const navigation = useNavigation<navProp>();
 

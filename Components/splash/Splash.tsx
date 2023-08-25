@@ -8,6 +8,7 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import CONSTANTS from "../../constants";
 import { StackNavigationProp } from "@react-navigation/stack";
 import EncryptedStorage from "react-native-encrypted-storage";
+import Req from "../../request/Request";
 
 export type RootStackParamList = {
     Login: undefined;
@@ -17,7 +18,6 @@ export type RootStackParamList = {
 };
   
 type navProp = StackNavigationProp<RootStackParamList, "Splash">;
-  
 
 
 async function retrieveUserSession() {
@@ -25,18 +25,39 @@ async function retrieveUserSession() {
 
     try {   
         let session = await EncryptedStorage.getItem("session_id");
+        let email = await EncryptedStorage.getItem("user_email");
+        let pass = await EncryptedStorage.getItem("user_password");
     
         if (session !== undefined) {
-            // Congrats! You've just retrieved your first value!
-            console.log("THIS RUNS: ", session);
-            
             if (session != null) {
-                navigation.navigate("Admin");
+                // check the session to see if its valid:
+                let result = await Req.isUserLoggedIn(session);
 
+                // if it is still valid, navigate to Admin.
+                if (result == true) {
+                    navigation.navigate("Admin");
+                } else {
+                    // attempt to log the user back in with the saved user details.
+                    if (email != undefined && pass != undefined) {
+                        let loginRes = await Req.loginAdhoc(email, pass);
+                        
+                        // if login is successfull navigate to admin page
+                        if (loginRes == true) {
+                            navigation.navigate("Admin");
+
+                        } else {
+                            // if login fails, go back to login page.
+                            navigation.navigate("Login");
+                        }
+                    } else {
+                    // if the login doesnt work, go back to the login page.
+                        navigation.navigate("Login");
+                    }
+                }
             } else {
+                // if there is no session token, go straight to the login page.
                 navigation.navigate("Login");
             }
-            
         } 
     } catch (error) {
         // There was an error on the native side
@@ -49,37 +70,30 @@ function Splash(this: any, props: any) {
 
     const [showingData, setShowingData] = useState(false);
 
-    //const navigation = useNavigation<loginProp>();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const spinValue = new Animated.Value(0);
 
     retrieveUserSession();
-    // First set up animation 
 
-    // Next, interpolate beginning and end values (in this case 0 and 1)
     const spin = spinValue.interpolate({
         inputRange: [0, 1],
         outputRange: ['0deg', '360deg']
     });
 
-    
+    // setup the animation for the spinning loading bar.
     Animated.loop(
         Animated.timing(
             spinValue,
             {
                 toValue: 1,
                 duration: 1500,
-                easing: Easing.linear, // Easing is an additional import from react-native
-                useNativeDriver: true,  // To make use of native driver for performance
+                easing: Easing.linear, 
+                useNativeDriver: true,  
             }
         )
     ).start();
-
-    // Check if theres any saved session/email or password data:
-
-    
 
 
     return (
