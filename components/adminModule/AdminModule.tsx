@@ -12,6 +12,8 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { faLinkSlash } from '@fortawesome/free-solid-svg-icons';
 import Help from '../help/Help';
+import { Alert } from 'react-native';
+import { ToastAndroid } from 'react-native';
 
 
 type navProp = StackNavigationProp<RootStackParamList, "Admin">;
@@ -38,6 +40,30 @@ function AdminModule() {
 
   const navigation = useNavigation<navProp>();
 
+  const [value, setValue]=useState('');
+  const[id, setId]=useState('');
+
+  const searchMediaplay = async ( searchV: string, sId: string) => {
+      let session = await EncryptedStorage.getItem("session_id");
+      console.log("SEARCH VALUE IS: ", value);
+
+      if (session !== undefined) {
+          if (session != null) {
+
+            var response = await Req.searchRequest(searchV, session);
+
+            if (response.error==true) {
+              ToastAndroid.show(response.errorMsg,ToastAndroid.LONG);
+              setShowingData(false);
+              
+            } else {
+              setShowingData(true);
+            }
+          }
+      }
+      
+
+  }
 
   return (
     <View>
@@ -54,8 +80,9 @@ function AdminModule() {
           
           <Help />
 
-          <SearchField onPress={() => {
-              setShowingData(true);
+          <SearchField textChangeEvent={(v) => {console.log("IN TEXT IS: ", v);setValue(v)}} onPress={() => {
+            searchMediaplay(value, id);
+            
           } } title={''} />
 
           

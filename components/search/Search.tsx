@@ -7,6 +7,9 @@ import { StyleSheet, View, Text, TextInput, Pressable } from 'react-native';
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import {faSquareXmark} from "@fortawesome/free-solid-svg-icons";
 import CustomButton from "../customButton/CustomButton";
+import Req from "../../request/Request";
+import { Alert } from "react-native";
+import EncryptedStorage from "react-native-encrypted-storage";
 
 interface CustomButtonProps {
     onPress: () => void;
@@ -14,9 +17,13 @@ interface CustomButtonProps {
     color?: string;
     iconName?: string;
     iconColor?: string;
+    textChangeEvent: (p: any) => void;
 }
 
-const SearchField: React.FC<CustomButtonProps> = ({onPress, title, color ='white', iconName, iconColor = 'white'})=> {
+const SearchField: React.FC<CustomButtonProps> = ({onPress, title, color ='white', iconName, iconColor = 'white', textChangeEvent})=> {
+    
+   const [text, setText] = useState('');
+    
     return (
         <View style={styles.flexbox}>
 
@@ -25,19 +32,22 @@ const SearchField: React.FC<CustomButtonProps> = ({onPress, title, color ='white
             <TextInput 
                 placeholder="Search by IP or MPID"
                 style={styles.input}
+                onChangeText={(t) => {textChangeEvent; setText(t)}}
+               value={text}
             />
             </View >
             <View>
                 <View style={styles.searchBtn}>
-                    <CustomButton faIcon={faMagnifyingGlass} onPress={onPress} title={'Search For MP'} color="#74c365" textPosition="center"/>
+                    <CustomButton faIcon={faMagnifyingGlass} onPress={onPress} title={'Search For MP'} color="#74c365" textPosition="center"
+                    />
                 </View>
             </View>
-            <CustomButton faIcon={faSquareXmark} onPress={onPress} title={'Clear'} color="white" textColour="#ff8c00" textPosition="center" iconColor="#ff8c00" enableBorder={true}/>
+            <CustomButton faIcon={faSquareXmark} onPress={() => {setText("")}}title={'Clear'} color="white" textColour="#ff8c00" textPosition="center" iconColor="#ff8c00" enableBorder={true}/>
 
         </View>
 
     );
-        
+    
 }
 export default SearchField;
 

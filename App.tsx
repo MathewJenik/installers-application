@@ -28,7 +28,7 @@ import {
 import Orientations from './components/orientation/Orientation';
 import Actions from './components/actions/Actions';
 import SearchField from './components/search/Search';
-import LoginModule, { RootStackParamList } from './components/loginModule/LoginModule';
+
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AdminModule from './components/adminModule/AdminModule';
@@ -36,6 +36,7 @@ import React, { createContext, useState } from 'react';
 import Splash from './components/splash/Splash';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
+import LoginModule from './components/loginModule/LoginModule';
 
 
 
