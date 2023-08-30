@@ -1,4 +1,6 @@
 import React, {useState, useEffect} from 'react';
+import { ToastAndroid } from "react-native";
+import EncryptedStorage from "react-native-encrypted-storage";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import {faArrowUp} from '@fortawesome/free-solid-svg-icons/faArrowUp'
 import {faArrowRight} from '@fortawesome/free-solid-svg-icons/faArrowRight'
@@ -18,10 +20,17 @@ import {
 import CustomButton from '../customButton/CustomButton';
 import ViewContainer from '../viewContainer/ViewContainer';
 import constants from '../../constants';
+import request from '../../request/Request';
 
+//MPID: 15250
+// IP:  172.18.1.84
 
-//Display orientation input
-enum orientation {
+var normalPress = false;
+var inversePress = false;
+var leftPress = false;
+var rightPress = false;
+
+export enum ScreenOrientation {
 	none = '',
 	normal = 'normal',
 	right = 'right',
@@ -29,96 +38,24 @@ enum orientation {
 	left = 'left'
 }
 
-type login = {
-  error: boolean,
-  errorMsg: string,
-  valid: boolean,
-  next: any,
-  email: string
-}
-
-function handleAPI(){
-  //Display payload
-  fetch("https:api.lymlive.com.au/v2/auth/check.iris", {
-    method: 'POST',
-    headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-        email: '20674250@student.westernsydney.edu.au'
-    })
-  })
-  const getAPI = () => {
-    return fetch('https:api.lymlive.com.au/v2/auth/check.iris')
-      .then(response => response)
-      .then((response) => {
-        console.log(response)
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  };
-
-  let data = getAPI();
-  console.log(data);
-}
-
-function displayAPI(){
-  //Display payload
-  fetch("https:api.lymlive.com.au/v2/installers/actions/screen__rotate.iris", {
-    method: 'POST',
-    headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      player__id: 0,
-      client__id: 0,
-      orientation: 0,
-      session_id: '',
-    })
-  })
-  const getAPI = () => {
-    return fetch('https:api.lymlive.com.au/v2/installers/actions/screen__rotate.iris')
-      .then(response => response)
-      .then((response) => {
-        console.log(response)
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  };
-
-  let data = getAPI();
-  console.log(data);
-}
-
-
-var normalPress = false;
-var inversePress = false;
-var leftPress = false;
-var rightPress = false;
-
 function pressNormal(): boolean {
   normalPress = true;
-  handleAPI();
-  console.log('normal')
+  request.displayCheckValid(ScreenOrientation.normal);
   return normalPress;
 }
 function pressInverse(): boolean {
   inversePress = true;
-  console.log('Inverse')
+  request.displayCheckValid(ScreenOrientation.inverted);
   return inversePress;
 }
 function pressLeft(): boolean {
   leftPress = true;
-  console.log('Left')
+  request.displayCheckValid(ScreenOrientation.left);
   return leftPress;
 }
 function pressRight(): boolean {
   rightPress = true;
-  console.log('Right')
+  request.displayCheckValid(ScreenOrientation.right);
   return rightPress;
 }
 
@@ -141,13 +78,13 @@ export default class Orientation extends React.Component {
           </View>
           
           <View style={{flexDirection:"row", marginHorizontal: constants.FONTSIZE.EM/2}}>
-            <CustomButton onPress={() => pressNormal()} title={'Left '} iconName='arrow-left' />
-            <CustomButton onPress={() => pressNormal()} title={'Right'} iconName='arrow-right' />
+            <CustomButton onPress={() => pressLeft()} title={'Left '} iconName='arrow-left' />
+            <CustomButton onPress={() => pressRight()} title={'Right'} iconName='arrow-right' />
 
           </View>
             
           <View style={styles.button}>
-            <CustomButton onPress={() => pressNormal()} title={'Inverse'} iconName='arrow-down' />
+            <CustomButton onPress={() => pressInverse()} title={'Inverse'} iconName='arrow-down' />
           </View>
 
 
