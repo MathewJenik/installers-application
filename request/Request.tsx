@@ -52,17 +52,16 @@ class Requests {
       });   
   }
 
-  displayCheckValid(orientation: ScreenOrientation){
+  displayCheckValid(orient: ScreenOrientation){
     this.displayGetClientID("15250", sessionID);
-    console.log("Orienton: ", orientation);
 
     const orientationReq = {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(
         { player__id: 15250,
-          client_id: 10110,
-          //orientation: ScreenOrientation.normal,
+          client__id: 10110,
+          orientation: orient,
           session_id: sessionID
           
         })
