@@ -76,7 +76,7 @@ export default class Actions extends React.Component {
                             let markAsInstalledCheck = await Req.markAsInstalled(Number(deviceID), Number(clientID), sessionID);
                             
                             // Assuming the API responding the button if the device is installed and ready to be marked
-                            if(markAsInstalledCheck.results == true)
+                            if(markAsInstalledCheck.valid)
                             {
                                 console.log("Marking Device Installation Success", sessionID);
                             }
