@@ -187,7 +187,29 @@ class Requests {
           return false;
         }
     }
+
+    markAsInstalled = async (deviceID: number, clientID: number, sessionID: string) => {
+      const loginReqOptions = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({player_id: deviceID, 
+        client_id: clientID, session_id: sessionID })
+      };
+      
+      return fetch("https://api.lymlive.com.au/v1/installers/actions/install__player.iris", loginReqOptions)
+      .then(response => response.json())
+        .then(json => { 
+          
+          console.log(json.valid);
+          console.log("Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n valid: ", json.valid, "\n next: ", json.next, "\n Logged In: ", json.loggedIn);
+          return json;
+        })
+        .catch(error => {
+          console.error(error);
+        });    
+      };
 };
+
 
 const Req = new Requests();
 export default Req;
