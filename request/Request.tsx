@@ -177,10 +177,9 @@ class Requests {
             userPasword
           );
 
-          // Congrats! You've just stored your first value!
-          } catch (error) {
-              // There was an error on the native side
-          }
+        } catch (error) {
+            // There was an error on the native side
+        }
 
           return true;
         } else {
@@ -188,29 +187,37 @@ class Requests {
         }
     }
 
-    markAsInstalled = async (deviceID: number, clientID: number, sessionID: string) => {
-      const loginReqOptions = {
+    markAsInstalled(deviceID: number, clientID: number, sessionID: string) {
+      const ReqOptions = {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({player_id: deviceID, 
         client_id: clientID, session_id: sessionID })
       };
       
-      return fetch("https://api.lymlive.com.au/v1/installers/actions/install__player.iris", loginReqOptions)
+      return fetch("https://api.lymlive.com.au/v1/installers/actions/install__player.iris", ReqOptions)
       .then(response => response.json())
         .then(json => { 
-          
+          console.log("API DEVICE ID:", deviceID);
+          console.log("API CLIENT ID:", clientID);
+          console.log("API SESSION ID:", sessionID);
           console.log(json.valid);
           console.log("Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n valid: ", json.valid, "\n next: ", json.next, "\n Logged In: ", json.loggedIn);
+        
+          return json;
+
+        });
+      };
+    
 
     searchRequest(searchValue: string , sessionId: string)  {
-      const loginReqOptions = {
+      const ReqOptions = {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({search__value: searchValue, session_id:sessionId})
       };
   
-      return fetch("https:api.lymlive.com.au/v1/installers/player/read.iris", loginReqOptions)
+      return fetch("https:api.lymlive.com.au/v1/installers/player/read.iris", ReqOptions)
       .then(response => response.json())
         .then(json => { 
           

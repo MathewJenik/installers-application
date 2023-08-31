@@ -34,15 +34,15 @@ function AdminModule() {
 
   const navigation = useNavigation<navProp>();
 
-  const [value, setValue]=useState("");
-
+  const [value, setValue] = useState("");
+  const [cID, setCID] = useState("");
 
   /**
    * Function that completes the check for the media player based off input
    *
    * @param {string} search
    */
-  const searchMediaplay = async ( search: string) => {
+  const searchMediaplay = async (search: string) => {
       let session = await EncryptedStorage.getItem("session_id");
       console.log("SEARCH VALUE IS: ", value);
 
@@ -56,12 +56,13 @@ function AdminModule() {
               setShowingData(false);
               
             } else {
+              setCID(response.client.user_id);
+              console.log("CLIENT ID IS:", response.client.user_id);
               setShowingData(true);
             }
           }
       }
       
-
   }
 
   return (
@@ -79,14 +80,14 @@ function AdminModule() {
           
           <Help />
 
-          <SearchField textChangeEvent={(t) => {setValue(t)}} onPress={() => {
+          <SearchField textChangeEvent={(t) => {setValue(t);}} onPress={() => {
             searchMediaplay(value);
           } } title={''} />
 
           
 
           {showingData ? (
-              <><Actions></Actions><Orientation></Orientation></>
+              <><Actions devID={value} clientID={cID}></Actions><Orientation></Orientation></>
 
           ):(<View></View>)}
           

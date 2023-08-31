@@ -13,11 +13,13 @@ import {
     View,
     Alert,
     Pressable,
+    ToastAndroid,
 } from 'react-native';
 import CustomButton from '../customButton/CustomButton';
 import ViewContainer from '../viewContainer/ViewContainer';
 import Req from '../../request/Request';
 import { err } from 'react-native-svg/lib/typescript/xml';
+import EncryptedStorage from 'react-native-encrypted-storage';
 
 export function Button(props: any) {
     const { onPress, title = '', icon } = props;
@@ -60,49 +62,59 @@ const styles = StyleSheet.create({
     }
 })
 
-export default class Actions extends React.Component {
-    render() {
-        const [deviceID, setdeviceID] = useState('');
-        const [clientID, setclientID] = useState('');
-        const [sessionID, setsessionID] = useState('');
-
-        return (
-            <View style={styles.viewStyle}>
-
-                <ViewContainer title={'Actions'} colour='white' titleColour='white' >
-                    
-                    <CustomButton title="Mark player as installed" onPress={async () => {
-                        try{
-                            let markAsInstalledCheck = await Req.markAsInstalled(Number(deviceID), Number(clientID), sessionID);
-                            
-                            // Assuming the API responding the button if the device is installed and ready to be marked
-                            if(markAsInstalledCheck.valid)
-                            {
-                                console.log("Marking Device Installation Success", sessionID);
-                            }
-                            else
-                            {
-                                console.log("Device Failed to Marked", markAsInstalledCheck.errorMsg);
-                            }
-                        } catch {
-                            console.log("Error!");
-                        }
-                    }} color="#36bf00" iconName="wrench"/>
-                    <CustomButton title="Re-sync" onPress={() => {}} iconName="cloud-download" />
-                    <View style={{ flexDirection: 'row' }}>
-                    
-                        <View>
-                            <CustomButton color='#d32f2f' title="Ping" onPress={() => {}} faIcon={faHeartPulse}/>
-                        </View>
-
-                        <View>
-                            <CustomButton color='#85c0f9' title="Reboot" onPress={() => {}} iconName="rotate-left" />
-                        </View>
-                    </View>
-                </ViewContainer>
-
-            </View>
-        );
-    }
+interface ActionsProps {
+    devID: string;
+    clientID: string;
 }
 
+const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = ""})=> {
+    
+    const markInstaller = async () => {
+        try{
+            console.log("DEVICE ID: ", devID);
+            const sessionID = await EncryptedStorage.getItem("session_id");
+            
+            console.log("Session ID: ", (String)(sessionID));
+            let results = await Req.markAsInstalled(Number(devID), Number(clientID), (String)(sessionID));
+            
+            // Assuming the API responding the button if the device is installed and ready to be marked
+            if(results.error == false)
+            {
+                console.log("Marking Device Installation Success", sessionID);
+                ToastAndroid.showWithGravity("Device Marked as Installed.", ToastAndroid.LONG, ToastAndroid.CENTER);
+            }
+            else
+            {
+                console.log("Device Failed to Marked", results.errorMsg);
+                ToastAndroid.showWithGravity(results.errorMsg, ToastAndroid.LONG, ToastAndroid.CENTER);
+            }
+
+
+        } catch {
+            console.log("Error!");
+        }
+    }
+
+    return (
+        <View style={styles.viewStyle}>
+
+            <ViewContainer title={'Actions'} colour='white' titleColour='white' >
+                
+                <CustomButton title="Mark player as installed" onPress={markInstaller} color="#36bf00" iconName="wrench"/>
+                <CustomButton title="Re-sync" onPress={() => {}} iconName="cloud-download" />
+                <View style={{ flexDirection: 'row' }}>
+                
+                    <View>
+                        <CustomButton color='#d32f2f' title="Ping" onPress={() => {}} faIcon={faHeartPulse}/>
+                    </View>
+
+                    <View>
+                        <CustomButton color='#85c0f9' title="Reboot" onPress={() => {}} iconName="rotate-left" />
+                    </View>
+                </View>
+            </ViewContainer>
+
+        </View>
+    );
+}
+export default Actions;

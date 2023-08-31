@@ -22,7 +22,8 @@ interface CustomButtonProps {
 
 const SearchField: React.FC<CustomButtonProps> = ({onPress, title, color ='white', iconName, iconColor = 'white', textChangeEvent})=> {
     
-   const [text, setText] = useState('');
+    const [text, setText] = useState('');
+
     
     return (
         <View style={styles.flexbox}>
@@ -32,7 +33,7 @@ const SearchField: React.FC<CustomButtonProps> = ({onPress, title, color ='white
             <TextInput 
                 placeholder="Search by IP or MPID"
                 style={styles.input}
-                onChangeText={t => {textChangeEvent(t); setText(t);}}
+                onChangeText={(t) => {textChangeEvent(t); setText(t);}}
                value={text}
             />
             </View >
