@@ -12,32 +12,57 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { faLinkSlash } from '@fortawesome/free-solid-svg-icons';
 import Help from '../help/Help';
+import { Alert } from 'react-native';
+import { ToastAndroid } from 'react-native';
 
 
 type navProp = StackNavigationProp<RootStackParamList, "Admin">;
 
-async function LogOut() {
-  console.log("LOGGIN OUT");
-  
-  
-  //const nav = useNavigation<navProp>();
-  
+async function LogOut() {  
+  // clear the storage of all user details
   try {   
     await EncryptedStorage.clear();
-    //nav.navigate("Login");
+   
   } catch (error) {
-      // There was an error on the native side
+    // There was an error on the native side
   }
-  
 }
 
-//
 
 function AdminModule() {
   const [showingData, setShowingData] = useState(false);
 
   const navigation = useNavigation<navProp>();
 
+  const [value, setValue]=useState("");
+
+
+  /**
+   * Function that completes the check for the media player based off input
+   *
+   * @param {string} search
+   */
+  const searchMediaplay = async ( search: string) => {
+      let session = await EncryptedStorage.getItem("session_id");
+      console.log("SEARCH VALUE IS: ", value);
+
+      if (session !== undefined) {
+          if (session != null) {
+
+            var response = await Req.searchRequest(search, session);
+
+            if (response.error==true) {
+              ToastAndroid.show(response.errorMsg,ToastAndroid.LONG);
+              setShowingData(false);
+              
+            } else {
+              setShowingData(true);
+            }
+          }
+      }
+      
+
+  }
 
   return (
     <View>
@@ -54,8 +79,8 @@ function AdminModule() {
           
           <Help />
 
-          <SearchField onPress={() => {
-              setShowingData(true);
+          <SearchField textChangeEvent={(t) => {setValue(t)}} onPress={() => {
+            searchMediaplay(value);
           } } title={''} />
 
           

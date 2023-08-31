@@ -202,6 +202,22 @@ class Requests {
           
           console.log(json.valid);
           console.log("Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n valid: ", json.valid, "\n next: ", json.next, "\n Logged In: ", json.loggedIn);
+
+    searchRequest(searchValue: string , sessionId: string)  {
+      const loginReqOptions = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({search__value: searchValue, session_id:sessionId})
+      };
+  
+      return fetch("https:api.lymlive.com.au/v1/installers/player/read.iris", loginReqOptions)
+      .then(response => response.json())
+        .then(json => { 
+          
+          console.log(searchValue);
+          console.log("session ID:", sessionId);
+          console.log("Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n valid: ", json.loggedIn, "\n next: ", json.client, "\n Search: ", json.player);
+
           return json;
         })
         .catch(error => {
@@ -210,7 +226,5 @@ class Requests {
       };
 };
 
-
 const Req = new Requests();
 export default Req;
-
