@@ -8,15 +8,78 @@ export enum AuthMethod {
   adhoc = 'iris'
 }
 
+export enum ScreenOrientation {
+	none = '',
+	normal = 'normal',
+	right = 'right',
+	inverted = 'inverted',
+	left = 'left'
+}
+
+var sessionID = '';
+var player_id = 15250;
+var client_id= 0;
 class Requests {
-
-
   /**
    *
    * @param {string} userEmail
    * @return {*} 
    * @memberof Requests
    */
+
+  displayGetClientID(MPID: string, sessionID: string){
+    const orientationReq = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(
+        { search_value: MPID,
+          sessionID: sessionID
+        })
+    };
+
+    return fetch("https:api.lymlive.com.au/v1/installers/player/read.iris", orientationReq)
+    .then(response => response.json())
+      .then(json => { 
+        console.log("\n---------\n");
+        client_id = json.client;
+        console.log(json.valid);
+        console.log("\nClient = \n", "Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n valid: ", json.loggedIn, 
+                    "\n Client: ", json.client, "\n Player: ", json.player);
+        return json;
+      })
+      .catch(error => {
+        console.error(error);
+      });   
+  }
+
+  displayCheckValid(orient: ScreenOrientation){
+    //this.displayGetClientID("15250", sessionID);
+
+    const orientationReq = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(
+        { player__id: 15250,
+          client__id: 10110,
+          orientation: orient,
+          session_id: sessionID
+          
+        })
+    };
+
+    return fetch("https:api.lymlive.com.au/v1/installers/actions/screen__rotate.iris", orientationReq)
+    .then(response => response.json())
+      .then(json => { 
+        
+        console.log(json.valid);
+        console.log("\nDisplay Request = \n", "Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n valid: ", json.loggedIn);
+        return json;
+      })
+      .catch(error => {
+        console.error(error);
+      });   
+  }
+
   loginCheckValid(userEmail: string)  {
     const loginReqOptions = {
       method: 'POST',
@@ -103,6 +166,7 @@ class Requests {
       console.log("ADHOC RESTULTS: ", results);
 
 
+
       // if there isnt an error, store the required details
       if (results.error == false) {
 
@@ -159,6 +223,8 @@ class Requests {
 
       console.log("ADHOC RESTULTS: ", results);
 
+      sessionID = results.session_id;
+      console.log("\n\n\n",sessionID, "\n\n\n");
 
       // if there isnt an error, store the required details
       if (results.error == false) {
