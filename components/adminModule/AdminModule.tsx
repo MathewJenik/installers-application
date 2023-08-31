@@ -87,7 +87,7 @@ function AdminModule() {
           
 
           {showingData ? (
-              <><Actions devID={value} clientID={cID}></Actions><Orientation></Orientation></>
+              <><Actions devID={value} clientID={cID}></Actions><Orientation devID={value} clientID={cID}></Orientation></>
 
           ):(<View></View>)}
           

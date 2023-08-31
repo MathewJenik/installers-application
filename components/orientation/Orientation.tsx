@@ -38,24 +38,29 @@ export enum ScreenOrientation {
 	left = 'left'
 }
 
-function pressNormal(): boolean {
+async function pressNormal(devID: String, clientID: String): Promise<boolean> {
   normalPress = true;
-  request.displayCheckValid(ScreenOrientation.normal);
+  //playerID: Number, clientID: Number, orient: ScreenOrientation, sessionID: string
+  let session = await EncryptedStorage.getItem("session_id");
+  await request.displayCheckValid((Number)(devID), (Number)(clientID), ScreenOrientation.normal, (String)(session));
   return normalPress;
 }
-function pressInverse(): boolean {
+async function pressInverse(devID: String, clientID: String): Promise<boolean> {
   inversePress = true;
-  request.displayCheckValid(ScreenOrientation.inverted);
+  let session = await EncryptedStorage.getItem("session_id");
+  await request.displayCheckValid((Number)(devID), (Number)(clientID), ScreenOrientation.inverted, (String)(session));
   return inversePress;
 }
-function pressLeft(): boolean {
+async function pressLeft(devID: String, clientID: String): Promise<boolean> {
   leftPress = true;
-  request.displayCheckValid(ScreenOrientation.left);
+  let session = await EncryptedStorage.getItem("session_id");
+  await request.displayCheckValid((Number)(devID), (Number)(clientID), ScreenOrientation.left, (String)(session));
   return leftPress;
 }
-function pressRight(): boolean {
+async function pressRight(devID: String, clientID: String): Promise<boolean> {
   rightPress = true;
-  request.displayCheckValid(ScreenOrientation.right);
+  let session = await EncryptedStorage.getItem("session_id");
+  await request.displayCheckValid((Number)(devID), (Number)(clientID), ScreenOrientation.right, (String)(session));
   return rightPress;
 }
 
@@ -66,35 +71,40 @@ export function Button(props: any){
   );
 }
 
-export default class Orientation extends React.Component { 
-  render() { 
-    return (
-
-    
-      <View style={styles.viewStyle}>
-        <ViewContainer title={'Orientations'} colour='white' titleColour='white' >
-          <View  style={styles.button}>
-            <CustomButton onPress={() => pressNormal()} title={'Normal'} iconName='arrow-up' />
-          </View>
-          
-          <View style={{flexDirection:"row", marginHorizontal: constants.FONTSIZE.EM/2}}>
-            <CustomButton onPress={() => pressLeft()} title={'Left '} iconName='arrow-left' />
-            <CustomButton onPress={() => pressRight()} title={'Right'} iconName='arrow-right' />
-
-          </View>
-            
-          <View style={styles.button}>
-            <CustomButton onPress={() => pressInverse()} title={'Inverse'} iconName='arrow-down' />
-          </View>
-
-
-
-        </ViewContainer>
-      </View>
-      
-    );
-  }
+interface OrientationProps {
+  devID: string;
+  clientID: string;
 }
+
+const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", clientID = ""}) => { 
+
+  return (
+  
+    <View style={styles.viewStyle}>
+      <ViewContainer title={'Orientations'} colour='white' titleColour='white' >
+        <View  style={styles.button}>
+          <CustomButton onPress={() => pressNormal(devID, clientID)} title={'Normal'} iconName='arrow-up' />
+        </View>
+        
+        <View style={{flexDirection:"row", marginHorizontal: constants.FONTSIZE.EM/2}}>
+          <CustomButton onPress={() => pressLeft(devID, clientID)} title={'Left '} iconName='arrow-left' />
+          <CustomButton onPress={() => pressRight(devID, clientID)} title={'Right'} iconName='arrow-right' />
+
+        </View>
+          
+        <View style={styles.button}>
+          <CustomButton onPress={() => pressInverse(devID, clientID)} title={'Inverse'} iconName='arrow-down' />
+        </View>
+
+
+
+      </ViewContainer>
+    </View>
+    
+  );
+
+}
+export default Orientation;
 
 const styles = StyleSheet.create({
   button: {
