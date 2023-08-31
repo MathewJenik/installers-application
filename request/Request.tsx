@@ -53,7 +53,7 @@ class Requests {
   }
 
   displayCheckValid(orient: ScreenOrientation){
-    this.displayGetClientID("15250", sessionID);
+    //this.displayGetClientID("15250", sessionID);
 
     const orientationReq = {
       method: 'POST',
@@ -164,6 +164,7 @@ class Requests {
       var results = await Req.loginCheck(sessionID);
 
       console.log("ADHOC RESTULTS: ", results);
+
 
 
       // if there isnt an error, store the required details
