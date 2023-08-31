@@ -32,7 +32,7 @@ const SearchField: React.FC<CustomButtonProps> = ({onPress, title, color ='white
             <TextInput 
                 placeholder="Search by IP or MPID"
                 style={styles.input}
-                onChangeText={(t) => {textChangeEvent; setText(t)}}
+                onChangeText={t => {textChangeEvent(t); setText(t);}}
                value={text}
             />
             </View >

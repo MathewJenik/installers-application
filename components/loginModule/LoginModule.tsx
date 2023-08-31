@@ -26,7 +26,7 @@ function LoginModule(): any {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   
-  const [userChecked, setUserChecked] = useState(Boolean);
+  const [userChecked, setUserChecked] = useState(false);
 
   return (
     <View style={styles.container}>
