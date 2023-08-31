@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faHeartPulse } from '@fortawesome/free-solid-svg-icons';
 import { faRotateLeft } from '@fortawesome/free-solid-svg-icons';
@@ -16,6 +16,8 @@ import {
 } from 'react-native';
 import CustomButton from '../customButton/CustomButton';
 import ViewContainer from '../viewContainer/ViewContainer';
+import Req from '../../request/Request';
+import { err } from 'react-native-svg/lib/typescript/xml';
 
 export function Button(props: any) {
     const { onPress, title = '', icon } = props;
@@ -60,12 +62,32 @@ const styles = StyleSheet.create({
 
 export default class Actions extends React.Component {
     render() {
+        const [deviceID, setdeviceID] = useState('');
+        const [clientID, setclientID] = useState('');
+        const [sessionID, setsessionID] = useState('');
+
         return (
             <View style={styles.viewStyle}>
 
                 <ViewContainer title={'Actions'} colour='white' titleColour='white' >
                     
-                    <CustomButton title="Mark player as installed" onPress={() => {}} color="#36bf00" iconName="wrench"/>
+                    <CustomButton title="Mark player as installed" onPress={async () => {
+                        try{
+                            let markAsInstalledCheck = await Req.markAsInstalled(Number(deviceID), Number(clientID), sessionID);
+                            
+                            // Assuming the API responding the button if the device is installed and ready to be marked
+                            if(markAsInstalledCheck.valid)
+                            {
+                                console.log("Marking Device Installation Success", sessionID);
+                            }
+                            else
+                            {
+                                console.log("Device Failed to Marked", markAsInstalledCheck.errorMsg);
+                            }
+                        } catch {
+                            console.log("Error!");
+                        }
+                    }} color="#36bf00" iconName="wrench"/>
                     <CustomButton title="Re-sync" onPress={() => {}} iconName="cloud-download" />
                     <View style={{ flexDirection: 'row' }}>
                     
@@ -84,31 +106,3 @@ export default class Actions extends React.Component {
     }
 }
 
-handleAPI();
-
-function handleAPI() {
-    //Display payload
-    fetch("https:api.lymlive.com.au/v2/auth/check.iris", {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            email: '20141064@student.westernsydney.edu.au'
-        })
-    })
-    const getAPI = () => {
-        return fetch('https:api.lymlive.com.au/v2/auth/check.iris')
-            .then(response => response)
-            .then((response) => {
-                console.log(response)
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    };
-
-    let data = getAPI();
-    console.log(data);
-}

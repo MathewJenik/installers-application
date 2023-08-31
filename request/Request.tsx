@@ -188,6 +188,21 @@ class Requests {
         }
     }
 
+    markAsInstalled = async (deviceID: number, clientID: number, sessionID: string) => {
+      const loginReqOptions = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({player_id: deviceID, 
+        client_id: clientID, session_id: sessionID })
+      };
+      
+      return fetch("https://api.lymlive.com.au/v1/installers/actions/install__player.iris", loginReqOptions)
+      .then(response => response.json())
+        .then(json => { 
+          
+          console.log(json.valid);
+          console.log("Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n valid: ", json.valid, "\n next: ", json.next, "\n Logged In: ", json.loggedIn);
+
     searchRequest(searchValue: string , sessionId: string)  {
       const loginReqOptions = {
         method: 'POST',
@@ -202,6 +217,7 @@ class Requests {
           console.log(searchValue);
           console.log("session ID:", sessionId);
           console.log("Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n valid: ", json.loggedIn, "\n next: ", json.client, "\n Search: ", json.player);
+
           return json;
         })
         .catch(error => {
@@ -210,8 +226,5 @@ class Requests {
       };
 };
 
-
-
 const Req = new Requests();
 export default Req;
-
