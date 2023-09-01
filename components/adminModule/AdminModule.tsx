@@ -66,7 +66,7 @@ function AdminModule() {
   }
 
   return (
-    <View>
+    <View style={{backgroundColor: '#e0e0e0', height:"100%"}}>
       <SafeAreaView style={{backgroundColor: '#e0e0e0'}}>
           <ScrollView>
           <View style={{backgroundColor: "#cccccc"}}>
@@ -84,7 +84,6 @@ function AdminModule() {
             searchMediaplay(value);
           } } title={''} />
 
-          
 
           {showingData ? (
               <><Actions devID={value} clientID={cID}></Actions><Orientation devID={value} clientID={cID}></Orientation></>
