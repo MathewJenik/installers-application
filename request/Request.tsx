@@ -61,8 +61,7 @@ class Requests {
     .then(json => { 
 
       console.log(json.valid);
-      console.log("\nDisplay Request = \n", "Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n valid: ", json.loggedIn);
-      return json;
+      console.log("\nDisplay Request = \n", "Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n valid: ", json.loggedIn, "\n Result: ", json.result);
     })
     .catch(error => {
       console.error(error);
@@ -85,7 +84,7 @@ class Requests {
     .then(json => { 
 
       console.log(json.valid);
-      console.log("\nDisplay Request = \n", "Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n valid: ", json.loggedIn);
+      console.log("\nDisplay Request = \n", "Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n valid: ", json.loggedIn, "\n Result: ", json.result);
       return json;
     })
     .catch(error => {
