@@ -157,7 +157,7 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
             ):(
                 <>
                 <CustomButton title="Mark player as installed" onPress={markInstaller} color="#36bf00" iconName="wrench"/>
-                <CustomButton title="Re-sync" onPress={() => {}} iconName="cloud-download" />
+                <CustomButton title="Re-sync" onPress={resyncDevice} iconName="cloud-download" />
                 <View style={{ flexDirection: 'row' }}>
                 
                     <View>
