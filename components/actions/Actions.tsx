@@ -73,8 +73,8 @@ interface ActionsProps {
 
 const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = ""})=> {
     
-
     const [actionsLoading, setActionsLoading] = useState(false);
+    const [data, setData] = useState('');
 
   // Spinning animatiion:
   const spinValue = new Animated.Value(0);
@@ -122,6 +122,27 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
         }
     }
     
+    const resyncDevice = async () => {
+        try{
+            setActionsLoading(true);
+            console.log("DEVICE ID: ", devID);
+            const sessionID = await EncryptedStorage.getItem("session_id");
+            
+            console.log("Session ID: ", (String)(sessionID));
+            let results = await Req.resyncDevice(Number(devID), Number(clientID), (String)(sessionID));
+            
+            // Updating the results based what the player stands for
+            setData(results);
+
+            // Displays the updated data
+            console.log("Updated Data", results)
+        } catch {
+            console.log("Error!");
+        } finally{
+            setActionsLoading(false);
+        }
+    }
+
     return (
         <View style={styles.viewStyle}>
 
