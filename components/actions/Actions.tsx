@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faHeartPulse } from '@fortawesome/free-solid-svg-icons';
+import { faHeartPulse, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { faRotateLeft } from '@fortawesome/free-solid-svg-icons';
 
 import {
@@ -14,6 +14,8 @@ import {
     Alert,
     Pressable,
     ToastAndroid,
+    Animated,
+    Easing,
 } from 'react-native';
 import CustomButton from '../customButton/CustomButton';
 import ViewContainer from '../viewContainer/ViewContainer';
@@ -21,6 +23,7 @@ import Req from '../../request/Request';
 import { err } from 'react-native-svg/lib/typescript/xml';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import request from '../../request/Request';
+import constants from '../../constants';
 
 export function Button(props: any) {
     const { onPress, title = '', icon } = props;
@@ -70,6 +73,29 @@ interface ActionsProps {
 
 const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = ""})=> {
     
+
+    const [actionsLoading, setActionsLoading] = useState(false);
+
+  // Spinning animatiion:
+  const spinValue = new Animated.Value(0);
+    const spin = spinValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: ['0deg', '360deg']
+    });
+
+    // setup the animation for the spinning loading bar.
+    Animated.loop(
+        Animated.timing(
+            spinValue,
+            {
+                toValue: 1,
+                duration: 1500,
+                easing: Easing.linear, 
+                useNativeDriver: true,  
+            }
+        )
+    ).start();
+
     const markInstaller = async () => {
         try{
             console.log("DEVICE ID: ", devID);
@@ -101,30 +127,45 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
 
             <ViewContainer title={'Actions'} colour='white' titleColour='white' >
                 
+            {actionsLoading ? (
+                <View style={{minWidth: 320}}>
+                <Animated.View style={{transform: [{rotateZ: spin}], width: constants.FONTSIZE.LOOPING_ANIMATION*2, marginLeft: 100, marginBottom: 70, marginTop: 50 }}>
+                <FontAwesomeIcon  icon={faSpinner} size={constants.FONTSIZE.LOOPING_ANIMATION*2}/>
+                </Animated.View>
+                </View>
+            ):(
+                <>
                 <CustomButton title="Mark player as installed" onPress={markInstaller} color="#36bf00" iconName="wrench"/>
                 <CustomButton title="Re-sync" onPress={() => {}} iconName="cloud-download" />
                 <View style={{ flexDirection: 'row' }}>
                 
                     <View>
                         <CustomButton color='#d32f2f' title="Ping" onPress={async () => {
+                            setActionsLoading(true);
                             var session = await EncryptedStorage.getItem("session_id");
                             console.log((Number)(devID), (Number)(clientID));
                             let result = await Req.pingMediaPlayer((Number)(devID), (Number)(clientID), (String)(session));
                             console.log(result);
+                            setActionsLoading(false);
                         
                         }} faIcon={faHeartPulse}/>
                     </View>
 
                     <View>
                         <CustomButton color='#85c0f9' title="Reboot" onPress={async () => {
+                            setActionsLoading(true);
                             var session = await EncryptedStorage.getItem("session_id");
                             console.log((Number)(devID), (Number)(clientID));
                             let result = await Req.rebootMediaPlayer((Number)(devID), (Number)(clientID), (String)(session));
                             console.log(result);
+                            setActionsLoading(false);
 
                         }} faIcon={faRotateLeft} />
                     </View>
                 </View>
+                </>
+            )}
+
             </ViewContainer>
 
         </View>
