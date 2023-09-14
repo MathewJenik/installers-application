@@ -11,6 +11,7 @@ export type RootStackParamList = {
   Login: undefined;
   Admin: undefined;
   App: undefined;
+  Profile: undefined;
 };
 
 type loginProp = StackNavigationProp<RootStackParamList, "Login">;
@@ -26,11 +27,11 @@ function LoginModule(): any {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   
-  const [userChecked, setUserChecked] = useState(Boolean);
+  const [userChecked, setUserChecked] = useState(false);
 
   return (
     <View style={styles.container}>
-
+      
       <Image source={require('../../Images/Lymlive_Iris_login.png')} />
       <TextInput onChangeText={t => setEmail(t)} style={styles.textInput} placeholder='Email'></TextInput>
       {userChecked ?

@@ -1,4 +1,6 @@
 import React, {useState, useEffect} from 'react';
+import { Animated, Easing, ToastAndroid } from "react-native";
+import EncryptedStorage from "react-native-encrypted-storage";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import {faArrowUp} from '@fortawesome/free-solid-svg-icons/faArrowUp'
 import {faArrowRight} from '@fortawesome/free-solid-svg-icons/faArrowRight'
@@ -18,10 +20,18 @@ import {
 import CustomButton from '../customButton/CustomButton';
 import ViewContainer from '../viewContainer/ViewContainer';
 import constants from '../../constants';
+import request from '../../request/Request';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
+//MPID: 15250
+// IP:  172.18.1.84
 
-//Display orientation input
-enum orientation {
+var normalPress = false;
+var inversePress = false;
+var leftPress = false;
+var rightPress = false;
+
+export enum ScreenOrientation {
 	none = '',
 	normal = 'normal',
 	right = 'right',
@@ -29,96 +39,29 @@ enum orientation {
 	left = 'left'
 }
 
-type login = {
-  error: boolean,
-  errorMsg: string,
-  valid: boolean,
-  next: any,
-  email: string
-}
-
-function handleAPI(){
-  //Display payload
-  fetch("https:api.lymlive.com.au/v2/auth/check.iris", {
-    method: 'POST',
-    headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-        email: '20674250@student.westernsydney.edu.au'
-    })
-  })
-  const getAPI = () => {
-    return fetch('https:api.lymlive.com.au/v2/auth/check.iris')
-      .then(response => response)
-      .then((response) => {
-        console.log(response)
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  };
-
-  let data = getAPI();
-  console.log(data);
-}
-
-function displayAPI(){
-  //Display payload
-  fetch("https:api.lymlive.com.au/v2/installers/actions/screen__rotate.iris", {
-    method: 'POST',
-    headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      player__id: 0,
-      client__id: 0,
-      orientation: 0,
-      session_id: '',
-    })
-  })
-  const getAPI = () => {
-    return fetch('https:api.lymlive.com.au/v2/installers/actions/screen__rotate.iris')
-      .then(response => response)
-      .then((response) => {
-        console.log(response)
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  };
-
-  let data = getAPI();
-  console.log(data);
-}
-
-
-var normalPress = false;
-var inversePress = false;
-var leftPress = false;
-var rightPress = false;
-
-function pressNormal(): boolean {
+async function pressNormal(devID: String, clientID: String): Promise<boolean> {
   normalPress = true;
-  handleAPI();
-  console.log('normal')
+  //playerID: Number, clientID: Number, orient: ScreenOrientation, sessionID: string
+  let session = await EncryptedStorage.getItem("session_id");
+  await request.displayCheckValid((Number)(devID), (Number)(clientID), ScreenOrientation.normal, (String)(session));
   return normalPress;
 }
-function pressInverse(): boolean {
+async function pressInverse(devID: String, clientID: String): Promise<boolean> {
   inversePress = true;
-  console.log('Inverse')
+  let session = await EncryptedStorage.getItem("session_id");
+  await request.displayCheckValid((Number)(devID), (Number)(clientID), ScreenOrientation.inverted, (String)(session));
   return inversePress;
 }
-function pressLeft(): boolean {
+async function pressLeft(devID: String, clientID: String): Promise<boolean> {
   leftPress = true;
-  console.log('Left')
+  let session = await EncryptedStorage.getItem("session_id");
+  await request.displayCheckValid((Number)(devID), (Number)(clientID), ScreenOrientation.left, (String)(session));
   return leftPress;
 }
-function pressRight(): boolean {
+async function pressRight(devID: String, clientID: String): Promise<boolean> {
   rightPress = true;
-  console.log('Right')
+  let session = await EncryptedStorage.getItem("session_id");
+  await request.displayCheckValid((Number)(devID), (Number)(clientID), ScreenOrientation.right, (String)(session));
   return rightPress;
 }
 
@@ -129,35 +72,140 @@ export function Button(props: any){
   );
 }
 
-export default class Orientation extends React.Component { 
-  render() { 
-    return (
-
-    
-      <View style={styles.viewStyle}>
-        <ViewContainer title={'Orientations'} colour='white' titleColour='white' >
-          <View  style={styles.button}>
-            <CustomButton onPress={() => pressNormal()} title={'Normal'} iconName='arrow-up' />
-          </View>
-          
-          <View style={{flexDirection:"row", marginHorizontal: constants.FONTSIZE.EM/2}}>
-            <CustomButton onPress={() => pressNormal()} title={'Left '} iconName='arrow-left' />
-            <CustomButton onPress={() => pressNormal()} title={'Right'} iconName='arrow-right' />
-
-          </View>
-            
-          <View style={styles.button}>
-            <CustomButton onPress={() => pressNormal()} title={'Inverse'} iconName='arrow-down' />
-          </View>
-
-
-
-        </ViewContainer>
-      </View>
-      
-    );
-  }
+interface OrientationProps {
+  devID: string;
+  clientID: string;
 }
+
+const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", clientID = ""}) => { 
+
+  const [leftPressed, setLeftPressed] = useState(false);
+  const [rightPressed, setRightPressed] = useState(false);
+  const [upPressed, setUpPressed] = useState(false);
+  const [downPressed, setDownPressed] = useState(false);
+
+  const [orientationLoading, setOrientationLoading] = useState(false);
+
+
+  function onClickNormal() {
+    setUpPressed(false);
+    setDownPressed(true)
+    setLeftPressed(true);
+    setRightPressed(true)
+
+    console.log("RUNNING");
+    //pressNormal(devID, clientID)
+  }
+  function onClickInverted() {
+    setUpPressed(true);
+    setDownPressed(false)
+    setLeftPressed(true);
+    setRightPressed(true)
+  }
+  function onClickLeft() {
+    setUpPressed(true);
+    setDownPressed(true)
+    setLeftPressed(false);
+    setRightPressed(true)
+  }
+  function onClickRight() {
+    setUpPressed(true);
+    setDownPressed(true)
+    setLeftPressed(true);
+    setRightPressed(false)
+  }
+
+
+  // Spinning animatiion:
+  const spinValue = new Animated.Value(0);
+
+
+    const spin = spinValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: ['0deg', '360deg']
+    });
+
+    // setup the animation for the spinning loading bar.
+    Animated.loop(
+        Animated.timing(
+            spinValue,
+            {
+                toValue: 1,
+                duration: 1500,
+                easing: Easing.linear, 
+                useNativeDriver: true,  
+            }
+        )
+    ).start();
+  
+
+  return (  
+    <View style={styles.viewStyle}>
+      <ViewContainer title={'Orientations'} colour='white' titleColour='white' >
+
+      {orientationLoading ? (
+        <View style={{minWidth: 320}}>
+          <Animated.View style={{transform: [{rotateZ: spin}], width: constants.FONTSIZE.LOOPING_ANIMATION*2, marginLeft: 100, marginBottom: 70, marginTop: 50 }}>
+          <FontAwesomeIcon  icon={faSpinner} size={constants.FONTSIZE.LOOPING_ANIMATION*2}/>
+          </Animated.View>
+        </View>
+      ):(
+
+        <>
+        <View  style={styles.button}>
+          <CustomButton onPress={async () => {
+            setOrientationLoading(true);
+            let res = await pressNormal(devID, clientID);
+            if (res == true) {
+              onClickNormal();
+            }
+            setOrientationLoading(false);
+            }} title={'Normal'} iconName='arrow-up' greyed={upPressed}/>
+        </View>
+        
+        <View style={{flexDirection:"row", marginHorizontal: constants.FONTSIZE.EM/2}}>
+          <CustomButton onPress={async () => {
+            setOrientationLoading(true);
+            let res = await pressLeft(devID, clientID);
+            if (res == true) {
+              onClickLeft();
+            }
+            setOrientationLoading(false);
+            }} title={'Left '} iconName='arrow-left' greyed={leftPressed}/>
+          <CustomButton onPress={async () => {
+            setOrientationLoading(true);
+            let res = await pressRight(devID, clientID);
+            if (res == true) {
+              onClickRight();
+            }
+            setOrientationLoading(false);
+            }} title={'Right'} iconName='arrow-right' greyed={rightPressed}/>
+
+        </View>
+          
+        <View style={styles.button}>
+          <CustomButton onPress={async () => {
+            setOrientationLoading(true);
+            let res = await pressInverse(devID, clientID);
+            if (res == true) {
+              onClickInverted();
+            }
+            setOrientationLoading(false);
+            }} title={'Inverse'} iconName='arrow-down' greyed={downPressed}/>
+        </View>
+        </>
+      )}
+
+        
+
+
+      </ViewContainer>
+    </View>
+    
+  );
+
+}
+export default Orientation;
 
 const styles = StyleSheet.create({
   button: {
