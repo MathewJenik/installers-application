@@ -21,7 +21,6 @@ class Requests {
 
   displayCheckValid(playerID: Number, clientID: Number, orient: ScreenOrientation, sessionID: string) {
     //this.displayGetClientID("15250", sessionID);
-
     const orientationReq = {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -44,6 +43,53 @@ class Requests {
       .catch(error => {
         console.error(error);
       });   
+  }
+
+  pingMediaPlayer(mpID: number, clientID: number, sessionID: number) {
+    const ReqOptions = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(
+        { player__id: 15250,
+          client__id: 10110,
+          session_id: sessionID
+        })
+  };
+
+  return fetch("https:api.lymlive.com.au/v1/admin/mediaplayer/ping.iris")
+  .then(response => response.json())
+    .then(json => { 
+
+      console.log(json.valid);
+      console.log("\nDisplay Request = \n", "Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n valid: ", json.loggedIn, "\n Result: ", json.result);
+    })
+    .catch(error => {
+      console.error(error);
+    });  
+  }
+
+  rebootMediaPlayer(mpID: number, clientID: number, sessionID: number) {
+    const ReqOptions = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(
+        { player__id: 15250,
+          client__id: 10110,
+          session_id: sessionID
+        })
+  };
+  
+  return fetch("https:api.lymlive.com.au/v1/admin/mediaplayer/reboot.iris")
+  .then(response => response.json())
+    .then(json => { 
+
+      console.log(json.valid);
+      console.log("\nDisplay Request = \n", "Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n valid: ", json.loggedIn, "\n Result: ", json.result);
+      return json;
+    })
+    .catch(error => {
+      console.error(error);
+    });
   }
 
   loginCheckValid(userEmail: string)  {
@@ -236,8 +282,7 @@ class Requests {
           return json;
 
         });
-      };
-    
+      };    
 
     searchRequest(searchValue: string , sessionId: string)  {
       const ReqOptions = {

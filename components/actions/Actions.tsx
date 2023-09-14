@@ -20,6 +20,7 @@ import ViewContainer from '../viewContainer/ViewContainer';
 import Req from '../../request/Request';
 import { err } from 'react-native-svg/lib/typescript/xml';
 import EncryptedStorage from 'react-native-encrypted-storage';
+import request from '../../request/Request';
 
 export function Button(props: any) {
     const { onPress, title = '', icon } = props;
@@ -94,7 +95,7 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
             console.log("Error!");
         }
     }
-
+    
     return (
         <View style={styles.viewStyle}>
 
@@ -109,7 +110,7 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
                     </View>
 
                     <View>
-                        <CustomButton color='#85c0f9' title="Reboot" onPress={() => {}} iconName="rotate-left" />
+                        <CustomButton color='#85c0f9' title="Reboot" onPress={() => {}} faIcon={faRotateLeft} />
                     </View>
                 </View>
             </ViewContainer>
