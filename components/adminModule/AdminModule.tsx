@@ -14,6 +14,7 @@ import { faLinkSlash } from '@fortawesome/free-solid-svg-icons';
 import Help from '../help/Help';
 import { Alert } from 'react-native';
 import { ToastAndroid } from 'react-native';
+import { width } from '@fortawesome/free-solid-svg-icons/faArrowUp';
 
 
 type navProp = StackNavigationProp<RootStackParamList, "Admin">;
@@ -69,20 +70,30 @@ function AdminModule() {
     <View style={{backgroundColor: '#e0e0e0', height:"100%"}}>
       <SafeAreaView style={{backgroundColor: '#e0e0e0'}}>
           <ScrollView>
-          <View style={{backgroundColor: "#cccccc"}}>
+          <View style={{backgroundColor: "#cccccc", flexDirection: 'row', alignItems: 'center'}}>
             <CustomButton iconName='arrow-left' onPress={async () => {
               LogOut();
               navigation.navigate("Login");
               setShowingData(false);
             }
-            } title={'Log out'} ></CustomButton>
+            } title={'Log out'} flexRow={true}></CustomButton>
+            <Image style={{width: 80, height: 50}} source={require('../../Images/Iris_logo.png')} />
+            <View style={{marginLeft: 'auto'}}>
+              <CustomButton type={'small'} iconName='user' onPress={async () => {
+                  
+                  navigation.navigate("Profile");
+                  setShowingData(false);
+                }
+
+              } title={null} flexRow={true}></CustomButton>
+            </View>
           </View>
           
           <Help />
 
           <SearchField textChangeEvent={(t) => {setValue(t);}} onPress={() => {
             searchMediaplay(value);
-          } } title={''} />
+          } } clearTextEvent={() => {setShowingData(false);}} title={''} />
 
 
           {showingData ? (

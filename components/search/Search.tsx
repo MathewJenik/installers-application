@@ -18,12 +18,12 @@ interface CustomButtonProps {
     iconName?: string;
     iconColor?: string;
     textChangeEvent: (p: any) => void;
+    clearTextEvent: () => void;
 }
 
-const SearchField: React.FC<CustomButtonProps> = ({onPress, title, color ='white', iconName, iconColor = 'white', textChangeEvent})=> {
+const SearchField: React.FC<CustomButtonProps> = ({onPress, title, color ='white', iconName, iconColor = 'white', textChangeEvent, clearTextEvent})=> {
     
     const [text, setText] = useState('');
-
     
     return (
         <View style={styles.flexbox}>
@@ -43,7 +43,7 @@ const SearchField: React.FC<CustomButtonProps> = ({onPress, title, color ='white
                     />
                 </View>
             </View>
-            <CustomButton faIcon={faSquareXmark} onPress={() => {setText("")}}title={'Clear'} color="white" textColour="#ff8c00" textPosition="center" iconColor="#ff8c00" enableBorder={true}/>
+            <CustomButton faIcon={faSquareXmark} onPress={() => {clearTextEvent(); setText("");}} title={'Clear'} color="white" textColour="#ff8c00" textPosition="center" iconColor="#ff8c00" enableBorder={true}/>
 
         </View>
 

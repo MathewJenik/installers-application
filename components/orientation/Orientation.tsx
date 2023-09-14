@@ -78,22 +78,55 @@ interface OrientationProps {
 
 const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", clientID = ""}) => { 
 
-  return (
-  
+  const [leftPressed, setLeftPressed] = useState(false);
+  const [rightPressed, setRightPressed] = useState(false);
+  const [upPressed, setUpPressed] = useState(false);
+  const [downPressed, setDownPressed] = useState(false);
+
+
+  function onClickNormal() {
+    setUpPressed(false);
+    setDownPressed(true)
+    setLeftPressed(true);
+    setRightPressed(true)
+
+    console.log("RUNNING");
+    //pressNormal(devID, clientID)
+  }
+  function onClickInverted() {
+    setUpPressed(true);
+    setDownPressed(false)
+    setLeftPressed(true);
+    setRightPressed(true)
+  }
+  function onClickLeft() {
+    setUpPressed(true);
+    setDownPressed(true)
+    setLeftPressed(false);
+    setRightPressed(true)
+  }
+  function onClickRight() {
+    setUpPressed(true);
+    setDownPressed(true)
+    setLeftPressed(true);
+    setRightPressed(false)
+  }
+
+  return (  
     <View style={styles.viewStyle}>
       <ViewContainer title={'Orientations'} colour='white' titleColour='white' >
         <View  style={styles.button}>
-          <CustomButton onPress={() => pressNormal(devID, clientID)} title={'Normal'} iconName='arrow-up' />
+          <CustomButton onPress={onClickNormal} title={'Normal'} iconName='arrow-up' greyed={upPressed}/>
         </View>
         
         <View style={{flexDirection:"row", marginHorizontal: constants.FONTSIZE.EM/2}}>
-          <CustomButton onPress={() => pressLeft(devID, clientID)} title={'Left '} iconName='arrow-left' />
-          <CustomButton onPress={() => pressRight(devID, clientID)} title={'Right'} iconName='arrow-right' />
+          <CustomButton onPress={onClickLeft} title={'Left '} iconName='arrow-left' greyed={leftPressed}/>
+          <CustomButton onPress={onClickRight} title={'Right'} iconName='arrow-right' greyed={rightPressed}/>
 
         </View>
           
         <View style={styles.button}>
-          <CustomButton onPress={() => pressInverse(devID, clientID)} title={'Inverse'} iconName='arrow-down' />
+          <CustomButton onPress={onClickInverted} title={'Inverse'} iconName='arrow-down' greyed={downPressed}/>
         </View>
 
 
