@@ -18,6 +18,13 @@ export enum ScreenOrientation {
 
 class Requests {
 
+  async GetSessionID() {
+    let session = await EncryptedStorage.getItem("session_id");
+    return session;
+  }
+
+  //
+
 
   displayCheckValid(playerID: Number, clientID: Number, orient: ScreenOrientation, sessionID: string) {
     //this.displayGetClientID("15250", sessionID);
@@ -25,8 +32,8 @@ class Requests {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(
-        { player__id: 15250,
-          client__id: 10110,
+        { player__id: playerID,
+          client__id: clientID,
           orientation: orient,
           session_id: sessionID
         })
@@ -45,51 +52,61 @@ class Requests {
       });   
   }
 
-  pingMediaPlayer(mpID: number, clientID: number, sessionID: number) {
+  pingMediaPlayer(mpID: Number, clientID: Number, sessionID: string) {
     const ReqOptions = {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(
-        { player__id: 15250,
-          client__id: 10110,
+        { mp__id: mpID,
+          client__id: clientID,
           session_id: sessionID
         })
-  };
+    };
 
-  return fetch("https:api.lymlive.com.au/v1/admin/mediaplayer/ping.iris")
-  .then(response => response.json())
+    return fetch("https:api.lymlive.com.au/v1/admin/mediaplayer/ping.iris", ReqOptions)
+    .then(response => response.json())
     .then(json => { 
 
-      console.log(json.valid);
-      console.log("\nDisplay Request = \n", "Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n valid: ", json.loggedIn, "\n Result: ", json.result);
+      console.log(mpID);
+      console.log(clientID);
+      console.log(sessionID);
+
+      console.log("\nDisplay Request = \n", "Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n Result: ", json.result);
+      return json;
+
     })
     .catch(error => {
       console.error(error);
     });  
   }
+  
 
-  rebootMediaPlayer(mpID: number, clientID: number, sessionID: number) {
+  rebootMediaPlayer(mpID: Number, clientID: Number, sessionID: string) {
     const ReqOptions = {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(
-        { player__id: 15250,
-          client__id: 10110,
+        { mp__id: mpID,
+          client__id: clientID,
           session_id: sessionID
         })
-  };
-  
-  return fetch("https:api.lymlive.com.au/v1/admin/mediaplayer/reboot.iris")
-  .then(response => response.json())
-    .then(json => { 
+      }
+    
+    return fetch("https:api.lymlive.com.au/v1/admin/mediaplayer/reboot.iris", ReqOptions)
+    .then(response => response.json())
+      .then(json => { 
 
-      console.log(json.valid);
-      console.log("\nDisplay Request = \n", "Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n valid: ", json.loggedIn, "\n Result: ", json.result);
-      return json;
-    })
-    .catch(error => {
-      console.error(error);
-    });
+        console.log(mpID);
+        console.log(clientID);
+        console.log(sessionID);
+
+        console.log(json.valid);
+        console.log("\Reboot Request = \n", "Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n Logged in: ", json.loggedIn, "\n Result: ", json.result);
+        return json;
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   loginCheckValid(userEmail: string)  {

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { ToastAndroid } from "react-native";
+import { Animated, Easing, ToastAndroid } from "react-native";
 import EncryptedStorage from "react-native-encrypted-storage";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import {faArrowUp} from '@fortawesome/free-solid-svg-icons/faArrowUp'
@@ -21,6 +21,7 @@ import CustomButton from '../customButton/CustomButton';
 import ViewContainer from '../viewContainer/ViewContainer';
 import constants from '../../constants';
 import request from '../../request/Request';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 //MPID: 15250
 // IP:  172.18.1.84
@@ -83,6 +84,8 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
   const [upPressed, setUpPressed] = useState(false);
   const [downPressed, setDownPressed] = useState(false);
 
+  const [orientationLoading, setOrientationLoading] = useState(false);
+
 
   function onClickNormal() {
     setUpPressed(false);
@@ -112,23 +115,88 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
     setRightPressed(false)
   }
 
+
+  // Spinning animatiion:
+  const spinValue = new Animated.Value(0);
+
+
+    const spin = spinValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: ['0deg', '360deg']
+    });
+
+    // setup the animation for the spinning loading bar.
+    Animated.loop(
+        Animated.timing(
+            spinValue,
+            {
+                toValue: 1,
+                duration: 1500,
+                easing: Easing.linear, 
+                useNativeDriver: true,  
+            }
+        )
+    ).start();
+  
+
   return (  
     <View style={styles.viewStyle}>
       <ViewContainer title={'Orientations'} colour='white' titleColour='white' >
+
+      {orientationLoading ? (
+        <View style={{minWidth: 320}}>
+          <Animated.View style={{transform: [{rotateZ: spin}], width: constants.FONTSIZE.LOOPING_ANIMATION*2, marginLeft: 100, marginBottom: 70, marginTop: 50 }}>
+          <FontAwesomeIcon  icon={faSpinner} size={constants.FONTSIZE.LOOPING_ANIMATION*2}/>
+          </Animated.View>
+        </View>
+      ):(
+
+        <>
         <View  style={styles.button}>
-          <CustomButton onPress={onClickNormal} title={'Normal'} iconName='arrow-up' greyed={upPressed}/>
+          <CustomButton onPress={async () => {
+            setOrientationLoading(true);
+            let res = await pressNormal(devID, clientID);
+            if (res == true) {
+              onClickNormal();
+            }
+            setOrientationLoading(false);
+            }} title={'Normal'} iconName='arrow-up' greyed={upPressed}/>
         </View>
         
         <View style={{flexDirection:"row", marginHorizontal: constants.FONTSIZE.EM/2}}>
-          <CustomButton onPress={onClickLeft} title={'Left '} iconName='arrow-left' greyed={leftPressed}/>
-          <CustomButton onPress={onClickRight} title={'Right'} iconName='arrow-right' greyed={rightPressed}/>
+          <CustomButton onPress={async () => {
+            setOrientationLoading(true);
+            let res = await pressLeft(devID, clientID);
+            if (res == true) {
+              onClickLeft();
+            }
+            setOrientationLoading(false);
+            }} title={'Left '} iconName='arrow-left' greyed={leftPressed}/>
+          <CustomButton onPress={async () => {
+            setOrientationLoading(true);
+            let res = await pressRight(devID, clientID);
+            if (res == true) {
+              onClickRight();
+            }
+            setOrientationLoading(false);
+            }} title={'Right'} iconName='arrow-right' greyed={rightPressed}/>
 
         </View>
           
         <View style={styles.button}>
-          <CustomButton onPress={onClickInverted} title={'Inverse'} iconName='arrow-down' greyed={downPressed}/>
+          <CustomButton onPress={async () => {
+            setOrientationLoading(true);
+            let res = await pressInverse(devID, clientID);
+            if (res == true) {
+              onClickInverted();
+            }
+            setOrientationLoading(false);
+            }} title={'Inverse'} iconName='arrow-down' greyed={downPressed}/>
         </View>
+        </>
+      )}
 
+        
 
 
       </ViewContainer>

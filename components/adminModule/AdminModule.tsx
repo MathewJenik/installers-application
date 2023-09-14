@@ -15,6 +15,7 @@ import Help from '../help/Help';
 import { Alert } from 'react-native';
 import { ToastAndroid } from 'react-native';
 import { width } from '@fortawesome/free-solid-svg-icons/faArrowUp';
+import PingDetails from '../pingDetails/PingDetails';
 
 
 type navProp = StackNavigationProp<RootStackParamList, "Admin">;
@@ -97,7 +98,7 @@ function AdminModule() {
 
 
           {showingData ? (
-              <><Actions devID={value} clientID={cID}></Actions><Orientation devID={value} clientID={cID}></Orientation></>
+              <><PingDetails></PingDetails><Actions devID={value} clientID={cID}></Actions><Orientation devID={value} clientID={cID}></Orientation></>
 
           ):(<View></View>)}
           

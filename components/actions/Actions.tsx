@@ -106,11 +106,23 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
                 <View style={{ flexDirection: 'row' }}>
                 
                     <View>
-                        <CustomButton color='#d32f2f' title="Ping" onPress={() => {}} faIcon={faHeartPulse}/>
+                        <CustomButton color='#d32f2f' title="Ping" onPress={async () => {
+                            var session = await EncryptedStorage.getItem("session_id");
+                            console.log((Number)(devID), (Number)(clientID));
+                            let result = await Req.pingMediaPlayer((Number)(devID), (Number)(clientID), (String)(session));
+                            console.log(result);
+                        
+                        }} faIcon={faHeartPulse}/>
                     </View>
 
                     <View>
-                        <CustomButton color='#85c0f9' title="Reboot" onPress={() => {}} faIcon={faRotateLeft} />
+                        <CustomButton color='#85c0f9' title="Reboot" onPress={async () => {
+                            var session = await EncryptedStorage.getItem("session_id");
+                            console.log((Number)(devID), (Number)(clientID));
+                            let result = await Req.rebootMediaPlayer((Number)(devID), (Number)(clientID), (String)(session));
+                            console.log(result);
+
+                        }} faIcon={faRotateLeft} />
                     </View>
                 </View>
             </ViewContainer>
