@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Image, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, Image, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View, Alert, TouchableOpacity} from 'react-native';
 
 import Req from '../../request/Request';
 import SearchField from '../search/Search';
@@ -13,6 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 import { faLinkSlash } from '@fortawesome/free-solid-svg-icons';
 import Help from '../help/Help';
 
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 type navProp = StackNavigationProp<RootStackParamList, "Admin">;
 
@@ -37,7 +38,6 @@ function AdminModule() {
   const [showingData, setShowingData] = useState(false);
 
   const navigation = useNavigation<navProp>();
-
 
   return (
     <View>
@@ -66,11 +66,54 @@ function AdminModule() {
           ):(<View></View>)}
           
           </ScrollView>
-      
+        
       </SafeAreaView>
+      <CustomButton onPress={() => Alert.alert('Changes Saved')} title="Save Changes" color='#42e83c' iconName='floppy-o'></CustomButton>
+      <CustomButton onPress={() => Alert.alert('Cancel')} title="Cancel" color='#d64f42' iconName='times'></CustomButton>
     </View> 
   );
 }
+
+const styles = StyleSheet.create({
+  box:{
+    borderWidth: 1, 
+    borderRadius: 4,
+  },
+  input: {
+      flex: 1,
+      padding: 10,
+  },
+  container: {
+    margin: 10,
+  },
+  labelName:{
+
+  },
+  label:{
+    backgroundColor: 'lightblue',
+    fontSize: 16,
+    margin: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    width: 140,
+    textAlign: 'center',
+    borderWidth: 2,
+    borderRadius: 3,
+  },
+  icon: {
+    position: 'absolute', // Position the icon absolutely inside the input container
+    right: 10, // Adjust the right position as needed
+  },
+  inputContainer:{
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 4,
+    paddingHorizontal: 10,
+    marginTop: 5,
+  },
+});
 
 export default AdminModule;
 
