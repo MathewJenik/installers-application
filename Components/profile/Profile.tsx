@@ -9,8 +9,8 @@ const Profile = () => {
     const [email, setEmail] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [password, setPassword] = useState('');
-    const [newpassword, setNewPassword] = useState('');
-    const [confirmpassword, setConfirmPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [isSecureEntry, setIsSecureEntry] = useState(true);
   
     const toggleSecureEntry = () => {
@@ -69,7 +69,7 @@ const Profile = () => {
                 <View style = {styles.inputContainer}>
                   <TextInput 
                     style={styles.input} 
-                    value={newpassword} 
+                    value={newPassword} 
                     onChangeText={setNewPassword} 
                     secureTextEntry={isSecureEntry}
                     ></TextInput>
@@ -82,7 +82,7 @@ const Profile = () => {
                 <View style = {styles.inputContainer}>
                   <TextInput 
                     style={styles.input} 
-                    value={confirmpassword} 
+                    value={confirmPassword} 
                     onChangeText={setConfirmPassword} 
                     secureTextEntry={isSecureEntry}
                     ></TextInput>
@@ -93,7 +93,7 @@ const Profile = () => {
                 </View>
                 <CustomButton onPress={() => Alert.alert('Password Updated')} title="Change Password" color="#5db3e8" iconName="key"></CustomButton>
                 </View>
-          </View>
+            </View>
 
             <CustomButton onPress={() => Alert.alert('Changes Saved')} title="Save Changes" color='#42e83c' iconName='floppy-o'></CustomButton>
             <CustomButton onPress={() => Alert.alert('Cancel')} title="Cancel" color='#d64f42' iconName='times'></CustomButton> 

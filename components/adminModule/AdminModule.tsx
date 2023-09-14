@@ -72,34 +72,6 @@ function AdminModule() {
           </ScrollView>
         
       </SafeAreaView>
-      <View style = {styles.box}>
-            <Text style = {styles.label}>Account Details</Text>
-                <View style = {styles.container}>
-                <Text style = {styles.labelName}>Full Name</Text>
-                  <View style = {styles.inputContainer}>
-                    <TextInput 
-                      style={styles.input}
-                      value={text}
-                      onChangeText={setText}
-                      ></TextInput>
-                  </View>
-                  <Text>Email Address</Text>
-                  <View style = {styles.inputContainer}>
-                    <TextInput 
-                      style={styles.input}
-                      value={email}
-                      onChangeText={setEmail}></TextInput>
-                  </View>
-                  <Text>Phone Number</Text>
-                  <View style = {styles.inputContainer}>
-                    <TextInput 
-                      style={styles.input}
-                      value={phoneNumber}
-                      onChangeText={setPhoneNumber}
-                      keyboardType='numeric' ></TextInput>
-                  </View>
-                </View>
-            </View>
     </View> 
   );
 }
