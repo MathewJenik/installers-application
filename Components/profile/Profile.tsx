@@ -6,6 +6,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Profile = () => {
     const [text, setText] = useState('');
+    const [email, setEmail] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
     const [password, setPassword] = useState('');
     const [newpassword, setNewPassword] = useState('');
     const [confirmpassword, setConfirmPassword] = useState('');
@@ -18,19 +20,36 @@ const Profile = () => {
 
     return (
         <View>
-            <View style = {styles.box}>
+          <View style = {styles.box}>
             <Text style = {styles.label}>Account Details</Text>
                 <View style = {styles.container}>
                 <Text style = {styles.labelName}>Full Name</Text>
-                <TextInput style={styles.input}></TextInput>
-                <Text>Email Address</Text>
-                <TextInput style={styles.input}></TextInput>
-                <Text>Phone Number</Text>
-                <TextInput style={styles.input} ></TextInput>
+                  <View style = {styles.inputContainer}>
+                    <TextInput 
+                      style={styles.input}
+                      value={text}
+                      onChangeText={setText}
+                      ></TextInput>
+                  </View>
+                  <Text>Email Address</Text>
+                  <View style = {styles.inputContainer}>
+                    <TextInput 
+                      style={styles.input}
+                      value={email}
+                      onChangeText={setEmail}></TextInput>
+                  </View>
+                  <Text>Phone Number</Text>
+                  <View style = {styles.inputContainer}>
+                    <TextInput 
+                      style={styles.input}
+                      value={phoneNumber}
+                      onChangeText={setPhoneNumber}
+                      keyboardType='numeric' ></TextInput>
+                  </View>
                 </View>
-            </View>
+          </View>
 
-            <View style = {styles.box}>
+          <View style = {styles.box}>
             <Text style = {styles.label}>Password Reset</Text>
                 <View style = {styles.container}>
                 <Text style = {styles.labelName}>Current Password</Text>
@@ -74,7 +93,7 @@ const Profile = () => {
                 </View>
                 <CustomButton onPress={() => Alert.alert('Password Updated')} title="Change Password" color="#5db3e8" iconName="key"></CustomButton>
                 </View>
-            </View>
+          </View>
 
             <CustomButton onPress={() => Alert.alert('Changes Saved')} title="Save Changes" color='#42e83c' iconName='floppy-o'></CustomButton>
             <CustomButton onPress={() => Alert.alert('Cancel')} title="Cancel" color='#d64f42' iconName='times'></CustomButton> 

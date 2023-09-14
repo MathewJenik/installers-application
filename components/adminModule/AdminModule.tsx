@@ -37,6 +37,10 @@ async function LogOut() {
 function AdminModule() {
   const [showingData, setShowingData] = useState(false);
 
+  const [text, setText] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+
   const navigation = useNavigation<navProp>();
 
   return (
@@ -68,8 +72,34 @@ function AdminModule() {
           </ScrollView>
         
       </SafeAreaView>
-      <CustomButton onPress={() => Alert.alert('Changes Saved')} title="Save Changes" color='#42e83c' iconName='floppy-o'></CustomButton>
-      <CustomButton onPress={() => Alert.alert('Cancel')} title="Cancel" color='#d64f42' iconName='times'></CustomButton>
+      <View style = {styles.box}>
+            <Text style = {styles.label}>Account Details</Text>
+                <View style = {styles.container}>
+                <Text style = {styles.labelName}>Full Name</Text>
+                  <View style = {styles.inputContainer}>
+                    <TextInput 
+                      style={styles.input}
+                      value={text}
+                      onChangeText={setText}
+                      ></TextInput>
+                  </View>
+                  <Text>Email Address</Text>
+                  <View style = {styles.inputContainer}>
+                    <TextInput 
+                      style={styles.input}
+                      value={email}
+                      onChangeText={setEmail}></TextInput>
+                  </View>
+                  <Text>Phone Number</Text>
+                  <View style = {styles.inputContainer}>
+                    <TextInput 
+                      style={styles.input}
+                      value={phoneNumber}
+                      onChangeText={setPhoneNumber}
+                      keyboardType='numeric' ></TextInput>
+                  </View>
+                </View>
+            </View>
     </View> 
   );
 }
