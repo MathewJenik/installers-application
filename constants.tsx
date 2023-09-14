@@ -11,5 +11,6 @@ export default {
     },
     HELP: {
       PADDING: EM/4
-    }
+    },
+
 };
