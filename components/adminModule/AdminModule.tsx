@@ -17,6 +17,7 @@ import { Alert } from 'react-native';
 import { ToastAndroid } from 'react-native';
 import { width } from '@fortawesome/free-solid-svg-icons/faArrowUp';
 import PingDetails from '../pingDetails/PingDetails';
+import ClientPlayerDetails from '../ClientPlayerDetails/ClientPlayerDetails';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import constants from '../../constants';
@@ -48,6 +49,14 @@ function AdminModule() {
   const [lastSyncUpdate, setLastSyncUpdate] = useState("");
   const [startingOrientation, setStartingOrientation] = useState("");
 
+
+  const [clientName, setClientName] = useState("");
+  const [clientNumber, setClientNumber] = useState("");
+  const [mediaName, setMediaName] = useState("");
+  const [ipAddres, setipAddress] = useState("");
+  const [mpbid, setmpbid] = useState("");
+
+
   /**
    * Function that completes the check for the media player based off input
    *
@@ -74,6 +83,13 @@ function AdminModule() {
               setLastSyncUpdate(response.player.last_sync_update);
               setStartingOrientation(response.player.screen_orientation);
               
+                            
+              setClientName(response.client.user_business_name);
+              setClientNumber(response.client.user_id);
+              setMediaName(response.player.user_screens_name);
+              setipAddress(response.player.ipAddr);
+              setmpbid(response.player.id)
+
               setShowingData(true);
             }
           }
@@ -116,6 +132,7 @@ function AdminModule() {
 
           {showingData ? (
               <>
+                <ClientPlayerDetails  clientName={clientName} clientNumber={clientNumber} mediaName={mediaName} ipAddres={ipAddres} mpbid={mpbid}></ClientPlayerDetails>
                 <Actions devID={value} clientID={cID}></Actions>
                 <Orientation devID={value} clientID={cID} startingOrientation={startingOrientation}></Orientation>
                 <PingDetails lastPing={lastPing} lastPingS={lastPingSuccess} lastSync={lastSync} lastSyncUpdate={lastSyncUpdate}></PingDetails>
