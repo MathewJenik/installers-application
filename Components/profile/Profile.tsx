@@ -1,8 +1,12 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, TextInput } from "react-native";
+import { StyleSheet, View, Text, TextInput, SafeAreaView, ScrollView, Image } from "react-native";
 import CustomButton from "../customButton/CustomButton";
 import { Alert } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from "../loginModule/LoginModule";
+import { useNavigation } from "@react-navigation/native";
+import constants from "../../constants";
 
 const Profile = () => {
     const [text, setText] = useState('');
@@ -15,72 +19,51 @@ const Profile = () => {
       setIsSecureEntry(!isSecureEntry);
     };
     
+    type navProp = StackNavigationProp<RootStackParamList, "Admin">;
+    const navigation = useNavigation<navProp>();
 
     return (
         <View>
-            <View style = {styles.box}>
-            <Text style = {styles.label}>Account Details</Text>
-                <View style = {styles.container}>
-                <Text style = {styles.labelName}>Full Name</Text>
-                <TextInput style={styles.input}></TextInput>
-                <Text>Email Address</Text>
-                <TextInput style={styles.input}></TextInput>
-                <Text>Phone Number</Text>
-                <TextInput style={styles.input} ></TextInput>
-                </View>
-            </View>
+            <SafeAreaView style={{backgroundColor: '#e0e0e0'}}>
+                <ScrollView>
 
-            <View style = {styles.box}>
-            <Text style = {styles.label}>Password Reset</Text>
-                <View style = {styles.container}>
-                <Text style = {styles.labelName}>Current Password</Text>
-                <View style = {styles.inputContainer}>
-                  <TextInput 
-                    style={styles.input} 
-                    value={password} 
-                    onChangeText={setPassword} 
-                    secureTextEntry={isSecureEntry}
-                    ></TextInput>
-                    <Icon name={isSecureEntry ? 'eye-slash' : 'eye'}
-                    size={20}
-                    color="gray"
-                    onPress={toggleSecureEntry}></Icon>
-                </View>
-                <Text>New Password</Text>
-                <View style = {styles.inputContainer}>
-                  <TextInput 
-                    style={styles.input} 
-                    value={newpassword} 
-                    onChangeText={setNewPassword} 
-                    secureTextEntry={isSecureEntry}
-                    ></TextInput>
-                    <Icon name={isSecureEntry ? 'eye-slash' : 'eye'}
-                    size={20}
-                    color="gray"
-                    onPress={toggleSecureEntry}></Icon>
-                </View>
-                <Text>New Password Confirmation</Text>
-                <View style = {styles.inputContainer}>
-                  <TextInput 
-                    style={styles.input} 
-                    value={confirmpassword} 
-                    onChangeText={setConfirmPassword} 
-                    secureTextEntry={isSecureEntry}
-                    ></TextInput>
-                    <Icon name={isSecureEntry ? 'eye-slash' : 'eye'}
-                    size={20}
-                    color="gray"
-                    onPress={toggleSecureEntry}></Icon>
-                </View>
-                <CustomButton onPress={() => Alert.alert('Password Updated')} title="Change Password" color="#5db3e8" iconName="key"></CustomButton>
-                </View>
-            </View>
+                    <View style={{display: 'flex', justifyContent: 'space-between', flexDirection: 'column', margin: 'auto'}}>
+                      <View style={{backgroundColor: "#cccccc", flexDirection: 'row', alignItems: 'center'}}>
+                          <CustomButton color={'#ffe500'} iconName='chevron-left' onPress={async () => {
+                              navigation.navigate("Admin");
+                          }
+                          } title={null} flexRow={true} type="small"></CustomButton>
+                          <View style={{flex: 1.25}}></View>
+                          <Image style={{width: 80, height: 50}} source={require('../../Images/Iris_logo.png')} />
+                          <View style={{flex: 1}}></View>
+                          <View style={{flex: 1}}></View>
+                      </View>
+                    </View>
 
-            <CustomButton onPress={() => Alert.alert('Changes Saved')} title="Save Changes" color='#42e83c' iconName='floppy-o'></CustomButton>
-            <CustomButton onPress={() => Alert.alert('Cancel')} title="Cancel" color='#d64f42' iconName='times'></CustomButton> 
+                    <View>
+                      <View style = {styles.box}>
+                      <Text style = {styles.label}>Account Details</Text>
+                          <View style = {styles.container}>
+                          <Text style = {styles.labelName}>Full Name</Text>
+                          <TextInput style={styles.input}></TextInput>
+                          <Text>Email Address</Text>
+                          <TextInput style={styles.input}></TextInput>
+                          <Text>Phone Number</Text>
+                          <TextInput style={styles.input} ></TextInput>
+                          </View>
+                      </View>
+
+                      <CustomButton onPress={() => Alert.alert('Changes Saved')} title="Save Changes" color='#42e83c' iconName='floppy-o'></CustomButton>
+                      <CustomButton onPress={() => Alert.alert('Cancel')} title="Cancel" color='#d64f42' iconName='times'></CustomButton> 
+                  </View>
+                
+                </ScrollView>
+            
+            </SafeAreaView>
+            
         </View>
-        
     );
+
 }
 
 const styles = StyleSheet.create({

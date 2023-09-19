@@ -71,7 +71,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({onPress, title=null, color =
           <View style={[flexRow ? styles.buttonContent : btnContentCol]}>
 
             {iconName && (<Icon name={iconName} size={20} color={iconColor} style={styles.icon}/>)}
-            {faIcon && (<FontAwesomeIcon icon={faIcon} style={styles.icon} color={iconColor}/>)}
+            {faIcon && (<FontAwesomeIcon size={20} icon={faIcon} style={styles.icon} color={iconColor}/>)}
 
             {(title != null) ? (<Text style={[styles.word, {color: textColour, marginLeft:10}]}>{title}</Text>) : (null)}
           </View>

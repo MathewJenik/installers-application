@@ -12,5 +12,7 @@ export default {
     HELP: {
       PADDING: EM/4
     },
+    NAVIGATIONCOLOUR: "#83898f", //  #72797f
+    CARDTITLEBACKGROUND: "#83898f",
 
 };
