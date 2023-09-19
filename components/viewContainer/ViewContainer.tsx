@@ -14,7 +14,7 @@ interface ViewContainerProps {
     children: ReactNode;
 }
 
-const ViewContainer: FunctionComponent<ViewContainerProps> = ({title, colour ="white", titleColour='white', titleBackground="#04abde", children}) => {
+const ViewContainer: FunctionComponent<ViewContainerProps> = ({title, colour ="white", titleColour='white', titleBackground=constants.CARDTITLEBACKGROUND, children}) => {
     return(
         <View style={[styles.container, {backgroundColor: colour}]}>
             {title && <Text style={[styles.title, {color: titleColour, backgroundColor: titleBackground}]}>{title}</Text>}
@@ -41,7 +41,8 @@ const styles = StyleSheet.create({
         borderBottomWidth: 2,
         borderLeftWidth: 2,
         borderColor: "grey",
-        marginBottom: constants.FONTSIZE.EM
+        marginBottom: constants.FONTSIZE.EM,
+        minWidth: 340
     }
 })
 

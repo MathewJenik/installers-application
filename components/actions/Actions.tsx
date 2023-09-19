@@ -125,7 +125,7 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
     return (
         <View style={styles.viewStyle}>
 
-            <ViewContainer title={'Actions'} colour='white' titleColour='white' >
+            <ViewContainer title={'Actions'} colour='white' titleColour='white'>
                 
             {actionsLoading ? (
                 <View style={{minWidth: 320}}>

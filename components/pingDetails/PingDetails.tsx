@@ -8,16 +8,25 @@ import ViewContainer from "../viewContainer/ViewContainer";
 
 
 
-function PingDetails(): any {
-
+interface MonitoringInformationProps {
+    lastPing: string;
+    lastPingS: string;
+    lastSync: string;
+    lastSyncUpdate: string;
+}
+  
+const PingDetails: React.FunctionComponent<MonitoringInformationProps> = ({lastPing = "", lastPingS = "", lastSync="", lastSyncUpdate=""}) => { 
     
     type navProp = StackNavigationProp<RootStackParamList, "Admin">;
     const navigation = useNavigation<navProp>();
 
     return (    
         <View style={styles.viewStyle}>
-            <ViewContainer title={'Ping Details'} colour='white' titleColour='white' >
-                <Text>This is just some temp data</Text>
+            <ViewContainer title={'Monitoring Information'} colour='white' titleColour='white' >
+                <Text>Last Ping: {lastPing}</Text>
+                <Text>Last Ping Success: {lastPingS}</Text>
+                <Text>Last Sync: {lastSync}</Text>
+                <Text>Last Sync Update: {lastSyncUpdate}</Text>
                 
             </ViewContainer>
             
@@ -41,6 +50,7 @@ const styles = StyleSheet.create({
     },
     viewStyle: {
         alignItems: 'center',
+        minWidth: 100
     },
     blueButton: {
         backgroundColor: '#85c0f9',

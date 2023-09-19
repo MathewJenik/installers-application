@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Image, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View, Alert, TouchableOpacity} from 'react-native';
+import { Button, Image, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View, TouchableOpacity} from 'react-native';
 
 import Req from '../../request/Request';
 import SearchField from '../search/Search';
@@ -11,6 +11,7 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { faLinkSlash } from '@fortawesome/free-solid-svg-icons';
+import { faRightFromBracket} from '@fortawesome/free-solid-svg-icons'
 import Help from '../help/Help';
 import { Alert } from 'react-native';
 import { ToastAndroid } from 'react-native';
@@ -18,6 +19,7 @@ import { width } from '@fortawesome/free-solid-svg-icons/faArrowUp';
 import PingDetails from '../pingDetails/PingDetails';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
+import constants from '../../constants';
 
 type navProp = StackNavigationProp<RootStackParamList, "Admin">;
 
@@ -40,6 +42,12 @@ function AdminModule() {
   const [value, setValue] = useState("");
   const [cID, setCID] = useState("");
 
+  const [lastSync, setLastSync] = useState("");
+  const [lastPing, setLastPing] = useState("'");
+  const [lastPingSuccess, setLastPingSuccess] = useState("");
+  const [lastSyncUpdate, setLastSyncUpdate] = useState("");
+  const [startingOrientation, setStartingOrientation] = useState("");
+
   /**
    * Function that completes the check for the media player based off input
    *
@@ -60,7 +68,12 @@ function AdminModule() {
               
             } else {
               setCID(response.client.user_id);
-              console.log("CLIENT ID IS:", response.client.user_id);
+              setLastSync(response.player.last_sync);
+              setLastPingSuccess(response.player.last_success_ping);
+              setLastPing(response.player.last_ping);
+              setLastSyncUpdate(response.player.last_sync_update);
+              setStartingOrientation(response.player.screen_orientation);
+              
               setShowingData(true);
             }
           }
@@ -72,25 +85,28 @@ function AdminModule() {
     <View style={{backgroundColor: '#e0e0e0', height:"100%"}}>
       <SafeAreaView style={{backgroundColor: '#e0e0e0'}}>
           <ScrollView>
-          <View style={{backgroundColor: "#cccccc", flexDirection: 'row', alignItems: 'center'}}>
-            <CustomButton iconName='arrow-left' onPress={async () => {
-              LogOut();
-              navigation.navigate("Login");
-              setShowingData(false);
-            }
-            } title={'Log out'} flexRow={true}></CustomButton>
-            <Image style={{width: 80, height: 50}} source={require('../../Images/Iris_logo.png')} />
-            <View style={{marginLeft: 'auto'}}>
-              <CustomButton type={'small'} iconName='user' onPress={async () => {
-                  
-                  navigation.navigate("Profile");
+            <View style={{display: 'flex', justifyContent: 'space-between', flexDirection: 'column', margin: 'auto'}}>
+              <View style={{backgroundColor: "#cccccc", flexDirection: 'row', alignItems: 'center', flex: 1}}>
+                <CustomButton color={constants.NAVIGATIONCOLOUR} faIcon={faRightFromBracket} onPress={async () => {
+                  LogOut();
+                  navigation.navigate("Login");
                   setShowingData(false);
                 }
+                } title={null} flexRow={true} type={'small'}></CustomButton>
+                <View style={{flex: 1}}></View>
+                <Image style={{width: 80, height: 50, display: 'flex'}} source={require('../../Images/Iris_logo.png')} />
+                <View style={{flex: 1}}></View>
+                <View style={{display: 'flex'}}>
+                  <CustomButton color={constants.NAVIGATIONCOLOUR} type={'small'} iconName='user' onPress={async () => {
+                      
+                      navigation.navigate("Profile");
+                      setShowingData(false);
+                    }
 
-              } title={null} flexRow={true}></CustomButton>
+                  } title={null} flexRow={true}></CustomButton>
+                </View>
+              </View>
             </View>
-          </View>
-          
           <Help />
 
           <SearchField textChangeEvent={(t) => {setValue(t);}} onPress={() => {
@@ -99,15 +115,18 @@ function AdminModule() {
 
 
           {showingData ? (
-              <><PingDetails></PingDetails><Actions devID={value} clientID={cID}></Actions><Orientation devID={value} clientID={cID}></Orientation></>
+              <>
+                <Actions devID={value} clientID={cID}></Actions>
+                <Orientation devID={value} clientID={cID} startingOrientation={startingOrientation}></Orientation>
+                <PingDetails lastPing={lastPing} lastPingS={lastPingSuccess} lastSync={lastSync} lastSyncUpdate={lastSyncUpdate}></PingDetails>
+              </>
 
           ):(<View></View>)}
           
           </ScrollView>
         
       </SafeAreaView>
-      <CustomButton onPress={() => Alert.alert('Changes Saved')} title="Save Changes" color='#42e83c' iconName='floppy-o'></CustomButton>
-      <CustomButton onPress={() => Alert.alert('Cancel')} title="Cancel" color='#d64f42' iconName='times'></CustomButton>
+      
     </View> 
   );
 }
