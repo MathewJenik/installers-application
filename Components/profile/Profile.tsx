@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, TextInput } from "react-native";
 import CustomButton from "../customButton/CustomButton";
 import { Alert } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import ViewContainer from "../viewContainer/ViewContainer";
 
 const Profile = () => {
     const [text, setText] = useState('');
@@ -20,9 +21,8 @@ const Profile = () => {
 
     return (
         <View>
-          <View style = {styles.box}>
-            <Text style = {styles.label}>Account Details</Text>
-                <View style = {styles.container}>
+          <ViewContainer title={'Account Details'} colour='white' titleColour='white' >
+              <View style = {styles.container}>
                 <Text style = {styles.labelName}>Full Name</Text>
                   <View style = {styles.inputContainer}>
                     <TextInput 
@@ -47,10 +47,11 @@ const Profile = () => {
                       keyboardType='numeric' ></TextInput>
                   </View>
                 </View>
-          </View>
+          </ViewContainer>
+          <ViewContainer title={'Authentication Method'} colour='white' titleColour='white' >
 
-          <View style = {styles.box}>
-            <Text style = {styles.label}>Password Reset</Text>
+          </ViewContainer>
+          <ViewContainer title={'Password Reset'} colour='white' titleColour='white' >
                 <View style = {styles.container}>
                 <Text style = {styles.labelName}>Current Password</Text>
                 <View style = {styles.inputContainer}>
@@ -93,7 +94,7 @@ const Profile = () => {
                 </View>
                 <CustomButton onPress={() => Alert.alert('Password Updated')} title="Change Password" color="#5db3e8" iconName="key"></CustomButton>
                 </View>
-            </View>
+            </ViewContainer>
 
             <CustomButton onPress={() => Alert.alert('Changes Saved')} title="Save Changes" color='#42e83c' iconName='floppy-o'></CustomButton>
             <CustomButton onPress={() => Alert.alert('Cancel')} title="Cancel" color='#d64f42' iconName='times'></CustomButton> 
