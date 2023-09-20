@@ -16,10 +16,12 @@ const Profile = () => {
     const [password, setPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [isSecureEntry, setIsSecureEntry] = useState(true);
+    const [isSecureEntry, setIsSecureEntry] = useState([true, true, true]);
   
-    const toggleSecureEntry = () => {
-      setIsSecureEntry(!isSecureEntry);
+    const toggleSecureEntry = (index: number) => {
+      const updatedSecureEntry = [...isSecureEntry];
+      updatedSecureEntry[index] = !updatedSecureEntry[index];
+      setIsSecureEntry(updatedSecureEntry);
     };
     
     type navProp = StackNavigationProp<RootStackParamList, "Admin">;
@@ -90,11 +92,11 @@ const Profile = () => {
                         style={styles.input}
                         value={password}
                         onChangeText={setPassword}
-                        secureTextEntry={isSecureEntry}
+                        secureTextEntry={isSecureEntry[0]}
                       />
-                      <TouchableOpacity onPress={toggleSecureEntry} style={styles.icon}>
+                      <TouchableOpacity onPress={() => toggleSecureEntry(0)} style={styles.icon}>
                         <Icon
-                          name={isSecureEntry ? 'eye-slash' : 'eye'}
+                          name={isSecureEntry[0] ? 'eye-slash' : 'eye'}
                           size={20}
                           color="gray"
                         />
@@ -106,11 +108,11 @@ const Profile = () => {
                         style={styles.input}
                         value={newPassword}
                         onChangeText={setNewPassword}
-                        secureTextEntry={isSecureEntry}
+                        secureTextEntry={isSecureEntry[1]}
                       />
-                      <TouchableOpacity onPress={toggleSecureEntry} style={styles.icon}>
+                      <TouchableOpacity onPress={() => toggleSecureEntry(1)} style={styles.icon}>
                         <Icon
-                          name={isSecureEntry ? 'eye-slash' : 'eye'}
+                          name={isSecureEntry[1]? 'eye-slash' : 'eye'}
                           size={20}
                           color="gray"
                         />
@@ -122,11 +124,11 @@ const Profile = () => {
                       style={styles.input}
                       value={confirmPassword}
                       onChangeText={setConfirmPassword}
-                      secureTextEntry={isSecureEntry}
+                      secureTextEntry={isSecureEntry[2]}
                     />
-                      <TouchableOpacity onPress={toggleSecureEntry} style={styles.icon}>
+                      <TouchableOpacity onPress={() => toggleSecureEntry(2)} style={styles.icon}>
                         <Icon
-                          name={isSecureEntry ? 'eye-slash' : 'eye'}
+                          name={isSecureEntry[2]? 'eye-slash' : 'eye'}
                           size={20}
                           color="gray"
                         />
