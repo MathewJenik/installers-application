@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faHeartPulse, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { faRotateLeft } from '@fortawesome/free-solid-svg-icons';
@@ -69,12 +69,53 @@ const styles = StyleSheet.create({
 interface ActionsProps {
     devID: string;
     clientID: string;
+    interactionable: boolean;
 }
 
-const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = ""})=> {
+const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = "", interactionable=true})=> {
     
     const [actionsLoading, setActionsLoading] = useState(false);
     const [data, setData] = useState('');
+
+    // The colours for each of the interactable buttons
+    const [MIButtonColour, setMIButtonColour] = useState(constants.GREENBUTTONCOLOUR);
+    const [RSButtonColour, setRSButtonColour] = useState(constants.BLUEBUTTONCOLOUR);
+    const [RBButtonColour, setRBButtonColour] = useState(constants.FADEDBLUEBUTTONCOLOUR);
+    
+
+
+    function makeOpaque() {
+        setMIButtonColour(MIButtonColour+"55");
+        setRSButtonColour(RSButtonColour+"55");
+        setRBButtonColour(RBButtonColour+"55");
+    }
+    
+    function removeOpaque() {
+        setMIButtonColour(MIButtonColour.substring(0, MIButtonColour.length-2));
+        setRSButtonColour(RSButtonColour.substring(0, RSButtonColour.length-2));
+        setRBButtonColour(RBButtonColour.substring(0, RBButtonColour.length-2));
+    }
+
+    // Used for onload selection of the current orientation.
+    useEffect(() => {
+
+        // set all the colours to be opaque.
+        if (interactionable == false) {
+            makeOpaque();
+
+
+        } else {
+            removeOpaque();
+        }
+
+    }, [interactionable]
+    );
+
+    
+
+
+  
+
 
   // Spinning animatiion:
   const spinValue = new Animated.Value(0);
@@ -156,8 +197,8 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
                 </View>
             ):(
                 <>
-                <CustomButton title="Mark player as installed" onPress={markInstaller} color="#36bf00" iconName="wrench"/>
-                <CustomButton title="Re-sync" onPress={resyncDevice} iconName="cloud-download" />
+                <CustomButton title="Mark player as installed" onPress={markInstaller} color={MIButtonColour} iconName="wrench" enabled={interactionable}/>
+                <CustomButton title="Re-sync" onPress={resyncDevice} iconName="cloud-download" color={RSButtonColour} enabled={interactionable}/>
                 <View style={{ flexDirection: 'row' }}>
                 
                     <View>
@@ -173,7 +214,7 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
                     </View>
 
                     <View>
-                        <CustomButton color='#85c0f9' title="Reboot" onPress={async () => {
+                        <CustomButton color={RBButtonColour} title="Reboot" onPress={async () => {
                             setActionsLoading(true);
                             var session = await EncryptedStorage.getItem("session_id");
                             console.log((Number)(devID), (Number)(clientID));
@@ -181,7 +222,7 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
                             console.log(result);
                             setActionsLoading(false);
 
-                        }} faIcon={faRotateLeft} />
+                        }} faIcon={faRotateLeft} enabled={interactionable} />
                     </View>
                 </View>
                 </>

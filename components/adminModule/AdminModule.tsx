@@ -50,6 +50,8 @@ function AdminModule() {
   const [lastPingSuccess, setLastPingSuccess] = useState("");
   const [lastSyncUpdate, setLastSyncUpdate] = useState("");
   const [startingOrientation, setStartingOrientation] = useState("");
+  
+  const [pingSuccessfull, setPingSuccessfull] = useState(false);
 
   /**
    * Function that completes the check for the media player based off input
@@ -78,6 +80,14 @@ function AdminModule() {
               setStartingOrientation(response.player.screen_orientation);
               
               setShowingData(true);
+
+              // ping the media player
+              var pingResult = await Req.pingMediaPlayer((Number)(search), response.client.user_id, session);
+
+              console.log("PINGING PLAYER", pingResult);
+
+              setPingSuccessfull(pingResult.result);
+             
             }
           }
       }
@@ -119,7 +129,7 @@ function AdminModule() {
 
           {showingData ? (
               <>
-                <Actions devID={value} clientID={cID}></Actions>
+                <Actions devID={value} clientID={cID} interactionable={pingSuccessfull}></Actions>
                 <Orientation devID={value} clientID={cID} startingOrientation={startingOrientation}></Orientation>
                 <PingDetails lastPing={lastPing} lastPingS={lastPingSuccess} lastSync={lastSync} lastSyncUpdate={lastSyncUpdate}></PingDetails>
               </>
