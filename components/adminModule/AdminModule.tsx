@@ -13,7 +13,6 @@ import { useNavigation } from '@react-navigation/native';
 import { faLinkSlash } from '@fortawesome/free-solid-svg-icons';
 import { faRightFromBracket} from '@fortawesome/free-solid-svg-icons'
 import Help from '../help/Help';
-import { Alert } from 'react-native';
 import { ToastAndroid } from 'react-native';
 import { width } from '@fortawesome/free-solid-svg-icons/faArrowUp';
 import PingDetails from '../pingDetails/PingDetails';
@@ -36,6 +35,10 @@ async function LogOut() {
 
 function AdminModule() {
   const [showingData, setShowingData] = useState(false);
+
+  const [text, setText] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
 
   const navigation = useNavigation<navProp>();
 
@@ -126,7 +129,7 @@ function AdminModule() {
           </ScrollView>
         
       </SafeAreaView>
-      
+
     </View> 
   );
 }
