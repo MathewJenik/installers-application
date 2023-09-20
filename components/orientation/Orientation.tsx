@@ -75,9 +75,10 @@ export function Button(props: any){
 interface OrientationProps {
   devID: string;
   clientID: string;
+  startingOrientation: string;
 }
 
-const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", clientID = ""}) => { 
+const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", clientID = "", startingOrientation="normal"}) => { 
 
   const [leftPressed, setLeftPressed] = useState(false);
   const [rightPressed, setRightPressed] = useState(false);
@@ -87,14 +88,12 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
   const [orientationLoading, setOrientationLoading] = useState(false);
 
 
+  // function to set the selected buttons.
   function onClickNormal() {
     setUpPressed(false);
     setDownPressed(true)
     setLeftPressed(true);
     setRightPressed(true)
-
-    console.log("RUNNING");
-    //pressNormal(devID, clientID)
   }
   function onClickInverted() {
     setUpPressed(true);
@@ -114,6 +113,23 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
     setLeftPressed(true);
     setRightPressed(false)
   }
+
+
+  // Used for onload selection of the current orientation.
+  useEffect(() => {
+    if (startingOrientation == "normal") {
+      onClickNormal();
+    } else if (startingOrientation == "right") {
+      onClickRight();
+    } else if (startingOrientation == "inverse") {
+      onClickInverted();
+    } else if (startingOrientation == "left") {
+      onClickLeft();
+    }
+
+  });
+
+  
 
 
   // Spinning animatiion:

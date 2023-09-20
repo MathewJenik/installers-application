@@ -61,6 +61,10 @@ async function retrieveUserSession() {
         } 
     } catch (error) {
         // There was an error on the native side
+        console.log(error);
+
+        // navigate to the login screen
+        navigation.navigate("Login");
         
     }
 }

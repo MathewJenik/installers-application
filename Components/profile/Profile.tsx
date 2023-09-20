@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import { StyleSheet, View, Text, TextInput, ScrollView, SafeAreaView, Image, TouchableOpacity } from "react-native";
 import CustomButton from "../customButton/CustomButton";
 import { Alert } from "react-native";
@@ -7,6 +8,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../loginModule/LoginModule";
 import ViewContainer from "../viewContainer/ViewContainer";
+
 import constants from "../../constants";
 
 const Profile = () => {
@@ -150,7 +152,9 @@ const Profile = () => {
       </SafeAreaView>
       
   </View>
+
     );
+
 }
 
 const styles = StyleSheet.create({
