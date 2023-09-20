@@ -17,6 +17,7 @@ interface CustomButtonProps {
     greyedColour?: string;
     flexRow?: boolean;
     type?: string;
+    enabled?: boolean
 }
 
 /**
@@ -25,7 +26,7 @@ interface CustomButtonProps {
  * @param {*} {onPress, title, color ='#04abde', iconName, iconColor = 'white', faIcon}
  * @return {*} 
  */
-const CustomButton: React.FC<CustomButtonProps> = ({onPress, title=null, color ='#04abde', iconName, iconColor = 'white', faIcon, textPosition = 'left', textColour='white', enableBorder=false, greyed=false, greyedColour="#91d9ff", flexRow=true, type="medium"}) => {
+const CustomButton: React.FC<CustomButtonProps> = ({onPress, title=null, color ='#04abde', iconName, iconColor = 'white', faIcon, textPosition = 'left', textColour='white', enableBorder=false, greyed=false, greyedColour="#91d9ff", flexRow=true, type="medium", enabled=true}) => {
     const buttonStyles = {
       ...styles.button,
       backgroundColor: color,
@@ -67,7 +68,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({onPress, title=null, color =
     }
 
     return(
-        <TouchableOpacity style={[greyed ? greyButtonStyle : (type=="small") ? buttonStylesSmall : (type=="medium") ? buttonStylesMedium : buttonStylesLarge, enableBorder ? bordered : null]} onPress={onPress} >
+        <TouchableOpacity style={[greyed ? greyButtonStyle : (type=="small") ? buttonStylesSmall : (type=="medium") ? buttonStylesMedium : buttonStylesLarge, enableBorder ? bordered : null]} onPress={enabled? onPress : null} >
           <View style={[flexRow ? styles.buttonContent : btnContentCol]}>
 
             {iconName && (<Icon name={iconName} size={20} color={iconColor} style={styles.icon}/>)}

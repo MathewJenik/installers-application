@@ -13,7 +13,6 @@ import { useNavigation } from '@react-navigation/native';
 import { faLinkSlash } from '@fortawesome/free-solid-svg-icons';
 import { faRightFromBracket} from '@fortawesome/free-solid-svg-icons'
 import Help from '../help/Help';
-import { Alert } from 'react-native';
 import { ToastAndroid } from 'react-native';
 import { width } from '@fortawesome/free-solid-svg-icons/faArrowUp';
 import PingDetails from '../pingDetails/PingDetails';
@@ -38,6 +37,10 @@ async function LogOut() {
 function AdminModule() {
   const [showingData, setShowingData] = useState(false);
 
+  const [text, setText] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+
   const navigation = useNavigation<navProp>();
 
   const [value, setValue] = useState("");
@@ -48,6 +51,8 @@ function AdminModule() {
   const [lastPingSuccess, setLastPingSuccess] = useState("");
   const [lastSyncUpdate, setLastSyncUpdate] = useState("");
   const [startingOrientation, setStartingOrientation] = useState("");
+  
+  const [pingSuccessfull, setPingSuccessfull] = useState(false);
 
 
   const [clientName, setClientName] = useState("");
@@ -91,6 +96,14 @@ function AdminModule() {
               setmpbid(response.player.id)
 
               setShowingData(true);
+
+              // ping the media player
+              var pingResult = await Req.pingMediaPlayer((Number)(search), response.client.user_id, session);
+
+              console.log("PINGING PLAYER", pingResult);
+
+              setPingSuccessfull(pingResult.result);
+             
             }
           }
       }
@@ -133,7 +146,8 @@ function AdminModule() {
           {showingData ? (
               <>
                 <ClientPlayerDetails  clientName={clientName} clientNumber={clientNumber} mediaName={mediaName} ipAddres={ipAddres} mpbid={mpbid}></ClientPlayerDetails>
-                <Actions devID={value} clientID={cID}></Actions>
+                <Actions devID={value} clientID={cID} interactionable={pingSuccessfull}></Actions>
+
                 <Orientation devID={value} clientID={cID} startingOrientation={startingOrientation}></Orientation>
                 <PingDetails lastPing={lastPing} lastPingS={lastPingSuccess} lastSync={lastSync} lastSyncUpdate={lastSyncUpdate}></PingDetails>
               </>
@@ -143,7 +157,7 @@ function AdminModule() {
           </ScrollView>
         
       </SafeAreaView>
-      
+
     </View> 
   );
 }
