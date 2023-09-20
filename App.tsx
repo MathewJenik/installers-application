@@ -38,6 +38,7 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 import LoginModule from './components/loginModule/LoginModule';
 import ProfileModule from './components/profileModule/ProfileModule';
+import Profile from './components/profile/Profile';
 
 
 
@@ -62,9 +63,7 @@ function App(): JSX.Element {
         <Stack.Screen name="Splash" component={Splash} />
         <Stack.Screen name="Admin" component={AdminModule} />
         <Stack.Screen name="Login" component={LoginModule} />
-        <Stack.Screen name="Profile" component={ProfileModule} />
-        
-        
+        <Stack.Screen name="Profile" component={Profile} />
 
       </Stack.Navigator>
     </NavigationContainer>
