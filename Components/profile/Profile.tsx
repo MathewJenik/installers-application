@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, TextInput } from "react-native";
+import { StyleSheet, View, Text, TextInput, ScrollView, SafeAreaView, Image } from "react-native";
 import CustomButton from "../customButton/CustomButton";
 import { Alert } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from "../loginModule/LoginModule";
 import ViewContainer from "../viewContainer/ViewContainer";
 
 const Profile = () => {
@@ -18,88 +21,59 @@ const Profile = () => {
       setIsSecureEntry(!isSecureEntry);
     };
     
+    type navProp = StackNavigationProp<RootStackParamList, "Admin">;
+    const navigation = useNavigation<navProp>();
 
     return (
-        <View>
-          <ViewContainer title={'Account Details'} colour='white' titleColour='white' >
-              <View style = {styles.container}>
-                <Text style = {styles.labelName}>Full Name</Text>
-                  <View style = {styles.inputContainer}>
-                    <TextInput 
-                      style={styles.input}
-                      value={text}
-                      onChangeText={setText}
-                      ></TextInput>
-                  </View>
-                  <Text>Email Address</Text>
-                  <View style = {styles.inputContainer}>
-                    <TextInput 
-                      style={styles.input}
-                      value={email}
-                      onChangeText={setEmail}></TextInput>
-                  </View>
-                  <Text>Phone Number</Text>
-                  <View style = {styles.inputContainer}>
-                    <TextInput 
-                      style={styles.input}
-                      value={phoneNumber}
-                      onChangeText={setPhoneNumber}
-                      keyboardType='numeric' ></TextInput>
-                  </View>
-                </View>
-          </ViewContainer>
-          <ViewContainer title={'Authentication Method'} colour='white' titleColour='white' >
+      <View>
+      <SafeAreaView style={{backgroundColor: '#e0e0e0'}}>
+          <ScrollView>
 
-          </ViewContainer>
-          <ViewContainer title={'Password Reset'} colour='white' titleColour='white' >
-                <View style = {styles.container}>
-                <Text style = {styles.labelName}>Current Password</Text>
-                <View style = {styles.inputContainer}>
-                  <TextInput 
-                    style={styles.input} 
-                    value={password} 
-                    onChangeText={setPassword} 
-                    secureTextEntry={isSecureEntry}
-                    ></TextInput>
-                    <Icon name={isSecureEntry ? 'eye-slash' : 'eye'}
-                    size={20}
-                    color="gray"
-                    onPress={toggleSecureEntry}></Icon>
+              <View style={{display: 'flex', justifyContent: 'space-between', flexDirection: 'column', margin: 'auto'}}>
+                <View style={{backgroundColor: "#cccccc", flexDirection: 'row', alignItems: 'center'}}>
+                    <CustomButton color={'#ffe500'} iconName='chevron-left' onPress={async () => {
+                        navigation.navigate("Admin");
+                    }
+                    } title={null} flexRow={true} type="small"></CustomButton>
+                    <View style={{flex: 1.25}}></View>
+                    <Image style={{width: 80, height: 50}} source={require('../../Images/Iris_logo.png')} />
+                    <View style={{flex: 1}}></View>
+                    <View style={{flex: 1}}></View>
                 </View>
-                <Text>New Password</Text>
-                <View style = {styles.inputContainer}>
-                  <TextInput 
-                    style={styles.input} 
-                    value={newPassword} 
-                    onChangeText={setNewPassword} 
-                    secureTextEntry={isSecureEntry}
-                    ></TextInput>
-                    <Icon name={isSecureEntry ? 'eye-slash' : 'eye'}
-                    size={20}
-                    color="gray"
-                    onPress={toggleSecureEntry}></Icon>
-                </View>
-                <Text>New Password Confirmation</Text>
-                <View style = {styles.inputContainer}>
-                  <TextInput 
-                    style={styles.input} 
-                    value={confirmPassword} 
-                    onChangeText={setConfirmPassword} 
-                    secureTextEntry={isSecureEntry}
-                    ></TextInput>
-                    <Icon name={isSecureEntry ? 'eye-slash' : 'eye'}
-                    size={20}
-                    color="gray"
-                    onPress={toggleSecureEntry}></Icon>
-                </View>
-                <CustomButton onPress={() => Alert.alert('Password Updated')} title="Change Password" color="#5db3e8" iconName="key"></CustomButton>
-                </View>
-            </ViewContainer>
+              </View>
 
-            <CustomButton onPress={() => Alert.alert('Changes Saved')} title="Save Changes" color='#42e83c' iconName='floppy-o'></CustomButton>
-            <CustomButton onPress={() => Alert.alert('Cancel')} title="Cancel" color='#d64f42' iconName='times'></CustomButton> 
-        </View>
-        
+              <View>
+                <ViewContainer title={'Profile Details'} colour='white' titleColour='white' >
+                    <View style = {styles.container}>
+                    <Text style = {styles.labelName}>Full Name</Text>
+                    <TextInput style={styles.input}></TextInput>
+                    <Text>Email Address</Text>
+                    <TextInput style={styles.input}></TextInput>
+                    <Text>Phone Number</Text>
+                    <TextInput style={styles.input} ></TextInput>
+                    </View>
+                </ViewContainer>
+
+                <ViewContainer title={'Password Reset'} colour='white' titleColour='white' >
+                    <View style = {styles.container}>
+                    <Text style = {styles.labelName}>Password</Text>
+                    <TextInput style={styles.input}></TextInput>
+                    <Text>New Password</Text>
+                    <TextInput style={styles.input}></TextInput>
+                    <Text></Text>
+                    <TextInput style={styles.input} ></TextInput>
+                    </View>
+                </ViewContainer>
+
+                <CustomButton onPress={() => Alert.alert('Changes Saved')} title="Save Changes" color='#42e83c' iconName='floppy-o'></CustomButton>
+                <CustomButton onPress={() => Alert.alert('Cancel')} title="Cancel" color='#d64f42' iconName='times'></CustomButton> 
+            </View>
+          
+          </ScrollView>
+      
+      </SafeAreaView>
+      
+  </View>
     );
 }
 
