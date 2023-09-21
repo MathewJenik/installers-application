@@ -138,12 +138,12 @@ const Profile = () => {
                     </View>
                     </View>
                     <View style={styles.savePasswordButton}>
-                    <CustomButton onPress={() => Alert.alert('Password Changed!')} title="Password Change" color='#42b4ff' iconName='key'></CustomButton>
+                    <CustomButton onPress={() => Alert.alert('Password Changed!')} title="Password Change" color='#42b4ff' iconName='key' textPosition="center"></CustomButton>
                     </View>
                 </ViewContainer>
               <View style={styles.buttonBackground}>
-                <CustomButton onPress={() => Alert.alert('Changes Saved')} title="Save Changes" color='#a2fa4b' iconName='floppy-o'></CustomButton>
-                <CustomButton onPress={() => Alert.alert('Cancel')} title="Cancel" color='#faee4b' iconName='times'></CustomButton> 
+                <CustomButton onPress={() => Alert.alert('Changes Saved')} title="Save Changes" color='#4dff4d' iconName='floppy-o' textPosition="center"></CustomButton>
+                <CustomButton onPress={() => Alert.alert('Cancel')} title="Cancel" color='#ff5c33' iconName='times' textPosition="center"></CustomButton> 
               </View>
             </View>
           
