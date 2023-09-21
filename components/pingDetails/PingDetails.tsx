@@ -5,6 +5,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import CustomButton from "../customButton/CustomButton";
 import { useNavigation } from "@react-navigation/native";
 import ViewContainer from "../viewContainer/ViewContainer";
+import constants from "../../constants";
 
 
 
@@ -19,55 +20,32 @@ const PingDetails: React.FunctionComponent<MonitoringInformationProps> = ({lastP
     
     type navProp = StackNavigationProp<RootStackParamList, "Admin">;
     const navigation = useNavigation<navProp>();
-
     return (    
         <View style={styles.viewStyle}>
-            <ViewContainer title={'Monitoring Information'} colour='white' titleColour='white' >
-                <Text>Last Ping: {lastPing}</Text>
-                <Text>Last Ping Success: {lastPingS}</Text>
-                <Text>Last Sync: {lastSync}</Text>
-                <Text>Last Sync Update: {lastSyncUpdate}</Text>
-                
+            <ViewContainer title={'Client and Player Details'} colour='white' titleColour='white' >
+                <Text style={styles.text}><Text style={styles.boldText}>Last Ping:</Text> {lastPing}</Text>  
+                <Text style={styles.text}><Text style={styles.boldText}>Last Successfull Ping:</Text> {lastPingS}</Text>  
+                <Text style={styles.text}><Text style={styles.boldText}>Last Sync</Text> {lastSync}</Text>  
+                <Text style={styles.text}><Text style={styles.boldText}>Last Sync Update</Text> {lastSyncUpdate}</Text>          
             </ViewContainer>
             
         </View>
     );
-
 }
 export default PingDetails;
 
-
-
-
 const styles = StyleSheet.create({
     text: {
-        fontSize: 20,
-        lineHeight: 20,
-        fontWeight: 'bold',
-        letterSpacing: 0.25,
-        color: 'white',
-        paddingLeft: 10
+        fontSize: constants.FONTSIZE.EM,
     },
     viewStyle: {
         alignItems: 'center',
         minWidth: 100
     },
-    blueButton: {
-        backgroundColor: '#85c0f9',
-        paddingVertical: 16,
-        paddingHorizontal: 30,
-        borderRadius: 10,
-        marginVertical: 14,
-        marginHorizontal: 30,
-        textAlign: 'center',
+    boldText: {
+        fontWeight: 'bold',
+        fontSize: constants.FONTSIZE.EM,
     },
-    redButton: {
-        backgroundColor: '#d32f2f',
-        paddingVertical: 16,
-        paddingHorizontal: 30,
-        borderRadius: 10,
-        marginVertical: 14,
-        marginHorizontal: 30,
-        textAlign: 'center',
-    }
-})
+
+
+});

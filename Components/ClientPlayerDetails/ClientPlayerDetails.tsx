@@ -5,8 +5,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import CustomButton from "../customButton/CustomButton";
 import { useNavigation } from "@react-navigation/native";
 import ViewContainer from "../viewContainer/ViewContainer";
-
-
+import constants from "../../constants";
 
 interface MonitoringInformationProps {
     clientName: string;
@@ -25,53 +24,32 @@ const ClientPlayerDetails: React.FunctionComponent<MonitoringInformationProps> =
     return (    
         <View style={styles.viewStyle}>
             <ViewContainer title={'Client and Player Details'} colour='white' titleColour='white' >
-                <Text>Client</Text>     
-                <Text>Name: {clientName}</Text>  
-                <Text>Client Number: {clientNumber}</Text>  
-                <Text>Media Player</Text>  
-                <Text>Name: {mediaName}</Text>  
-                <Text>IP Address: {ipAddres}</Text>  
-                <Text>MPBID: {mpbid}</Text>             
+                <Text style={styles.boldText}>Client</Text>     
+                <Text style={styles.text}><Text style={styles.boldText}>Name:</Text> {clientName}</Text>  
+                <Text style={styles.text}><Text style={styles.boldText}>Client Number:</Text> {clientNumber}</Text>  
+                <Text style={styles.boldText}>Media Player</Text>  
+                <Text style={styles.text}><Text style={styles.boldText}>Name:</Text> {mediaName}</Text>  
+                <Text style={styles.text}><Text style={styles.boldText}>IP Address:</Text> {ipAddres}</Text>  
+                <Text style={styles.text}><Text style={styles.boldText}>MPBID:</Text> {mpbid}</Text>             
             </ViewContainer>
             
         </View>
     );
-
 }
 export default ClientPlayerDetails;
 
-
-
-
 const styles = StyleSheet.create({
     text: {
-        fontSize: 20,
-        lineHeight: 20,
-        fontWeight: 'bold',
-        letterSpacing: 0.25,
-        color: 'white',
-        paddingLeft: 10
+        fontSize: constants.FONTSIZE.EM,
     },
     viewStyle: {
         alignItems: 'center',
         minWidth: 100
     },
-    blueButton: {
-        backgroundColor: '#85c0f9',
-        paddingVertical: 16,
-        paddingHorizontal: 30,
-        borderRadius: 10,
-        marginVertical: 14,
-        marginHorizontal: 30,
-        textAlign: 'center',
+    boldText: {
+        fontWeight: 'bold',
+        fontSize: constants.FONTSIZE.EM,
     },
-    redButton: {
-        backgroundColor: '#d32f2f',
-        paddingVertical: 16,
-        paddingHorizontal: 30,
-        borderRadius: 10,
-        marginVertical: 14,
-        marginHorizontal: 30,
-        textAlign: 'center',
-    }
-})
+
+
+});
