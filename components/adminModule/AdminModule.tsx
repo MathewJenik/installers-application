@@ -94,7 +94,7 @@ function AdminModule() {
               setMediaName(response.player.user_screens_name);
               setipAddress(response.player.ipAddr);
               setmpbid(response.player.id)
-
+              
               setShowingData(true);
 
               // ping the media player

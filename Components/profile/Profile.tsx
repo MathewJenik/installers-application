@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import { StyleSheet, View, Text, TextInput, ScrollView, SafeAreaView, Image, TouchableOpacity } from "react-native";
 import CustomButton from "../customButton/CustomButton";
 import { Alert } from "react-native";
@@ -8,12 +7,16 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../loginModule/LoginModule";
 import ViewContainer from "../viewContainer/ViewContainer";
-
 import constants from "../../constants";
 
+interface MonitoringInformationProps {
+  userFullName : string;
+  userEmailAddr: string;
+}
+
 const Profile = () => {
-    const [text, setText] = useState('');
-    const [email, setEmail] = useState('');
+    const [userFullName, setUserFullName] = useState('');
+    const [userEmailAddr, setUserEmailAddr] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [password, setPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
@@ -47,46 +50,33 @@ const Profile = () => {
                 </View>
               </View>
 
-              <View>
+              <View style= {styles.boxSection}>
                 <ViewContainer title={'Profile Details'} colour='white' titleColour='white' >
                     <View style = {styles.container}>
                       <Text style = {styles.labelName}>Full Name</Text>
                       <View style = {styles.inputWrapper}>
-                        <TextInput 
-                          style={styles.input}
-                          value={text}
-                          onChangeText={setText}
-                          ></TextInput>
+                        <Text></Text>
                       </View>
                     <Text style = {styles.labelName}>Email Address</Text>
                       <View style = {styles.inputWrapper}>
-                      <TextInput 
-                          style={styles.input}
-                          value={email}
-                          onChangeText={setEmail}
-                          ></TextInput>
+                        <Text></Text>
                       </View>
                     <Text style = {styles.labelName}>Phone Number</Text>
                      <View style = {styles.inputWrapper}>
-                     <TextInput 
-                          style={styles.input}
-                          value={phoneNumber}
-                          onChangeText={setPhoneNumber}
-                          keyboardType="numeric"
-                          ></TextInput>
+                      <Text></Text>
                       </View>
                     </View>
                 </ViewContainer>
                 
                 <ViewContainer title={'Authentication Method'} colour="white" titleColour="white">
                   <View style={styles.bannerBorder}>
-                    <Icon name="exclamation-circle">
+                    <Icon name="exclamation-circle" size={20}>
                       <Text style={styles.bannerLabel}> This client account is using the adhoc authentication method</Text>
                     </Icon>
                   </View>
                 </ViewContainer>
-
-                <ViewContainer title={'Password Reset'} colour='white' titleColour='white' >
+                {/*
+                  <ViewContainer title={'Password Reset'} colour='white' titleColour='white' >
                     <View style = {styles.container}>
                     <Text style = {styles.labelName}>Current Password</Text>
                     <View style = {styles.inputWrapper}>
@@ -141,10 +131,13 @@ const Profile = () => {
                     <CustomButton onPress={() => Alert.alert('Password Changed!')} title="Password Change" color='#42b4ff' iconName='key' textPosition="center"></CustomButton>
                     </View>
                 </ViewContainer>
+                */}
+              {/*
               <View style={styles.buttonBackground}>
-                <CustomButton onPress={() => Alert.alert('Changes Saved')} title="Save Changes" color='#32a852' iconName='floppy-o' textPosition="center"></CustomButton>
+                <CustomButton onPress={() => Alert.alert('Changes Saved')} title="Save Changes" color='#56c924' iconName='floppy-o' textPosition="center"></CustomButton>
                 <CustomButton onPress={() => Alert.alert('Cancel')} title="Cancel" color='#ff5c33' iconName='times' textPosition="center"></CustomButton> 
               </View>
+              */}
             </View>
           
           </ScrollView>
@@ -152,9 +145,7 @@ const Profile = () => {
       </SafeAreaView>
       
   </View>
-
     );
-
 }
 
 const styles = StyleSheet.create({
@@ -168,10 +159,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'gray',
     borderRadius: 4,
-    paddingHorizontal: 10,
+    paddingHorizontal: constants.FONTSIZE.EM,
+    paddingVertical: constants.FONTSIZE.EM/2,
   },
   container: {
-    margin: 10,
+    paddingHorizontal: constants.FONTSIZE.EM,
+    paddingVertical: constants.FONTSIZE.EM/2,
   },
   labelName:{
     fontSize: 14,
@@ -180,17 +173,21 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   bannerLabel:{
-    fontSize: 14,
+    fontSize: 20,
     color: '#102940',
-    paddingVertical: 10,
+    paddingVertical: constants.FONTSIZE.EM,
   },
   bannerBorder:{
     borderWidth: 1,
     borderRadius: 4,
     borderColor: '#102940',
-    paddingHorizontal: constants.FONTSIZE.EM/2,
-    marginBottom: constants.FONTSIZE.EM,
+    marginHorizontal: constants.FONTSIZE.EM,
+    padding: constants.FONTSIZE.EM,
+    marginBottom: constants.FONTSIZE.EM*2,
     backgroundColor: '#acedfc',
+  },
+  boxSection:{
+    paddingHorizontal: 20,
   },
   icon: {
     position: 'absolute', // Position the icon absolutely inside the input container
@@ -203,7 +200,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: constants.FONTSIZE.EM/2,
     paddingVertical: constants.FONTSIZE.EM*2,
     borderRadius: 4,
-    borderWidth: 2,
+    borderLeftWidth: 2,
+    borderBottomWidth: 2,
     borderColor: "grey",
   },
   savePasswordButton:{
