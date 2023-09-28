@@ -18,16 +18,24 @@ export enum ScreenOrientation {
 
 class Requests {
 
+  /**
+   * @returns {let} session (session id stored in Encrypted storage)
+   */
   async GetSessionID() {
     let session = await EncryptedStorage.getItem("session_id");
     return session;
   }
 
-  //
 
-
+  /**
+   * Function that sends orientation request to the API and get handles a response 
+   * @param {Number} playerID 
+   * @param {Number} clientID 
+   * @param {enum} orient 
+   * @param {string} sessionID 
+   * @returns json (json object)
+   */
   displayCheckValid(playerID: Number, clientID: Number, orient: ScreenOrientation, sessionID: string) {
-    //this.displayGetClientID("15250", sessionID);
     const orientationReq = {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
