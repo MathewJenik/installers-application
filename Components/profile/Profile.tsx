@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View, Text, TextInput, ScrollView, SafeAreaView, Image, TouchableOpacity } from "react-native";
 import CustomButton from "../customButton/CustomButton";
 import { Alert } from "react-native";
@@ -8,14 +8,18 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../loginModule/LoginModule";
 import ViewContainer from "../viewContainer/ViewContainer";
 import constants from "../../constants";
+import EncryptedStorage from 'react-native-encrypted-storage';
 
 interface MonitoringInformationProps {
-  userFullName : string;
-  userEmailAddr: string;
+  userFullName: string;
+  userEmail: string;
+  userPhoneNumber: string;
 }
 
-const Profile: React.FunctionComponent<MonitoringInformationProps> = ({userFullName = "", userEmailAddr = ""}) => {
-    const [phoneNumber, setPhoneNumber] = useState('123456789');
+const Profile: React.FunctionComponent<MonitoringInformationProps> = ({userFullName = '', userEmail = '', userPhoneNumber = ''}) => {
+    const [storedFullName, setStoredFullName] = useState('');
+    const [storedEmail, setStoredEmail] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
     const [password, setPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -26,6 +30,20 @@ const Profile: React.FunctionComponent<MonitoringInformationProps> = ({userFullN
       updatedSecureEntry[index] = !updatedSecureEntry[index];
       setIsSecureEntry(updatedSecureEntry);
     };
+
+    useEffect(() => {
+      // Retrieve data from EncryptedStorage 
+      EncryptedStorage.getItem('user_email')
+        .then(userEmail => setStoredEmail(userEmail))
+        .catch(error => console.log(error));
+      EncryptedStorage.getItem('user_full_name')
+        .then(userFullName => setStoredFullName(userFullName))
+        .catch(error => console.log(error));
+      EncryptedStorage.getItem('user_phone_number')
+        .then(userPhoneNumber => setPhoneNumber(userPhoneNumber))
+        .catch(error => console.log(error));
+    }, []);
+  
     
     type navProp = StackNavigationProp<RootStackParamList, "Admin">;
     const navigation = useNavigation<navProp>();
@@ -53,15 +71,15 @@ const Profile: React.FunctionComponent<MonitoringInformationProps> = ({userFullN
                     <View style = {styles.container}>
                       <Text style = {styles.labelName}>Full Name</Text>
                       <View style = {styles.inputWrapper}>
-                        <Text>{userFullName}</Text>
+                        <Text>{storedFullName || userFullName}</Text>
                       </View>
                     <Text style = {styles.labelName}>Email Address</Text>
                       <View style = {styles.inputWrapper}>
-                        <Text>{userEmailAddr}</Text>
+                        <Text>{storedEmail || userEmail}</Text>
                       </View>
                     <Text style = {styles.labelName}>Phone Number</Text>
                      <View style = {styles.inputWrapper}>
-                      <Text>{phoneNumber}</Text>
+                      <Text>{phoneNumber || userPhoneNumber}</Text>
                       </View>
                     </View>
                 </ViewContainer>
@@ -154,9 +172,6 @@ const styles = StyleSheet.create({
   inputWrapper:{
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 4,
     paddingHorizontal: constants.FONTSIZE.EM,
     paddingVertical: constants.FONTSIZE.EM/2,
   },

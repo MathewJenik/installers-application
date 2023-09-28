@@ -268,11 +268,17 @@ class Requests {
             "user_password",
             userPasword
           );
-
+          await EncryptedStorage.setItem(
+            "user_full_name",
+            results.user.logins_actual_name
+          );
+          await EncryptedStorage.setItem(
+            "user_phone_number",
+            results.user.logins_contact_number
+          )
         } catch (error) {
             // There was an error on the native side
         }
-
           return true;
         } else {
           return false;
