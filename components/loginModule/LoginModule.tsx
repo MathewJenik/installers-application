@@ -59,7 +59,7 @@ function LoginModule(): any {
           } else {
             // if login failed, show toast message
             ToastAndroid.show('Incorrect Password or Email', ToastAndroid.SHORT);
-
+      
           }
         }
         

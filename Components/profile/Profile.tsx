@@ -14,10 +14,8 @@ interface MonitoringInformationProps {
   userEmailAddr: string;
 }
 
-const Profile = () => {
-    const [userFullName, setUserFullName] = useState('');
-    const [userEmailAddr, setUserEmailAddr] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
+const Profile: React.FunctionComponent<MonitoringInformationProps> = ({userFullName = "", userEmailAddr = ""}) => {
+    const [phoneNumber, setPhoneNumber] = useState('123456789');
     const [password, setPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -55,15 +53,15 @@ const Profile = () => {
                     <View style = {styles.container}>
                       <Text style = {styles.labelName}>Full Name</Text>
                       <View style = {styles.inputWrapper}>
-                        <Text></Text>
+                        <Text>{userFullName}</Text>
                       </View>
                     <Text style = {styles.labelName}>Email Address</Text>
                       <View style = {styles.inputWrapper}>
-                        <Text></Text>
+                        <Text>{userEmailAddr}</Text>
                       </View>
                     <Text style = {styles.labelName}>Phone Number</Text>
                      <View style = {styles.inputWrapper}>
-                      <Text></Text>
+                      <Text>{phoneNumber}</Text>
                       </View>
                     </View>
                 </ViewContainer>
