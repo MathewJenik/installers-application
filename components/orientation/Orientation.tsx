@@ -180,23 +180,27 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
         </View>
         
         <View style={{flexDirection:"row", marginHorizontal: constants.FONTSIZE.EM/2}}>
-          <CustomButton onPress={async () => {
-            setOrientationLoading(true);
-            let res = await pressLeft(devID, clientID);
-            if (res == true) {
-              onClickLeft();
-            }
-            setOrientationLoading(false);
+          <View style={{flex: 4}}>
+            <CustomButton onPress={async () => {
+              setOrientationLoading(true);
+              let res = await pressLeft(devID, clientID);
+              if (res == true) {
+                onClickLeft();
+              }
+              setOrientationLoading(false);
             }} title={'Left '} iconName='arrow-left' greyed={leftPressed}/>
-          <CustomButton onPress={async () => {
-            setOrientationLoading(true);
-            let res = await pressRight(devID, clientID);
-            if (res == true) {
-              onClickRight();
-            }
-            setOrientationLoading(false);
+          </View>
+          <View style={{flex: 1}}></View>
+          <View style={{flex: 4}}>
+            <CustomButton onPress={async () => {
+              setOrientationLoading(true);
+              let res = await pressRight(devID, clientID);
+              if (res == true) {
+                onClickRight();
+              }
+              setOrientationLoading(false);
             }} title={'Right'} iconName='arrow-right' greyed={rightPressed}/>
-
+          </View>
         </View>
           
         <View style={styles.button}>

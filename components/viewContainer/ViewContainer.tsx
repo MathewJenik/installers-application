@@ -42,7 +42,9 @@ const styles = StyleSheet.create({
         borderLeftWidth: 2,
         borderColor: "grey",
         marginBottom: constants.FONTSIZE.EM,
-        minWidth: 340
+        minWidth: 340,
+        width: "95%",
+        paddingBottom: constants.FONTSIZE.EM
     }
 })
 

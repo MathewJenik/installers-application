@@ -142,7 +142,7 @@ const Profile = () => {
                     </View>
                 </ViewContainer>
               <View style={styles.buttonBackground}>
-                <CustomButton onPress={() => Alert.alert('Changes Saved')} title="Save Changes" color='#4dff4d' iconName='floppy-o' textPosition="center"></CustomButton>
+                <CustomButton onPress={() => Alert.alert('Changes Saved')} title="Save Changes" color='#32a852' iconName='floppy-o' textPosition="center"></CustomButton>
                 <CustomButton onPress={() => Alert.alert('Cancel')} title="Cancel" color='#ff5c33' iconName='times' textPosition="center"></CustomButton> 
               </View>
             </View>
