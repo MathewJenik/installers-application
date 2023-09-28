@@ -34,12 +34,12 @@ const Profile = () => {
 
     return (
       <View>
-      <SafeAreaView style={{backgroundColor: '#e0e0e0'}}>
+        <SafeAreaView style={{backgroundColor: '#e0e0e0'}}>
           <ScrollView>
 
               <View style={{display: 'flex', justifyContent: 'space-between', flexDirection: 'column', margin: 'auto'}}>
                 <View style={{backgroundColor: "#cccccc", flexDirection: 'row', alignItems: 'center'}}>
-                    <CustomButton color={'#ffe500'} iconName='chevron-left' onPress={async () => {
+                    <CustomButton color={constants.NAVIGATIONCOLOUR} iconName='chevron-left' onPress={async () => {
                         navigation.navigate("Admin");
                     }
                     } title={null} flexRow={true} type="small"></CustomButton>
