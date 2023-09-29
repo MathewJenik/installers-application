@@ -23,9 +23,6 @@ class Requests {
     return session;
   }
 
-  //
-
-
   displayCheckValid(playerID: Number, clientID: Number, orient: ScreenOrientation, sessionID: string) {
     //this.displayGetClientID("15250", sessionID);
     const orientationReq = {
@@ -285,7 +282,16 @@ class Requests {
         }
     }
 
+    /**
+     * Function that marks the player as installed.
+     * 
+     * @param {number} deviceID : The ID of the device
+     * @param {number} clientID : The ID of the client
+     * @param {string} sessionID : The session ID of the user
+     * @returns JSON response from the API
+     */
     markAsInstalled(deviceID: number, clientID: number, sessionID: string) {
+      // Set the request options
       const ReqOptions = {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -293,39 +299,52 @@ class Requests {
         client_id: clientID, session_id: sessionID })
       };
       
+      // Send the request to the Lymlive API and return the response as JSON
       return fetch("https://api.lymlive.com.au/v1/installers/actions/install__player.iris", ReqOptions)
       .then(response => response.json())
         .then(json => { 
+          // Log the API response
           console.log("API DEVICE ID:", deviceID);
           console.log("API CLIENT ID:", clientID);
           console.log("API SESSION ID:", sessionID);
           console.log(json.valid);
           console.log("Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n valid: ", json.valid, "\n next: ", json.next, "\n Logged In: ", json.loggedIn);
-        
+          
+          // Return the response
           return json;
-
         });
       };    
-    
+
+
+      /**
+       * Function that resyncs the player to update details of the player
+       * 
+       * @param {number} deviceID : The ID of the device
+       * @param {number} clientID : The ID of the client
+       * @param {string} sessionID : The session ID of the user
+       * @returns JSON response from the API
+       */
       resyncDevice(deviceID: number, clientID: number, sessionID: string)  {
+        // Set the request options
         const ReqOptions = {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({player_id: deviceID, 
           client_id: clientID, session_id: sessionID })
         };
-    
+        // Send the request to the Lymlive API and return the response as JSON
         return fetch("https:api.lymlive.com.au/v1/admin/mediaplayer/sync.iris", ReqOptions)
         .then(response => response.json())
           .then(json => { 
+            // Log the API response
             console.log("API DEVICE ID:", deviceID);
             console.log("API CLIENT ID:", clientID);
             console.log("API SESSION ID:", sessionID);
             console.log(json.valid);
             console.log("Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n valid: ", json.valid, "\n next: ", json.next, "\n Result: ", json.result);
           
+            // Return the response
             return json;
-  
           });   
         };
 

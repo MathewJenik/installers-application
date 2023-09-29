@@ -21,7 +21,7 @@ interface CustomButtonProps {
 }
 
 /**
- * 
+ * A component that renders a custom button with an icon and text
  *
  * @param {*} {onPress, title, color ='#04abde', iconName, iconColor = 'white', faIcon}
  * @return {*} 

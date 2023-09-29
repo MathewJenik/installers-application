@@ -38,10 +38,6 @@ async function LogOut() {
 function AdminModule() {
   const [showingData, setShowingData] = useState(false);
 
-  const [userFullName, setUserFullName] = useState('');
-  const [userEmailAddr, setUserEmailAddr] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-
   const navigation = useNavigation<navProp>();
 
   const [value, setValue] = useState("");
