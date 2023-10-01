@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faHeartPulse, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { faRotateLeft } from '@fortawesome/free-solid-svg-icons';
+import styling from "../../styling";
+import { ViewStyle } from "react-native";
 
 import {
     SafeAreaView,
@@ -43,27 +45,6 @@ const styles = StyleSheet.create({
         color: 'white',
         paddingLeft: 10
     },
-    viewStyle: {
-        alignItems: 'center',
-    },
-    blueButton: {
-        backgroundColor: '#85c0f9',
-        paddingVertical: 16,
-        paddingHorizontal: 30,
-        borderRadius: 10,
-        marginVertical: 14,
-        marginHorizontal: 30,
-        textAlign: 'center',
-    },
-    redButton: {
-        backgroundColor: '#d32f2f',
-        paddingVertical: 16,
-        paddingHorizontal: 30,
-        borderRadius: 10,
-        marginVertical: 14,
-        marginHorizontal: 30,
-        textAlign: 'center',
-    }
 })
 
 interface ActionsProps {
@@ -184,8 +165,9 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
         }
     }
 
+
     return (
-        <View style={styles.viewStyle}>
+        <View style={styling.Styles.Card_Style as ViewStyle}>
 
             <ViewContainer title={'Actions'} colour='white' titleColour='white'>
                 
@@ -201,6 +183,9 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
                 <CustomButton title="Re-sync" onPress={resyncDevice} iconName="cloud-download" color={RSButtonColour} enabled={interactionable}/>
                 <View style={{ flexDirection: 'row' }}>
                 
+                {
+                    // Displays ping button and handles functionality when clicked.
+                }
                     <View>
                         <CustomButton color='#d32f2f' title="Ping" onPress={async () => {
                             setActionsLoading(true);
@@ -213,6 +198,9 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
                         }} faIcon={faHeartPulse}/>
                     </View>
 
+                {
+                    // Displays reboot button and handles functionality when clicked. 
+                }
                     <View>
                         <CustomButton color={RBButtonColour} title="Reboot" onPress={async () => {
                             setActionsLoading(true);

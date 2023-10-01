@@ -1,11 +1,12 @@
 import React from "react";
-import { Image, SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Image, SafeAreaView, ScrollView, StyleSheet, Text, View, ViewStyle } from "react-native";
 import { RootStackParamList } from "../loginModule/LoginModule";
 import { StackNavigationProp } from "@react-navigation/stack";
 import CustomButton from "../customButton/CustomButton";
 import { useNavigation } from "@react-navigation/native";
 import ViewContainer from "../viewContainer/ViewContainer";
 import constants from "../../constants";
+import styling from "../../styling";
 
 interface MonitoringInformationProps {
     clientName: string;
@@ -15,41 +16,38 @@ interface MonitoringInformationProps {
     ipAddres: string;
     mpbid: string;
 }
-  
-const ClientPlayerDetails: React.FunctionComponent<MonitoringInformationProps> = ({clientName = "", clientNumber = "", mediaName="", ipAddres="", mpbid=""}) => { 
-    
+
+/**
+ * Function that displays a view with the client and player details. 
+ * @param {string} clientName Client Name
+ * @param {string} clientNumber Client Number
+ * @param {string} mediaName Media Name
+ * @param {string} ipAddres Ip Address
+ * @param {string} mpbid MPBID
+ * @returns view with client and player details.
+ */
+const ClientPlayerDetails: React.FunctionComponent<MonitoringInformationProps> = ({ clientName = "", clientNumber = "", mediaName = "", ipAddres = "", mpbid = "" }) => {
+
     type navProp = StackNavigationProp<RootStackParamList, "Admin">;
     const navigation = useNavigation<navProp>();
 
-    return (    
-        <View style={styles.viewStyle}>
+    return (
+        <View style={styling.Styles.Card_Style as ViewStyle}>
             <ViewContainer title={'Client and Player Details'} colour='white' titleColour='white' >
-                <Text style={styles.boldText}>Client</Text>     
-                <Text style={styles.text}><Text style={styles.boldText}>Name:</Text> {clientName}</Text>  
-                <Text style={styles.text}><Text style={styles.boldText}>Client Number:</Text> {clientNumber}</Text>  
-                <Text style={styles.boldText}>Media Player</Text>  
-                <Text style={styles.text}><Text style={styles.boldText}>Name:</Text> {mediaName}</Text>  
-                <Text style={styles.text}><Text style={styles.boldText}>IP Address:</Text> {ipAddres}</Text>  
-                <Text style={styles.text}><Text style={styles.boldText}>MPBID:</Text> {mpbid}</Text>             
+                {
+                    // Displays all the text headers and to the right displays the
+                }
+                <Text style={styling.Styles.Bold_Text}>Client</Text>
+                <Text style={styling.Styles.Text_Size_1}><Text style={styling.Styles.Bold_Text}>Name:</Text> {clientName}</Text>
+                <Text style={styling.Styles.Text_Size_1}><Text style={styling.Styles.Bold_Text}>Client Number:</Text> {clientNumber}</Text>
+                <Text style={styling.Styles.Bold_Text}>Media Player</Text>
+                <Text style={styling.Styles.Text_Size_1}><Text style={styling.Styles.Bold_Text}>Name:</Text> {mediaName}</Text>
+                <Text style={styling.Styles.Text_Size_1}><Text style={styling.Styles.Bold_Text}>IP Address:</Text> {ipAddres}</Text>
+                <Text style={styling.Styles.Text_Size_1}><Text style={styling.Styles.Bold_Text}>MPBID:</Text> {mpbid}</Text>
             </ViewContainer>
-            
+
         </View>
     );
 }
 export default ClientPlayerDetails;
 
-const styles = StyleSheet.create({
-    text: {
-        fontSize: constants.FONTSIZE.EM,
-    },
-    viewStyle: {
-        alignItems: 'center',
-        minWidth: 100
-    },
-    boldText: {
-        fontWeight: 'bold',
-        fontSize: constants.FONTSIZE.EM,
-    },
-
-
-});

@@ -6,6 +6,8 @@ import CustomButton from "../customButton/CustomButton";
 import { useNavigation } from "@react-navigation/native";
 import ViewContainer from "../viewContainer/ViewContainer";
 import constants from "../../constants";
+import styling from "../../styling";
+import { ViewStyle } from "react-native";
 
 interface MonitoringInformationProps {
     lastPing: string;
@@ -25,25 +27,25 @@ const PingDetails: React.FunctionComponent<MonitoringInformationProps> = ({lastP
 
 
     return (    
-        <View style={styles.viewStyle}>
+        <View style={styling.Styles.Card_Style as ViewStyle}>
             <ViewContainer title={'Client and Player Details'} colour='white' titleColour='white'>
-                <Text style={styles.boldText}>Last Ping:</Text>
-                <Text style={styles.text}> {
+                <Text style={styling.Styles.Bold_Text}>Last Ping:</Text>
+                <Text style={styling.Styles.Text_Size_1}> {
                 lastPingDate.getDate() + "/" + lastPingDate.getMonth() + "/" + lastPingDate.getFullYear() + " " +
                 lastPingDate.getHours() + ":" + lastPingDate.getMinutes() + ":" + lastPingDate.getSeconds()
                  }</Text>  
-                <Text style={styles.boldText}>Last Successfull Ping:</Text>
-                <Text style={styles.text}> {
+                <Text style={styling.Styles.Bold_Text}>Last Successfull Ping:</Text>
+                <Text style={styling.Styles.Text_Size_1}> {
                 lastPingSucDate.getDate() + "/" + lastPingSucDate.getMonth() + "/" + lastPingSucDate.getFullYear() + " " +
                 lastPingSucDate.getHours() + ":" + lastPingSucDate.getMinutes() + ":" + lastPingSucDate.getSeconds()
                 }</Text>  
-                <Text style={styles.boldText}>Last Sync:</Text>
-                <Text style={styles.text}> {
+                <Text style={styling.Styles.Bold_Text}>Last Sync:</Text>
+                <Text style={styling.Styles.Text_Size_1}> {
                 lastSyncDate.getDate() + "/" + lastSyncDate.getMonth() + "/" + lastSyncDate.getFullYear() + " " +
                 lastSyncDate.getHours() + ":" + lastSyncDate.getMinutes() + ":" + lastSyncDate.getSeconds()
                 }</Text>  
-                <Text style={styles.boldText}>Last Sync Update:</Text>
-                <Text style={styles.text}> {
+                <Text style={styling.Styles.Bold_Text}>Last Sync Update:</Text>
+                <Text style={styling.Styles.Text_Size_1}> {
                 lastSyncUpDate.getDate() + "/" + lastSyncUpDate.getMonth() + "/" + lastSyncUpDate.getFullYear() + " " +
                 lastSyncUpDate.getHours() + ":" + lastSyncUpDate.getMinutes() + ":" + lastSyncUpDate.getSeconds()
                 }</Text>
@@ -54,20 +56,3 @@ const PingDetails: React.FunctionComponent<MonitoringInformationProps> = ({lastP
 }
 export default PingDetails;
 
-const styles = StyleSheet.create({
-    text: {
-        fontSize: constants.FONTSIZE.EM*2,
-        lineHeight: constants.FONTSIZE.EM*3.5,
-        
-    },
-    viewStyle: {
-        alignItems: 'center',
-        minWidth: 100
-    },
-    boldText: {
-        fontWeight: 'bold',
-        fontSize: constants.FONTSIZE.EM*1.3,
-    },
-
-
-});

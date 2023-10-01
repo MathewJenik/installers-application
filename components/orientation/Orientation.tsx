@@ -6,6 +6,8 @@ import {faArrowUp} from '@fortawesome/free-solid-svg-icons/faArrowUp'
 import {faArrowRight} from '@fortawesome/free-solid-svg-icons/faArrowRight'
 import {faArrowLeft} from '@fortawesome/free-solid-svg-icons/faArrowLeft'
 import {faArrowDown} from '@fortawesome/free-solid-svg-icons/faArrowDown'
+import styling from "../../styling";
+import { ViewStyle } from "react-native";
 import {
     SafeAreaView,
     ScrollView,
@@ -156,7 +158,7 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
   
 
   return (  
-    <View style={styles.viewStyle}>
+    <View style={styling.Styles.Card_Style as ViewStyle}>
       <ViewContainer title={'Orientations'} colour='white' titleColour='white' >
 
       {orientationLoading ? (
@@ -235,17 +237,4 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
     alignSelf: 'center'
   },
-  text: {
-    fontSize: 20,
-    lineHeight: 20,
-    fontWeight: 'bold',
-    letterSpacing: 0.25,
-    color: '#85c0f9',
-    paddingLeft: 5,
-    
-  },
-  viewStyle:{
-    alignItems: 'center',
-  }
-  
 })

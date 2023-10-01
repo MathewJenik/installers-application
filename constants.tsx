@@ -17,5 +17,5 @@ export default {
     GREENBUTTONCOLOUR: "#36bf00",
     BLUEBUTTONCOLOUR: "#04abde",
     FADEDBLUEBUTTONCOLOUR: "#85c0f9",
-
+    
 };
