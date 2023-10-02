@@ -28,7 +28,7 @@ const PingDetails: React.FunctionComponent<MonitoringInformationProps> = ({lastP
 
     return (    
         <View style={styling.Styles.Card_Style as ViewStyle}>
-            <ViewContainer title={'Client and Player Details'} colour='white' titleColour='white'>
+            <ViewContainer title={'Ping Details'} colour='white' titleColour='white'>
                 <Text style={styling.Styles.Bold_Text}>Last Ping:</Text>
                 <Text style={styling.Styles.Text_Size_1}> {
                 lastPingDate.getDate() + "/" + lastPingDate.getMonth() + "/" + lastPingDate.getFullYear() + " " +
