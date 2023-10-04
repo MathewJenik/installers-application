@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View, ViewComponent } from "react-native";
 import CustomButton from "../customButton/CustomButton";
 import constants from "../../constants";
+import { Alert } from 'react-native';
 
 function Help(): any {
     const [showHelp, setShowHelp] = useState(false);

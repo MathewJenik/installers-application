@@ -1,5 +1,5 @@
-import { ToastAndroid } from "react-native";
 import EncryptedStorage from "react-native-encrypted-storage";
+import { Alert } from "react-native";
 
 
 export enum AuthMethod {
@@ -228,7 +228,7 @@ class Requests {
       
       var results = await Req.loginCheckValid(userEmail);
       if (results.error == true) {
-        ToastAndroid.showWithGravity(results.errorMsg, ToastAndroid.LONG, ToastAndroid.CENTER);
+        Alert.alert(results.errorMsg);
         return false;
       } else {
         if (results.valid == true) {

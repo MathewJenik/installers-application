@@ -25,6 +25,7 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 import request from '../../request/Request';
 import constants from '../../constants';
 
+
 export function Button(props: any) {
     const { onPress, title = '', icon } = props;
     return (
@@ -149,12 +150,12 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
             if(results.error == false)
             {
                 console.log("Marking Device Installation Success", sessionID);
-                ToastAndroid.showWithGravity("Device Marked as Installed.", ToastAndroid.LONG, ToastAndroid.CENTER);
+                Alert.alert("Device Marked as Installed.");
             }
             else
             {
                 console.log("Device Failed to Marked", results.errorMsg);
-                ToastAndroid.showWithGravity(results.errorMsg, ToastAndroid.LONG, ToastAndroid.CENTER);
+                Alert.alert(results.errorMsg);
             }
 
 

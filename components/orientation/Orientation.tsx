@@ -8,7 +8,6 @@ import ViewContainer from '../viewContainer/ViewContainer';
 import constants from '../../constants';
 import request from '../../request/Request';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { ToastAndroid } from 'react-native';
 import { Alert } from 'react-native';
 
 var normalPress = false;
