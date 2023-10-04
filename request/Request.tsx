@@ -1,5 +1,5 @@
-import { ToastAndroid } from "react-native";
 import EncryptedStorage from "react-native-encrypted-storage";
+import { Alert } from "react-native";
 
 
 export enum AuthMethod {
@@ -18,16 +18,24 @@ export enum ScreenOrientation {
 
 class Requests {
 
+  /**
+   * @returns {let} session (session id stored in Encrypted storage)
+   */
   async GetSessionID() {
     let session = await EncryptedStorage.getItem("session_id");
     return session;
   }
 
-  //
 
-
+  /**
+   * Function that sends orientation request to the API and get handles a response 
+   * @param {Number} playerID 
+   * @param {Number} clientID 
+   * @param {enum} orient 
+   * @param {string} sessionID 
+   * @returns json (json object)
+   */
   displayCheckValid(playerID: Number, clientID: Number, orient: ScreenOrientation, sessionID: string) {
-    //this.displayGetClientID("15250", sessionID);
     const orientationReq = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -222,31 +230,24 @@ class Requests {
 
     }
 
-    return results.loggedIn;
-  }
+    /**
+     *
+     * Function that checks the login type, and returns the AuthMethod used
+     * @param {*} nav
+     * @param {string} userEmail
+     * @param {boolean} showFields
+     * @memberof Requests
+     * @returns AuthMethod
+     */
+    loginTypeCheck = async (nav: any, userEmail: string, showFields: boolean) => {
+      
+      var results = await Req.loginCheckValid(userEmail);
+      if (results.error == true) {
+        Alert.alert(results.errorMsg);
+        return false;
 
-
-  /**
-   *
-   * Function that checks the login type, and returns the AuthMethod used
-   * @param {*} nav
-   * @param {string} userEmail
-   * @param {boolean} showFields
-   * @memberof Requests
-   * @returns AuthMethod
-   */
-  loginTypeCheck = async (nav: any, userEmail: string, showFields: boolean) => {
-
-    var results = await Req.loginCheckValid(userEmail);
-    if (results.error == true) {
-      ToastAndroid.showWithGravity(results.errorMsg, ToastAndroid.LONG, ToastAndroid.CENTER);
-      return false;
-    } else {
-      if (results.valid == true) {
-        // return the login type
-        return results.next;
       } else {
-        return AuthMethod.none;
+        return results.next;
       }
     }
   }

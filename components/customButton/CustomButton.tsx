@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import React from "react";
 import { Text, TouchableOpacity, StyleSheet, View} from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { Alert } from 'react-native';
 
 interface CustomButtonProps {
     onPress: () => void;

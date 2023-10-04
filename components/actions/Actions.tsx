@@ -28,7 +28,6 @@ import request from '../../request/Request';
 import constants from '../../constants';
 
 
-
 const styles = StyleSheet.create({
     text: {
         fontSize: 20,
@@ -126,12 +125,12 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
             if(results.error == false)
             {
                 console.log("Marking Device Installation Success", sessionID);
-                ToastAndroid.showWithGravity("Device Marked as Installed.", ToastAndroid.LONG, ToastAndroid.CENTER);
+                Alert.alert("Device Marked as Installed.");
             }
             else
             {
                 console.log("Device Failed to Marked", results.errorMsg);
-                ToastAndroid.showWithGravity(results.errorMsg, ToastAndroid.LONG, ToastAndroid.CENTER);
+                Alert.alert(results.errorMsg);
             }
 
 
