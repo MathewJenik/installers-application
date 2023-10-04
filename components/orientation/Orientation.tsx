@@ -2,7 +2,27 @@ import React, {useState, useEffect} from 'react';
 import { Animated, Easing} from "react-native";
 import EncryptedStorage from "react-native-encrypted-storage";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+
 import { StyleSheet, View } from 'react-native';
+
+import {faArrowUp} from '@fortawesome/free-solid-svg-icons/faArrowUp'
+import {faArrowRight} from '@fortawesome/free-solid-svg-icons/faArrowRight'
+import {faArrowLeft} from '@fortawesome/free-solid-svg-icons/faArrowLeft'
+import {faArrowDown} from '@fortawesome/free-solid-svg-icons/faArrowDown'
+import styling from "../../styling";
+import { ViewStyle } from "react-native";
+import {
+    SafeAreaView,
+    ScrollView,
+    StatusBar,
+    StyleSheet,
+    Text,
+    useColorScheme,
+    View,
+    Alert,
+    Pressable,
+} from 'react-native';
+
 import CustomButton from '../customButton/CustomButton';
 import ViewContainer from '../viewContainer/ViewContainer';
 import constants from '../../constants';
@@ -166,9 +186,9 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
     ).start();
   
 
-  return (  
+  return ( 
     //returns the current view of the orientation buttons
-    <View style={styles.viewStyle}>
+    <View style={styling.Styles.Card_Style as ViewStyle}>
       <ViewContainer title={'Orientations'} colour='white' titleColour='white' >
 
       {orientationLoading ? (
@@ -192,7 +212,7 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
               Alert.alert('Cannot rotate screen');
             }
             setOrientationLoading(false);
-            }} title={'Normal'} iconName='arrow-up' greyed={upPressed}/>
+            }} title={'Normal'} faIcon={faArrowUp} greyed={upPressed}/>
         </View>
         
         <View style={{flexDirection:"row", marginHorizontal: constants.FONTSIZE.EM/2}}>
@@ -208,7 +228,7 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
                 Alert.alert('Cannot rotate screen');
               }
               setOrientationLoading(false);
-            }} title={'Left '} iconName='arrow-left' greyed={leftPressed}/>
+            }} title={'Left '} faIcon={faArrowLeft} greyed={leftPressed}/>
           </View>
 
           <View style={{flex: 1}}></View>
@@ -224,7 +244,7 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
                 Alert.alert('Cannot rotate screen');
               }
               setOrientationLoading(false);
-            }} title={'Right'} iconName='arrow-right' greyed={rightPressed}/>
+            }} title={'Right'} faIcon={faArrowRight} greyed={rightPressed}/>
           </View>
         </View>
 
@@ -240,7 +260,7 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
               Alert.alert('Cannot rotate screen');
             }
             setOrientationLoading(false);
-            }} title={'Inverse'} iconName='arrow-down' greyed={downPressed}/>
+            }} title={'Inverse'} faIcon={faArrowDown} greyed={downPressed}/>
         </View>
         </>
       )}
@@ -259,16 +279,5 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
     alignSelf: 'center'
   },
-  text: {
-    fontSize: 20,
-    lineHeight: 20,
-    fontWeight: 'bold',
-    letterSpacing: 0.25,
-    color: 'rgb(133,	192,	249)',
-    paddingLeft: 5,
-  },
-  viewStyle:{
-    alignItems: 'center',
-  }
-  
+
 })

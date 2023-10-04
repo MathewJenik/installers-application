@@ -9,11 +9,11 @@ export enum AuthMethod {
 }
 
 export enum ScreenOrientation {
-	none = '',
-	normal = 'normal',
-	right = 'right',
-	inverted = 'inverted',
-	left = 'left'
+  none = '',
+  normal = 'normal',
+  right = 'right',
+  inverted = 'inverted',
+  left = 'left'
 }
 
 class Requests {
@@ -38,9 +38,10 @@ class Requests {
   displayCheckValid(playerID: Number, clientID: Number, orient: ScreenOrientation, sessionID: string) {
     const orientationReq = {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(
-        { player__id: playerID,
+        {
+          player__id: playerID,
           client__id: clientID,
           orientation: orient,
           session_id: sessionID
@@ -48,62 +49,80 @@ class Requests {
     };
 
     return fetch("https:api.lymlive.com.au/v1/installers/actions/screen__rotate.iris", orientationReq)
-    .then(response => response.json())
-      .then(json => { 
-        
+      .then(response => response.json())
+      .then(json => {
+
         console.log(json.valid);
         console.log("\nDisplay Request = \n", "Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n valid: ", json.loggedIn);
         return json;
       })
       .catch(error => {
         console.error(error);
-      });   
+      });
   }
 
+  /**
+   * Function that sends ping request to the API.
+   * @param {number} mpID Media Player ID
+   * @param {number} clientID Client ID
+   * @param {string} sessionID Session ID
+   * @returns json object.
+   */
   pingMediaPlayer(mpID: Number, clientID: Number, sessionID: string) {
     const ReqOptions = {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(
-        { mp__id: mpID,
+        {
+          mp__id: mpID,
           client__id: clientID,
           session_id: sessionID
         })
     };
 
     return fetch("https:api.lymlive.com.au/v1/admin/mediaplayer/ping.iris", ReqOptions)
-    .then(response => response.json())
-    .then(json => { 
+      .then(response => response.json())
+      .then(json => {
 
-      console.log(mpID);
-      console.log(clientID);
-      console.log(sessionID);
+        // Logs all the variables and any errors
+        console.log(mpID);
+        console.log(clientID);
+        console.log(sessionID);
 
-      console.log("\nDisplay Request = \n", "Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n Result: ", json.result);
-      return json;
+        console.log("\nDisplay Request = \n", "Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n Result: ", json.result);
+        return json;
 
-    })
-    .catch(error => {
-      console.error(error);
-    });  
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
-  
 
+
+  /**
+   * Function that sends reboot request to the API. 
+   * @param {number} mpID Media Player ID
+   * @param {number} clientID Client ID
+   * @param {string} sessionID Session ID
+   * @returns json object.
+   */
   rebootMediaPlayer(mpID: Number, clientID: Number, sessionID: string) {
     const ReqOptions = {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(
-        { mp__id: mpID,
+        {
+          mp__id: mpID,
           client__id: clientID,
           session_id: sessionID
         })
-      }
-    
-    return fetch("https:api.lymlive.com.au/v1/admin/mediaplayer/reboot.iris", ReqOptions)
-    .then(response => response.json())
-      .then(json => { 
+    }
 
+    return fetch("https:api.lymlive.com.au/v1/admin/mediaplayer/reboot.iris", ReqOptions)
+      .then(response => response.json())
+      .then(json => {
+
+        // Logs all the variables and any errors
         console.log(mpID);
         console.log(clientID);
         console.log(sessionID);
@@ -117,104 +136,100 @@ class Requests {
       });
   }
 
-  loginCheckValid(userEmail: string)  {
+  loginCheckValid(userEmail: string) {
     const loginReqOptions = {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({email: userEmail})
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: userEmail })
     };
 
     return fetch("https://api.lymlive.com.au/v1/auth/check.iris/", loginReqOptions)
-    .then(response => response.json())
-      .then(json => { 
-        
+      .then(response => response.json())
+      .then(json => {
+
         console.log(json.valid);
         console.log("Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n valid: ", json.valid, "\n next: ", json.next, "\n Email: ", json.email);
         return json;
       })
       .catch(error => {
         console.error(error);
-      });    
+      });
+  };
+
+  loginAdhocAPI(userEmail: String, userPassword: String) {
+
+    const loginReqOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: userEmail,
+        password: userPassword,
+        saml: false,
+        type: AuthMethod.adhoc,
+        auth_token: ""
+
+      })
     };
 
-    loginAdhocAPI(userEmail: String, userPassword: String) {
-      
-      const loginReqOptions = {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-          name: userEmail,
-          password: userPassword,
-          saml: false,
-          type: AuthMethod.adhoc,
-          auth_token: ""
-
-        })
-      };
-
-      return fetch("https://api.lymlive.com.au/v1/auth/login.iris/", loginReqOptions)
+    return fetch("https://api.lymlive.com.au/v1/auth/login.iris/", loginReqOptions)
       .then(response => response.json())
-        .then(json => { 
-          
-          console.log(json.valid);
-          console.log("Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n valid: ", json.valid, "\n next: ", json.next, "\n Email: ", json.email);
-          return json;
-        })
-        .catch(error => {
-          console.error(error);
-        });    
+      .then(json => {
+
+        console.log(json.valid);
+        console.log("Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n valid: ", json.valid, "\n next: ", json.next, "\n Email: ", json.email);
+        return json;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+
+  loginCheck(sessionID: string) {
+
+    const loginCheckOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        session_id: sessionID,
+      })
     };
 
-    loginCheck(sessionID: string) {
-      
-      const loginCheckOptions = {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-          session_id: sessionID,
-        })
-      };
-
-      return fetch("https://api.lymlive.com.au/v1/auth/loginCheck.iris/", loginCheckOptions)
+    return fetch("https://api.lymlive.com.au/v1/auth/loginCheck.iris/", loginCheckOptions)
       .then(response => response.json())
-        .then(json => { 
-          
-          console.log(json.valid);
-          console.log("Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n LoggedIN: ", json.loggedIn, "\n User: ", json.user);
-          return json;
-        })
-        .catch(error => {
-          console.error(error);
-        });    
-    };
+      .then(json => {
 
-    
-    /**
-     * Function that checks if the user is logged in via their session ID
-     *
-     * @param {string} sessionID
-     * @memberof Requests
-     * @returns Boolean
-     */
-    isUserLoggedIn = async (sessionID: string) => {
-
-      var results = await Req.loginCheck(sessionID);
-
-      console.log("ADHOC RESTULTS: ", results);
+        console.log(json.valid);
+        console.log("Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n LoggedIN: ", json.loggedIn, "\n User: ", json.user);
+        return json;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
 
 
+  /**
+   * Function that checks if the user is logged in via their session ID
+   *
+   * @param {string} sessionID
+   * @memberof Requests
+   * @returns Boolean
+   */
+  isUserLoggedIn = async (sessionID: string) => {
 
-      // if there isnt an error, store the required details
-      if (results.error == false) {
+    var results = await Req.loginCheck(sessionID);
 
-          console.log("IS THE USER LOGGED IN: ", results.loggedIn);
-          
-      }
+    console.log("ADHOC RESTULTS: ", results);
 
-      return results.loggedIn;
+
+
+    // if there isnt an error, store the required details
+    if (results.error == false) {
+
+      console.log("IS THE USER LOGGED IN: ", results.loggedIn);
+
     }
 
-    
     /**
      *
      * Function that checks the login type, and returns the AuthMethod used
@@ -230,128 +245,129 @@ class Requests {
       if (results.error == true) {
         Alert.alert(results.errorMsg);
         return false;
+
       } else {
-        if (results.valid == true) {
-          // return the login type
-          return results.next;
-        } else {
-          return AuthMethod.none;
-        }
+        return results.next;
       }
     }
+  }
 
 
-    /**
-     * Function that logs the user in based off the provided email and password.
-     * 
-     *
-     * @param {string} userEmail
-     * @param {string} userPasword
-     * @memberof Requests
-     * @returns Boolean (True = successful login, False = Unseccessful login)
-     */
-    loginAdhoc = async (userEmail: string, userPasword: string) => {
+  /**
+   * Function that logs the user in based off the provided email and password.
+   * 
+   *
+   * @param {string} userEmail
+   * @param {string} userPasword
+   * @memberof Requests
+   * @returns Boolean (True = successful login, False = Unseccessful login)
+   */
+  loginAdhoc = async (userEmail: string, userPasword: string) => {
 
-      var results = await Req.loginAdhocAPI(userEmail, userPasword);
+    var results = await Req.loginAdhocAPI(userEmail, userPasword);
 
-      console.log("EMAIL:", userEmail);
+    console.log("EMAIL:", userEmail);
 
-      console.log("Password:", userPasword);
+    console.log("Password:", userPasword);
 
-      console.log("ADHOC RESTULTS: ", results);
+    console.log("ADHOC RESTULTS: ", results);
 
-      // if there isnt an error, store the required details
-      if (results.error == false) {
-        
-        try {
-          await EncryptedStorage.setItem(
-            "session_id",
-            results.session_id
-          );
-          await EncryptedStorage.setItem(
-            "user_email",
-            userEmail
-          );
-          await EncryptedStorage.setItem(
-            "user_password",
-            userPasword
-          );
+    // if there isnt an error, store the required details
+    if (results.error == false) {
 
-        } catch (error) {
-            // There was an error on the native side
-        }
+      try {
+        await EncryptedStorage.setItem(
+          "session_id",
+          results.session_id
+        );
+        await EncryptedStorage.setItem(
+          "user_email",
+          userEmail
+        );
+        await EncryptedStorage.setItem(
+          "user_password",
+          userPasword
+        );
 
-          return true;
-        } else {
-          return false;
-        }
+      } catch (error) {
+        // There was an error on the native side
+      }
+
+      return true;
+    } else {
+      return false;
     }
+  }
 
-    markAsInstalled(deviceID: number, clientID: number, sessionID: string) {
-      const ReqOptions = {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({player_id: deviceID, 
-        client_id: clientID, session_id: sessionID })
-      };
-      
-      return fetch("https://api.lymlive.com.au/v1/installers/actions/install__player.iris", ReqOptions)
+  markAsInstalled(deviceID: number, clientID: number, sessionID: string) {
+    const ReqOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        player_id: deviceID,
+        client_id: clientID, session_id: sessionID
+      })
+    };
+
+    return fetch("https://api.lymlive.com.au/v1/installers/actions/install__player.iris", ReqOptions)
       .then(response => response.json())
-        .then(json => { 
-          console.log("API DEVICE ID:", deviceID);
-          console.log("API CLIENT ID:", clientID);
-          console.log("API SESSION ID:", sessionID);
-          console.log(json.valid);
-          console.log("Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n valid: ", json.valid, "\n next: ", json.next, "\n Logged In: ", json.loggedIn);
-        
-          return json;
+      .then(json => {
+        console.log("API DEVICE ID:", deviceID);
+        console.log("API CLIENT ID:", clientID);
+        console.log("API SESSION ID:", sessionID);
+        console.log(json.valid);
+        console.log("Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n valid: ", json.valid, "\n next: ", json.next, "\n Logged In: ", json.loggedIn);
 
-        });
-      };    
-    
-      resyncDevice(deviceID: number, clientID: number, sessionID: string)  {
-        const ReqOptions = {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({player_id: deviceID, 
-          client_id: clientID, session_id: sessionID })
-        };
-    
-        return fetch("https:api.lymlive.com.au/v1/admin/mediaplayer/sync.iris", ReqOptions)
-        .then(response => response.json())
-          .then(json => { 
-            console.log("API DEVICE ID:", deviceID);
-            console.log("API CLIENT ID:", clientID);
-            console.log("API SESSION ID:", sessionID);
-            console.log(json.valid);
-            console.log("Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n valid: ", json.valid, "\n next: ", json.next, "\n Result: ", json.result);
-          
-            return json;
-  
-          });   
-        };
+        return json;
 
-    searchRequest(searchValue: string , sessionId: string)  {
-      const ReqOptions = {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({search__value: searchValue, session_id:sessionId})
-      };
-  
-      return fetch("https:api.lymlive.com.au/v1/installers/player/read.iris", ReqOptions)
+      });
+  };
+
+  resyncDevice(deviceID: number, clientID: number, sessionID: string) {
+    const ReqOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        player_id: deviceID,
+        client_id: clientID, session_id: sessionID
+      })
+    };
+
+    return fetch("https:api.lymlive.com.au/v1/admin/mediaplayer/sync.iris", ReqOptions)
       .then(response => response.json())
-        .then(json => { 
-          
-          console.log(searchValue);
-          console.log("session ID:", sessionId);
-          console.log("Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n valid: ", json.loggedIn, "\n next: ", json.client, "\n Search: ", json.player);
+      .then(json => {
+        console.log("API DEVICE ID:", deviceID);
+        console.log("API CLIENT ID:", clientID);
+        console.log("API SESSION ID:", sessionID);
+        console.log(json.valid);
+        console.log("Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n valid: ", json.valid, "\n next: ", json.next, "\n Result: ", json.result);
 
-          return json;
-        })
-        .catch(error => {
-          console.error(error);
-        });    
-      };
+        return json;
+
+      });
+  };
+
+  searchRequest(searchValue: string, sessionId: string) {
+    const ReqOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ search__value: searchValue, session_id: sessionId })
+    };
+
+    return fetch("https:api.lymlive.com.au/v1/installers/player/read.iris", ReqOptions)
+      .then(response => response.json())
+      .then(json => {
+
+        console.log(searchValue);
+        console.log("session ID:", sessionId);
+        console.log("Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n valid: ", json.loggedIn, "\n next: ", json.client, "\n Search: ", json.player);
+
+        return json;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
 };
 
 const Req = new Requests();
