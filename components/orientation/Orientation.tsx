@@ -8,6 +8,7 @@ import ViewContainer from '../viewContainer/ViewContainer';
 import constants from '../../constants';
 import request from '../../request/Request';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { ToastAndroid } from 'react-native';
 
 var normalPress = false;
 var inversePress = false;
@@ -185,6 +186,10 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
             let res = await pressNormal(devID, clientID);
             if (res == true) {
               onClickNormal();
+              ToastAndroid.show('Successfully rotated screen', ToastAndroid.SHORT);
+            }
+            else{
+              ToastAndroid.show('Cannot rotate screen', ToastAndroid.SHORT);
             }
             setOrientationLoading(false);
             }} title={'Normal'} iconName='arrow-up' greyed={upPressed}/>
@@ -197,6 +202,10 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
               let res = await pressLeft(devID, clientID);
               if (res == true) {
                 onClickLeft();
+                ToastAndroid.show('Successfully rotated screen', ToastAndroid.SHORT);
+              }
+              else{
+                ToastAndroid.show('Cannot rotate screen', ToastAndroid.SHORT);
               }
               setOrientationLoading(false);
             }} title={'Left '} iconName='arrow-left' greyed={leftPressed}/>
@@ -209,6 +218,10 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
               let res = await pressRight(devID, clientID);
               if (res == true) {
                 onClickRight();
+                ToastAndroid.show('Successfully rotated screen', ToastAndroid.SHORT);
+              }
+              else{
+                ToastAndroid.show('Cannot rotate screen', ToastAndroid.SHORT);
               }
               setOrientationLoading(false);
             }} title={'Right'} iconName='arrow-right' greyed={rightPressed}/>
@@ -221,6 +234,10 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
             let res = await pressInverse(devID, clientID);
             if (res == true) {
               onClickInverted();
+              ToastAndroid.show('Successfully rotated screen', ToastAndroid.SHORT);
+            }
+            else{
+              ToastAndroid.show('Cannot rotate screen', ToastAndroid.SHORT);
             }
             setOrientationLoading(false);
             }} title={'Inverse'} iconName='arrow-down' greyed={downPressed}/>
@@ -247,7 +264,7 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     fontWeight: 'bold',
     letterSpacing: 0.25,
-    color: '#85c0f9',
+    color: 'rgb(133,	192,	249)',
     paddingLeft: 5,
   },
   viewStyle:{
