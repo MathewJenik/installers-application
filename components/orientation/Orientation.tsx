@@ -6,6 +6,8 @@ import {faArrowUp} from '@fortawesome/free-solid-svg-icons/faArrowUp'
 import {faArrowRight} from '@fortawesome/free-solid-svg-icons/faArrowRight'
 import {faArrowLeft} from '@fortawesome/free-solid-svg-icons/faArrowLeft'
 import {faArrowDown} from '@fortawesome/free-solid-svg-icons/faArrowDown'
+import styling from "../../styling";
+import { ViewStyle } from "react-native";
 import {
     SafeAreaView,
     ScrollView,
@@ -156,7 +158,7 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
   
 
   return (  
-    <View style={styles.viewStyle}>
+    <View style={styling.Styles.Card_Style as ViewStyle}>
       <ViewContainer title={'Orientations'} colour='white' titleColour='white' >
 
       {orientationLoading ? (
@@ -176,7 +178,7 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
               onClickNormal();
             }
             setOrientationLoading(false);
-            }} title={'Normal'} iconName='arrow-up' greyed={upPressed}/>
+            }} title={'Normal'} faIcon={faArrowUp} greyed={upPressed}/>
         </View>
         
         <View style={{flexDirection:"row", marginHorizontal: constants.FONTSIZE.EM/2}}>
@@ -188,7 +190,7 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
                 onClickLeft();
               }
               setOrientationLoading(false);
-            }} title={'Left '} iconName='arrow-left' greyed={leftPressed}/>
+            }} title={'Left '} faIcon={faArrowLeft} greyed={leftPressed}/>
           </View>
           <View style={{flex: 1}}></View>
           <View style={{flex: 4}}>
@@ -199,7 +201,7 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
                 onClickRight();
               }
               setOrientationLoading(false);
-            }} title={'Right'} iconName='arrow-right' greyed={rightPressed}/>
+            }} title={'Right'} faIcon={faArrowRight} greyed={rightPressed}/>
           </View>
         </View>
           
@@ -211,7 +213,7 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
               onClickInverted();
             }
             setOrientationLoading(false);
-            }} title={'Inverse'} iconName='arrow-down' greyed={downPressed}/>
+            }} title={'Inverse'} faIcon={faArrowDown} greyed={downPressed}/>
         </View>
         </>
       )}
@@ -235,17 +237,4 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
     alignSelf: 'center'
   },
-  text: {
-    fontSize: 20,
-    lineHeight: 20,
-    fontWeight: 'bold',
-    letterSpacing: 0.25,
-    color: '#85c0f9',
-    paddingLeft: 5,
-    
-  },
-  viewStyle:{
-    alignItems: 'center',
-  }
-  
 })

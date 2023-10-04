@@ -5,6 +5,7 @@ import CustomButton from "../customButton/CustomButton";
 import { AuthMethod } from "../../request/Request";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../loginModule/LoginModule";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 function ProfileModule(): any {
 
@@ -17,7 +18,7 @@ function ProfileModule(): any {
             <SafeAreaView style={{backgroundColor: '#e0e0e0'}}>
                 <ScrollView>
                     <View style={{backgroundColor: "#cccccc", flexDirection: 'row', alignItems: 'center'}}>
-                        <CustomButton iconName='arrow-left' onPress={async () => {
+                        <CustomButton faIcon={faArrowLeft} onPress={async () => {
                             navigation.navigate("Admin");
                         }
                         } title={'Back'} flexRow={true}></CustomButton>

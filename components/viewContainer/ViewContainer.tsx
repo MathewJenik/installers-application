@@ -10,14 +10,14 @@ interface ViewContainerProps {
     title: string;
     colour?: string;
     titleColour?: string;
-    titleBackground?: string;
+    titleBackground?: any;
     children: ReactNode;
 }
 
 const ViewContainer: FunctionComponent<ViewContainerProps> = ({title, colour ="white", titleColour='white', titleBackground=constants.CARDTITLEBACKGROUND, children}) => {
     return(
         <View style={[styles.container, {backgroundColor: colour}]}>
-            {title && <Text style={[styles.title, {color: titleColour, backgroundColor: titleBackground}]}>{title}</Text>}
+            {title && <Text style={[styles.title, {color: titleColour, backgroundColor: 'rgba('+titleBackground.RED+',' + titleBackground.GREEN +',' + titleBackground.BLUE+' , 1)'}]}>{title}</Text>}
             {children}
         </View>
     );

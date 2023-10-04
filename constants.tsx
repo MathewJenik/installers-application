@@ -12,10 +12,30 @@ export default {
     HELP: {
       PADDING: EM/4
     },
-    NAVIGATIONCOLOUR: "#83898f", //  #72797f
-    CARDTITLEBACKGROUND: "#83898f",
-    GREENBUTTONCOLOUR: "#36bf00",
-    BLUEBUTTONCOLOUR: "#04abde",
-    FADEDBLUEBUTTONCOLOUR: "#85c0f9",
-
+    NAVIGATIONCOLOUR: {
+      RED: 131,
+      GREEN: 137,
+      BLUE: 143
+    },
+    CARDTITLEBACKGROUND:{
+      RED: 131,
+      GREEN: 137,
+      BLUE: 143
+    },
+    GREENBUTTONCOLOUR: {
+      RED: 54,
+      GREEN: 191,
+      BLUE: 0
+    },
+    BLUEBUTTONCOLOUR: {
+      RED: 4,
+      GREEN: 171,
+      BLUE: 222 ,
+    },
+    FADEDBLUEBUTTONCOLOUR: {
+      RED: 133,
+      GREEN: 193,
+      BLUE: 249,
+    }
 };
+

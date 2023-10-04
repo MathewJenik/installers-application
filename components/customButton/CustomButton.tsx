@@ -17,7 +17,9 @@ interface CustomButtonProps {
     greyedColour?: string;
     flexRow?: boolean;
     type?: string;
-    enabled?: boolean
+    enabled?: boolean;
+    rgbaColour?: string;
+    
 }
 
 /**
@@ -26,10 +28,10 @@ interface CustomButtonProps {
  * @param {*} {onPress, title, color ='#04abde', iconName, iconColor = 'white', faIcon}
  * @return {*} 
  */
-const CustomButton: React.FC<CustomButtonProps> = ({onPress, title=null, color ='#04abde', iconName, iconColor = 'white', faIcon, textPosition = 'left', textColour='white', enableBorder=false, greyed=false, greyedColour="#91d9ff", flexRow=true, type="medium", enabled=true}) => {
+const CustomButton: React.FC<CustomButtonProps> = ({onPress, title=null, color ='#04abde', iconName, iconColor = 'white', faIcon, textPosition = 'left', textColour='white', enableBorder=false, greyed=false, greyedColour="#91d9ff", flexRow=true, type="medium", enabled=true, rgbaColour}) => {
     const buttonStyles = {
       ...styles.button,
-      backgroundColor: color,
+      backgroundColor: rgbaColour,
       alignItems: textPosition
     };
 
@@ -71,10 +73,23 @@ const CustomButton: React.FC<CustomButtonProps> = ({onPress, title=null, color =
         <TouchableOpacity style={[greyed ? greyButtonStyle : (type=="small") ? buttonStylesSmall : (type=="medium") ? buttonStylesMedium : buttonStylesLarge, enableBorder ? bordered : null]} onPress={enabled? onPress : null} >
           <View style={[flexRow ? styles.buttonContent : btnContentCol]}>
 
-            {iconName && (<Icon name={iconName} size={20} color={iconColor} style={styles.icon}/>)}
-            {faIcon && (<FontAwesomeIcon size={20} icon={faIcon} style={styles.icon} color={iconColor}/>)}
-
-            {(title != null) ? (<Text style={[styles.word, {color: textColour, marginLeft:10}]}>{title}</Text>) : (null)}
+            {(iconName != null) ? ( 
+              (rgbaColour != undefined) ? (
+              <Icon name={iconName} size={20} color={iconColor} style={styles.icon}/>):
+              (<Icon name={iconName} size={20} color={iconColor} style={styles.icon}/> )
+            ) : (
+              (null)
+            )}
+            
+            
+            {(faIcon != null) ? ( 
+              (rgbaColour != undefined) ? (
+              <FontAwesomeIcon size={20} icon={faIcon} style={styles.icon} color={iconColor}/>):
+              ( <FontAwesomeIcon size={20} icon={faIcon} style={styles.icon} color={iconColor}/>)
+            ) : (
+              (null)
+            )}
+            {(title != null) ? (<Text style={[styles.word, {color: textColour, marginLeft:0}]}>{title}</Text>) : (null)}
           </View>
         </TouchableOpacity>
     );
@@ -92,7 +107,8 @@ const styles = StyleSheet.create({
       fontSize: 20,
     },
     icon:{
-      marginRight: 0,
+      marginRight: 10,
+      color: 'white'
     },
     buttonContent: {
       flexDirection: 'row', // Align icon and text horizontally

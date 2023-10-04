@@ -8,6 +8,8 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../loginModule/LoginModule";
 import ViewContainer from "../viewContainer/ViewContainer";
 import constants from "../../constants";
+import { faChevronLeft, faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
 interface MonitoringInformationProps {
   userFullName : string;
@@ -39,7 +41,7 @@ const Profile = () => {
 
               <View style={{display: 'flex', justifyContent: 'space-between', flexDirection: 'column', margin: 'auto'}}>
                 <View style={{backgroundColor: "#cccccc", flexDirection: 'row', alignItems: 'center'}}>
-                    <CustomButton color={constants.NAVIGATIONCOLOUR} iconName='chevron-left' onPress={async () => {
+                    <CustomButton color={constants.NAVIGATIONCOLOUR} faIcon={faChevronLeft} onPress={async () => {
                         navigation.navigate("Admin");
                     }
                     } title={null} flexRow={true} type="small"></CustomButton>
@@ -70,9 +72,8 @@ const Profile = () => {
                 
                 <ViewContainer title={'Authentication Method'} colour="white" titleColour="white">
                   <View style={styles.bannerBorder}>
-                    <Icon name="exclamation-circle" size={20}>
-                      <Text style={styles.bannerLabel}> This client account is using the adhoc authentication method</Text>
-                    </Icon>
+                    <FontAwesomeIcon icon={faExclamationCircle} size={20} /> 
+                    <Text style={styles.bannerLabel}> This client account is using the adhoc authentication method</Text>
                   </View>
                 </ViewContainer>
                 {/*
