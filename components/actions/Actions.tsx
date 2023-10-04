@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faHeartPulse, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faCloudDownload, faHeartPulse, faSpinner, faWrench } from '@fortawesome/free-solid-svg-icons';
 import { faRotateLeft } from '@fortawesome/free-solid-svg-icons';
 import styling from "../../styling";
 import { ViewStyle } from "react-native";
@@ -27,14 +27,7 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 import request from '../../request/Request';
 import constants from '../../constants';
 
-export function Button(props: any) {
-    const { onPress, title = '', icon } = props;
-    return (
-        <Pressable onPress={onPress}>
-            <Text style={styles.text}> <FontAwesomeIcon icon={icon} style={{ color: "#ffffff", }} />{title}</Text>
-        </Pressable>
-    );
-}
+
 
 const styles = StyleSheet.create({
     text: {
@@ -57,24 +50,27 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
     
     const [actionsLoading, setActionsLoading] = useState(false);
     const [data, setData] = useState('');
-
+    var alpha = 1.0;
     // The colours for each of the interactable buttons
-    const [MIButtonColour, setMIButtonColour] = useState(constants.GREENBUTTONCOLOUR);
-    const [RSButtonColour, setRSButtonColour] = useState(constants.BLUEBUTTONCOLOUR);
-    const [RBButtonColour, setRBButtonColour] = useState(constants.FADEDBLUEBUTTONCOLOUR);
+    const [MIButtonColour, setMIButtonColour] = useState('rgba('+constants.GREENBUTTONCOLOUR.RED+',' + constants.GREENBUTTONCOLOUR.GREEN +',' + constants.GREENBUTTONCOLOUR.BLUE+' , '+ alpha + ')');
+    const [RSButtonColour, setRSButtonColour] = useState('rgba('+constants.BLUEBUTTONCOLOUR.RED+',' + constants.BLUEBUTTONCOLOUR.GREEN +',' + constants.BLUEBUTTONCOLOUR.BLUE+' , '+ alpha + ')');
+    const [RBButtonColour, setRBButtonColour] = useState('rgba('+constants.FADEDBLUEBUTTONCOLOUR.RED+',' + constants.FADEDBLUEBUTTONCOLOUR.GREEN +',' + constants.FADEDBLUEBUTTONCOLOUR.BLUE+' , '+ alpha + ')');
     
 
 
     function makeOpaque() {
-        setMIButtonColour(MIButtonColour+"55");
-        setRSButtonColour(RSButtonColour+"55");
-        setRBButtonColour(RBButtonColour+"55");
+        alpha = 0.5;
+        setMIButtonColour('rgba('+constants.GREENBUTTONCOLOUR.RED+',' + constants.GREENBUTTONCOLOUR.GREEN +',' + constants.GREENBUTTONCOLOUR.BLUE+' , '+ alpha + ')');
+        setRSButtonColour('rgba('+constants.BLUEBUTTONCOLOUR.RED+',' + constants.BLUEBUTTONCOLOUR.GREEN +',' + constants.BLUEBUTTONCOLOUR.BLUE+' , '+ alpha + ')');
+        setRBButtonColour('rgba('+constants.FADEDBLUEBUTTONCOLOUR.RED+',' + constants.FADEDBLUEBUTTONCOLOUR.GREEN +',' + constants.FADEDBLUEBUTTONCOLOUR.BLUE+' , '+ alpha + ')');
+        console.log("COLOUR: ", MIButtonColour);
     }
     
     function removeOpaque() {
-        setMIButtonColour(MIButtonColour.substring(0, MIButtonColour.length-2));
-        setRSButtonColour(RSButtonColour.substring(0, RSButtonColour.length-2));
-        setRBButtonColour(RBButtonColour.substring(0, RBButtonColour.length-2));
+        alpha = 1.0;
+        setMIButtonColour('rgba('+constants.GREENBUTTONCOLOUR.RED+',' + constants.GREENBUTTONCOLOUR +',' + constants.GREENBUTTONCOLOUR+' , '+ alpha + ')');
+        setRSButtonColour('rgba('+constants.BLUEBUTTONCOLOUR.RED+',' + constants.BLUEBUTTONCOLOUR +',' + constants.BLUEBUTTONCOLOUR+' , '+ alpha + ')');
+        setRBButtonColour('rgba('+constants.FADEDBLUEBUTTONCOLOUR.RED+',' + constants.FADEDBLUEBUTTONCOLOUR +',' + constants.FADEDBLUEBUTTONCOLOUR+' , '+ alpha + ')');
     }
 
     // Used for onload selection of the current orientation.
@@ -179,15 +175,15 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
                 </View>
             ):(
                 <>
-                <CustomButton title="Mark player as installed" onPress={markInstaller} color={MIButtonColour} iconName="wrench" enabled={interactionable}/>
-                <CustomButton title="Re-sync" onPress={resyncDevice} iconName="cloud-download" color={RSButtonColour} enabled={interactionable}/>
+                <CustomButton title="Mark player as installed" onPress={markInstaller} rgbaColour={MIButtonColour} faIcon={faWrench} enabled={interactionable}/>
+                <CustomButton title="Re-sync" onPress={resyncDevice} faIcon={faCloudDownload} rgbaColour={RSButtonColour} enabled={interactionable}/>
                 <View style={{ flexDirection: 'row' }}>
                 
                 {
                     // Displays ping button and handles functionality when clicked.
                 }
                     <View>
-                        <CustomButton color='#d32f2f' title="Ping" onPress={async () => {
+                        <CustomButton rgbaColour='#d32f2f' title="Ping" onPress={async () => {
                             setActionsLoading(true);
                             var session = await EncryptedStorage.getItem("session_id");
                             console.log((Number)(devID), (Number)(clientID));
@@ -202,7 +198,7 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
                     // Displays reboot button and handles functionality when clicked. 
                 }
                     <View>
-                        <CustomButton color={RBButtonColour} title="Reboot" onPress={async () => {
+                        <CustomButton rgbaColour={RBButtonColour}  title="Reboot" onPress={async () => {
                             setActionsLoading(true);
                             var session = await EncryptedStorage.getItem("session_id");
                             console.log((Number)(devID), (Number)(clientID));

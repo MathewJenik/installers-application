@@ -178,7 +178,7 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
               onClickNormal();
             }
             setOrientationLoading(false);
-            }} title={'Normal'} iconName='arrow-up' greyed={upPressed}/>
+            }} title={'Normal'} faIcon={faArrowUp} greyed={upPressed}/>
         </View>
         
         <View style={{flexDirection:"row", marginHorizontal: constants.FONTSIZE.EM/2}}>
@@ -190,7 +190,7 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
                 onClickLeft();
               }
               setOrientationLoading(false);
-            }} title={'Left '} iconName='arrow-left' greyed={leftPressed}/>
+            }} title={'Left '} faIcon={faArrowLeft} greyed={leftPressed}/>
           </View>
           <View style={{flex: 1}}></View>
           <View style={{flex: 4}}>
@@ -201,7 +201,7 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
                 onClickRight();
               }
               setOrientationLoading(false);
-            }} title={'Right'} iconName='arrow-right' greyed={rightPressed}/>
+            }} title={'Right'} faIcon={faArrowRight} greyed={rightPressed}/>
           </View>
         </View>
           
@@ -213,7 +213,7 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
               onClickInverted();
             }
             setOrientationLoading(false);
-            }} title={'Inverse'} iconName='arrow-down' greyed={downPressed}/>
+            }} title={'Inverse'} faIcon={faArrowDown} greyed={downPressed}/>
         </View>
         </>
       )}
