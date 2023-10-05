@@ -17,7 +17,7 @@ interface ViewContainerProps {
 const ViewContainer: FunctionComponent<ViewContainerProps> = ({title, colour ="white", titleColour='white', titleBackground=constants.HEX.CARDTITLEBACKGROUND, children}) => {
     return(
         <View style={[styles.container, {backgroundColor: colour}]}>
-            {title && <Text style={[styles.title, {color: titleColour, backgroundColor: 'rgba('+titleBackground.RGB.RED+',' + titleBackground.RGB.GREEN +',' + titleBackground.RGB.BLUE+' , 1)'}]}>{title}</Text>}
+            {title && <Text style={[styles.title, {color: titleColour, backgroundColor: titleBackground}]}>{title}</Text>}
             {children}
         </View>
     );
