@@ -283,8 +283,8 @@ class Requests {
       const ReqOptions = {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({player_id: deviceID, 
-        client_id: clientID, session_id: sessionID })
+        body: JSON.stringify({player__id: deviceID, 
+        client__id: clientID, session_id: sessionID })
       };
       
       return fetch("https://api.lymlive.com.au/v1/installers/actions/install__player.iris", ReqOptions)

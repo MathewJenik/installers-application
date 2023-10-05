@@ -6,6 +6,8 @@ import { useNavigation } from '@react-navigation/native';
 import {StackNavigationProp, useCardAnimation} from '@react-navigation/stack';
 import CustomButton from '../customButton/CustomButton';
 import EncryptedStorage from 'react-native-encrypted-storage';
+import AzureAuth from 'react-native-azure-auth';
+import {APPID, DIRID, OBJID} from "@env"
 
 export type RootStackParamList = {
   Login: undefined;
@@ -29,8 +31,51 @@ function LoginModule(): any {
   
   const [userChecked, setUserChecked] = useState(false);
 
+
+  // Azure login
+  const CLIENT_ID = APPID;
+  const TENTANT_ID = DIRID;
+
+  const azureAuth = new AzureAuth({
+    clientId: CLIENT_ID,
+    tenant: TENTANT_ID,
+    //redirectUri: "installers-application://installers-application/android/callback",
+    
+  });
+
+  var state = { accessToken: null, user: '' , mails: [], userId: ''};
+  
+
+  const azureLogin = async () => {
+    try {
+      let tokens = await azureAuth.webAuth.authorize({scope: 'openid profile User.Read' })
+      console.log('CRED>>>', tokens)
+      state.accessToken = tokens.accessToken;
+      let info = await azureAuth.auth.msGraphRequest({token: tokens.accessToken, path: 'me'})
+      console.log('info', info)
+      state.user = info.displayName;
+      state.userId = tokens.userId;
+    } catch (error) {
+      console.log('Error during Azure operation', error)
+    }
+  };
+
+
+  const _onLogout = () => {
+    azureAuth.webAuth
+      .clearSession()
+      .then(success => {
+        this.setState({ accessToken: null, user: null });
+      })
+      .catch(error => console.log(error));
+  };
+
+
   return (
     <View style={styles.container}>
+      
+
+
       
       <Image source={require('../../Images/Lymlive_Iris_login.png')} />
       <TextInput onChangeText={t => setEmail(t)} style={styles.textInput} placeholder='Email'></TextInput>
@@ -46,6 +91,11 @@ function LoginModule(): any {
         let userCheckState = false;
         if (loginTypeCheckRes == AuthMethod.adhoc || loginTypeCheckRes == AuthMethod.azure) {
           userCheckState = true;
+        }
+
+        if (loginTypeCheckRes == AuthMethod.azure) {
+          azureLogin();
+
         }
         setUserChecked(userCheckState);
 
@@ -64,6 +114,7 @@ function LoginModule(): any {
         }
         
         }} title={'Login'} />
+    
         
     </View>
   );

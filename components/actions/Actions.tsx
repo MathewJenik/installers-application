@@ -197,7 +197,7 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
                 </View>
             ):(
                 <>
-                <CustomButton title="Mark player as installed" onPress={markInstaller} color={MIButtonColour} iconName="wrench" enabled={interactionable}/>
+                <CustomButton title="Mark player as installed" onPress={markInstaller} color={MIButtonColour} iconName="wrench" enabled={true}/>
                 <CustomButton title="Re-sync" onPress={resyncDevice} iconName="cloud-download" color={RSButtonColour} enabled={interactionable}/>
                 <View style={{ flexDirection: 'row' }}>
                 
