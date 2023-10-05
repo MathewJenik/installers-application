@@ -9,6 +9,7 @@ import { RootStackParamList } from "../loginModule/LoginModule";
 import ViewContainer from "../viewContainer/ViewContainer";
 import constants from "../../constants";
 import EncryptedStorage from 'react-native-encrypted-storage';
+import { Req } from "../../request/Request";
 
 interface MonitoringInformationProps {
   userFullName: string;
@@ -71,24 +72,27 @@ const Profile: React.FunctionComponent<MonitoringInformationProps> = ({userFullN
                     <View style = {styles.container}>
                       <Text style = {styles.labelName}>Full Name</Text>
                       <View style = {styles.inputWrapper}>
-                        <Text>{storedFullName || userFullName}</Text>
+                        <Text style = {styles.profileText}>{storedFullName || userFullName}</Text>
                       </View>
                     <Text style = {styles.labelName}>Email Address</Text>
                       <View style = {styles.inputWrapper}>
-                        <Text>{storedEmail || userEmail}</Text>
+                        <Text style = {styles.profileText}>{storedEmail || userEmail}</Text>
                       </View>
                     <Text style = {styles.labelName}>Phone Number</Text>
                      <View style = {styles.inputWrapper}>
-                      <Text>{phoneNumber || userPhoneNumber}</Text>
+                      <Text style = {styles.profileText}>{phoneNumber || userPhoneNumber}</Text>
                       </View>
                     </View>
                 </ViewContainer>
                 
                 <ViewContainer title={'Authentication Method'} colour="white" titleColour="white">
                   <View style={styles.bannerBorder}>
-                    <Icon name="exclamation-circle" size={20}>
-                      <Text style={styles.bannerLabel}> This client account is using the adhoc authentication method</Text>
-                    </Icon>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                      <Icon name="exclamation-circle" size={20} style={{marginRight: 10, marginBottom: 45}}></Icon>
+                      <View style={{flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center', width: '90%'}}>
+                        <Text style={styles.bannerLabel}>This client account is using the Azure authentication method</Text>
+                      </View>
+                    </View>
                   </View>
                 </ViewContainer>
                 {/*
@@ -180,9 +184,14 @@ const styles = StyleSheet.create({
     paddingVertical: constants.FONTSIZE.EM/2,
   },
   labelName:{
-    fontSize: 14,
+    fontSize: 16,
     color: '#1f1f1f',
     paddingVertical: 10,
+    fontWeight: 'bold',
+  },
+  profileText:{
+    fontSize: 14,
+    color: '#484a48',
     fontWeight: 'bold',
   },
   bannerLabel:{
@@ -195,7 +204,8 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     borderColor: '#102940',
     marginHorizontal: constants.FONTSIZE.EM,
-    padding: constants.FONTSIZE.EM,
+    paddingVertical: constants.FONTSIZE.EM/2,
+    paddingHorizontal: constants.FONTSIZE.EM,
     marginBottom: constants.FONTSIZE.EM*2,
     backgroundColor: '#acedfc',
   },
