@@ -75,7 +75,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({onPress, title=null, color =
           <View style={[flexRow ? styles.buttonContent : btnContentCol]}>
 
             {(iconName != null) ? ( 
-              (rgbaColour != undefined) ? (
+              (color != undefined) ? (
               <Icon name={iconName} size={20} color={iconColor} style={styles.icon}/>):
               (<Icon name={iconName} size={20} color={iconColor} style={styles.icon}/> )
             ) : (
@@ -84,7 +84,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({onPress, title=null, color =
             
             
             {(faIcon != null) ? ( 
-              (rgbaColour != undefined) ? (
+              (color != undefined) ? (
               <FontAwesomeIcon size={20} icon={faIcon} style={styles.icon} color={iconColor}/>):
               ( <FontAwesomeIcon size={20} icon={faIcon} style={styles.icon} color={iconColor}/>)
             ) : (

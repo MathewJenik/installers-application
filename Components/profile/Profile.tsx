@@ -41,7 +41,7 @@ const Profile = () => {
 
               <View style={{display: 'flex', justifyContent: 'space-between', flexDirection: 'column', margin: 'auto'}}>
                 <View style={{backgroundColor: "#cccccc", flexDirection: 'row', alignItems: 'center'}}>
-                    <CustomButton color={constants.NAVIGATIONCOLOUR} faIcon={faChevronLeft} onPress={async () => {
+                    <CustomButton color={constants.HEX.NAVIGATIONCOLOUR} faIcon={faChevronLeft} onPress={async () => {
                         navigation.navigate("Admin");
                     }
                     } title={null} flexRow={true} type="small"></CustomButton>
