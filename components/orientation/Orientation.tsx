@@ -3,8 +3,6 @@ import { Animated, Easing} from "react-native";
 import EncryptedStorage from "react-native-encrypted-storage";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 
-import { StyleSheet, View } from 'react-native';
-
 import {faArrowUp} from '@fortawesome/free-solid-svg-icons/faArrowUp'
 import {faArrowRight} from '@fortawesome/free-solid-svg-icons/faArrowRight'
 import {faArrowLeft} from '@fortawesome/free-solid-svg-icons/faArrowLeft'
@@ -28,7 +26,6 @@ import ViewContainer from '../viewContainer/ViewContainer';
 import constants from '../../constants';
 import request from '../../request/Request';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { Alert } from 'react-native';
 
 var normalPress = false;
 var inversePress = false;

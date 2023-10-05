@@ -215,7 +215,7 @@ class Requests {
    * @memberof Requests
    * @returns Boolean
    */
-  isUserLoggedIn = async (sessionID: string) => {
+  async isUserLoggedIn(sessionID: string) {
 
     var results = await Req.loginCheck(sessionID);
 
@@ -229,6 +229,9 @@ class Requests {
       console.log("IS THE USER LOGGED IN: ", results.loggedIn);
 
     }
+    return results.loggedIn;
+  };
+
 
     /**
      *
@@ -250,7 +253,7 @@ class Requests {
         return results.next;
       }
     }
-  }
+  
 
 
   /**
