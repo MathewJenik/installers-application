@@ -3,10 +3,15 @@ import { StyleSheet, Text, View, ViewComponent } from "react-native";
 import CustomButton from "../customButton/CustomButton";
 import constants from "../../constants";
 
+/**
+ * Component for the help button. Displays the help section on press.
+ * @returns 
+ */
 function Help(): any {
+    
     const [showHelp, setShowHelp] = useState(false);
     return (
-        <View >
+        <View>
             {showHelp ? (
                 <View style={styles.container}>
                     <CustomButton onPress={() => {setShowHelp(false);}} title={"Hide Help"} iconName="question-circle" />
@@ -22,8 +27,6 @@ function Help(): any {
                     <CustomButton onPress={() => {setShowHelp(true);}} title={"Show Help"} iconName="question-circle" />
                 </View>
             )}
-            
-            
         </View>
       );
 }

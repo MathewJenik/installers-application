@@ -17,49 +17,58 @@ export type RootStackParamList = {
 type loginProp = StackNavigationProp<RootStackParamList, "Login">;
 
 /**
- * Component for managing the login screen
+ * Component for managing the login screen.
  *
  * @return {*} 
  */
 function LoginModule(): any {
 
+  // create the navigation variable that is used to navigate to different pages.
   const navigation = useNavigation<loginProp>();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  
-  const [userChecked, setUserChecked] = useState(false);
+
+  // email and password variables
+  var email = "";
+  var password = "";
+
+  // used for if the email entered is valid, to show the required fields.
+  var userChecked = false;
 
   return (
     <View style={styles.container}>
-      
+        {
+          // Display Lymlive logo
+        }
       <Image source={require('../../Images/Lymlive_Iris_login.png')} />
-      <TextInput onChangeText={t => setEmail(t)} style={styles.textInput} placeholder='Email'></TextInput>
+      <TextInput onChangeText={t => email = t} style={styles.textInput} placeholder='Email'></TextInput>
       {userChecked ?
       (
-        <TextInput onChangeText={t => setPassword(t)} style={styles.textInput}  placeholder='Password' secureTextEntry={true}/>
+        <TextInput onChangeText={t => password = t} style={styles.textInput}  placeholder='Password' secureTextEntry={true}/>
       ) : null}
     
+        {
+          // Submit button
+        }
       <CustomButton onPress={async () => {
-        //navigation.navigate('Admin');
-        console.log(email);
+        // Send data 
         let loginTypeCheckRes = await Req.loginTypeCheck(navigation, email, userChecked);
         let userCheckState = false;
         if (loginTypeCheckRes == AuthMethod.adhoc || loginTypeCheckRes == AuthMethod.azure) {
           userCheckState = true;
         }
-        setUserChecked(userCheckState);
-
+        // set the user checked to true if the user exists.
+        userChecked = userCheckState;
+ 
+        // check if the user exists
         if (userChecked == true) {
+          // complete the login request and get the resposne.
           var response = Req.loginAdhoc(email, password);
 
           // if login is completed navigate to the admin page
           if (await response == true) {
             navigation.navigate('Admin');
-
           } else {
             // if login failed, show toast message
             ToastAndroid.show('Incorrect Password or Email', ToastAndroid.SHORT);
-
           }
         }
         
@@ -70,7 +79,6 @@ function LoginModule(): any {
 
 }
 export default LoginModule;
-
 
 const styles = StyleSheet.create({
   textInput: {
