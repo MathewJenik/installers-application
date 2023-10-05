@@ -119,7 +119,7 @@ function AdminModule() {
           <ScrollView>
             <View style={{display: 'flex', justifyContent: 'space-between', flexDirection: 'column', margin: 'auto'}}>
               <View style={{backgroundColor: "#cccccc", flexDirection: 'row', alignItems: 'center', flex: 1}}>
-                <CustomButton color={constants.NAVIGATIONCOLOUR} faIcon={faRightFromBracket} onPress={async () => {
+                <CustomButton color={constants.HEX.NAVIGATIONCOLOUR} faIcon={faRightFromBracket} onPress={async () => {
                   LogOut();
                   navigation.navigate("Login");
                   setShowingData(false);
@@ -129,7 +129,7 @@ function AdminModule() {
                 <Image style={{width: 80, height: 50, display: 'flex'}} source={require('../../Images/Iris_logo.png')} />
                 <View style={{flex: 1}}></View>
                 <View style={{display: 'flex'}}>
-                  <CustomButton color={constants.NAVIGATIONCOLOUR} type={'small'} faIcon={faUser} onPress={async () => {
+                  <CustomButton color={constants.HEX.NAVIGATIONCOLOUR} type={'small'} faIcon={faUser} onPress={async () => {
                       
                       navigation.navigate("Profile");
                       setShowingData(false);

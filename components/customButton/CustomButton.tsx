@@ -32,7 +32,7 @@ interface CustomButtonProps {
 const CustomButton: React.FC<CustomButtonProps> = ({onPress, title=null, color ='#04abde', iconName, iconColor = 'white', faIcon, textPosition = 'left', textColour='white', enableBorder=false, greyed=false, greyedColour="#91d9ff", flexRow=true, type="medium", enabled=true, rgbaColour}) => {
     const buttonStyles = {
       ...styles.button,
-      backgroundColor: rgbaColour,
+      backgroundColor: color,
       alignItems: textPosition
     };
 
