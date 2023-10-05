@@ -9,15 +9,31 @@ import { RootStackParamList } from "../loginModule/LoginModule";
 import ViewContainer from "../viewContainer/ViewContainer";
 import constants from "../../constants";
 import EncryptedStorage from 'react-native-encrypted-storage';
-import { Req } from "../../request/Request";
 
+/**
+ * Props for the MonitoringInformation component.
+ * 
+ * @interface MonitoringInformationProps
+ * @property {string} userFullName - The full name of the user.
+ * @property {string} userEmail - The email of the user.
+ * @property {string} userPhoneNumber - The phone number of the user.
+ */
 interface MonitoringInformationProps {
   userFullName: string;
   userEmail: string;
   userPhoneNumber: string;
 }
 
+/**
+ * This function displays the profile details of the user.
+ * 
+ * @param {MonitoringInformationProps} props - The props of the component.
+ * @param {string} props.userFullName - The full name of the user.
+ * @param {string} props.userEmail - The email of the user.
+ * @param {string} props.userPhoneNumber - The phone number of the user.
+ */
 const Profile: React.FunctionComponent<MonitoringInformationProps> = ({userFullName = '', userEmail = '', userPhoneNumber = ''}) => {
+    // Define the state variables for the component and used to store the user's details.
     const [storedFullName, setStoredFullName] = useState('');
     const [storedEmail, setStoredEmail] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
@@ -25,7 +41,12 @@ const Profile: React.FunctionComponent<MonitoringInformationProps> = ({userFullN
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [isSecureEntry, setIsSecureEntry] = useState([true, true, true]);
-  
+
+    /**
+     * Toggles the secure entry for the password fields.
+     * 
+     * @param {number} index - The index of the password field.
+     */
     const toggleSecureEntry = (index: number) => {
       const updatedSecureEntry = [...isSecureEntry];
       updatedSecureEntry[index] = !updatedSecureEntry[index];
@@ -33,7 +54,7 @@ const Profile: React.FunctionComponent<MonitoringInformationProps> = ({userFullN
     };
 
     useEffect(() => {
-      // Retrieve data from EncryptedStorage 
+      // Retrieve data from EncryptedStorage to show the user's details.
       EncryptedStorage.getItem('user_email')
         .then(userEmail => setStoredEmail(userEmail))
         .catch(error => console.log(error));
