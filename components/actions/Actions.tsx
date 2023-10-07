@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCloudDownload, faHeartPulse, faSpinner, faWrench } from '@fortawesome/free-solid-svg-icons';
 import { faRotateLeft } from '@fortawesome/free-solid-svg-icons';
 import styling from "../../styling";
-import { ViewStyle } from "react-native";
+import { Button, ViewStyle } from "react-native";
 
 import {
     SafeAreaView,
@@ -26,7 +26,7 @@ import { err } from 'react-native-svg/lib/typescript/xml';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import request from '../../request/Request';
 import constants from '../../constants';
-
+import CustomAlert from '../customAlert/CustomAlert';
 
 const styles = StyleSheet.create({
     text: {
@@ -86,10 +86,6 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
 
     }, [interactionable]
     );
-
-    
-
-
   
 
 
@@ -160,9 +156,23 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
         }
     }
 
+    const [isModalVisible, setModalVisible] = useState(false);
+
+    const showAlert = () => {
+      setModalVisible(true);
+    };
+  
+    const hideAlert = () => {
+      setModalVisible(false);
+    };
+
+
 
     return (
         <View style={styling.Styles.Card_Style as ViewStyle}>
+            
+            <Button title="Show Alert" onPress={showAlert} />
+            <CustomAlert isVisible={isModalVisible} title="Alert Title" message="Hello, World!" onClose={hideAlert} />
 
             <ViewContainer title={'Actions'} colour='white' titleColour='white'>
                 

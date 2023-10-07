@@ -26,6 +26,8 @@ import ViewContainer from '../viewContainer/ViewContainer';
 import constants from '../../constants';
 import request from '../../request/Request';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import Modal from "react-native-modal";
+import customAlert from "../customAlert/CustomAlert"
 
 var normalPress = false;
 var inversePress = false;
@@ -98,6 +100,17 @@ export function Button(props: any){
   const { onPress, title = '',  icon, direction = '', iconName = ''} = props;
   return (
     <CustomButton color='#85c0f9' iconName={iconName} onPress={onPress} title={title}></CustomButton>
+  );
+}
+function WrapperComponent() {
+  return (
+    <View>
+      <Modal isVisible={true}>
+        <View style={{ flex: 1 }}>
+          <Text>I am the modal content!</Text>
+        </View>
+      </Modal>
+    </View>
   );
 }
 
@@ -181,13 +194,16 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
             }
         )
     ).start();
-  
+    const [isModalVisible, setModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
 
   return ( 
     //returns the current view of the orientation buttons
     <View style={styling.Styles.Card_Style as ViewStyle}>
       <ViewContainer title={'Orientations'} colour='white' titleColour='white' >
-
       {orientationLoading ? (
         <View style={{minWidth: 320}}>
           <Animated.View style={{transform: [{rotateZ: spin}], width: constants.FONTSIZE.LOOPING_ANIMATION*2, marginLeft: 100, marginBottom: 70, marginTop: 50 }}>
