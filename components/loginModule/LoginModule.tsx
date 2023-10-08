@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import {StackNavigationProp, useCardAnimation} from '@react-navigation/stack';
 import CustomButton from '../customButton/CustomButton';
 import EncryptedStorage from 'react-native-encrypted-storage';
+import CustomAlert from '../customAlert/CustomAlert';
 
 export type RootStackParamList = {
   Login: undefined;
@@ -28,6 +29,16 @@ function LoginModule(): any {
   const [password, setPassword] = useState('');
   
   const [userChecked, setUserChecked] = useState(false);
+
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const showAlert = () => {
+    setModalVisible(true);
+  };
+
+  const hideAlert = () => {
+    setModalVisible(false);
+  };
 
   return (
     <View style={styles.container}>
@@ -58,13 +69,13 @@ function LoginModule(): any {
 
           } else {
             // if login failed, show toast message
-            ToastAndroid.show('Incorrect Password or Email', ToastAndroid.SHORT);
+            showAlert();
 
           }
         }
         
         }} title={'Login'} />
-        
+        <CustomAlert isVisible={isModalVisible} title="Failed Login" message={"Either the password or the username was incorrect"} onClose={hideAlert}></CustomAlert>
     </View>
   );
 

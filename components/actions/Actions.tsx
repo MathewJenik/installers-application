@@ -121,6 +121,8 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
             if(results.error == false)
             {
                 console.log("Marking Device Installation Success", sessionID);
+                showAlert();
+                <CustomAlert isVisible={isModalVisible} title="Alert Title" message="Hello, World!" onClose={hideAlert} />
                 Alert.alert("Device Marked as Installed.");
             }
             else
@@ -171,8 +173,8 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
     return (
         <View style={styling.Styles.Card_Style as ViewStyle}>
             
-            <Button title="Show Alert" onPress={showAlert} />
-            <CustomAlert isVisible={isModalVisible} title="Alert Title" message="Hello, World!" onClose={hideAlert} />
+            {/* <CustomButton title="Show Alert" onPress={showAlert} rgbaColour={MIButtonColour} faIcon={faWrench}/>
+            <CustomAlert isVisible={isModalVisible} title="Alert Title" message="Hello, World!" onClose={hideAlert} /> */}
 
             <ViewContainer title={'Actions'} colour='white' titleColour='white'>
                 
@@ -199,8 +201,9 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
                             let result = await Req.pingMediaPlayer((Number)(devID), (Number)(clientID), (String)(session));
                             console.log(result);
                             setActionsLoading(false);
-                        
+                            showAlert();
                         }} faIcon={faHeartPulse}/>
+                        <CustomAlert isVisible={isModalVisible} title="PING" message={"Successful"} onClose={hideAlert}></CustomAlert>
                     </View>
 
                 {
@@ -214,7 +217,6 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
                             let result = await Req.rebootMediaPlayer((Number)(devID), (Number)(clientID), (String)(session));
                             console.log(result);
                             setActionsLoading(false);
-
                         }} faIcon={faRotateLeft} enabled={interactionable} />
                     </View>
                 </View>

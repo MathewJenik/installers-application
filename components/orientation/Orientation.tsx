@@ -26,8 +26,7 @@ import ViewContainer from '../viewContainer/ViewContainer';
 import constants from '../../constants';
 import request from '../../request/Request';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-import Modal from "react-native-modal";
-import customAlert from "../customAlert/CustomAlert"
+import CustomAlert from "../customAlert/CustomAlert"
 
 var normalPress = false;
 var inversePress = false;
@@ -102,17 +101,6 @@ export function Button(props: any){
     <CustomButton color='#85c0f9' iconName={iconName} onPress={onPress} title={title}></CustomButton>
   );
 }
-function WrapperComponent() {
-  return (
-    <View>
-      <Modal isVisible={true}>
-        <View style={{ flex: 1 }}>
-          <Text>I am the modal content!</Text>
-        </View>
-      </Modal>
-    </View>
-  );
-}
 
 interface OrientationProps {
   devID: string;
@@ -160,6 +148,7 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
     setRightPressed(false)
   }
 
+
   // Used for onload selection of the current orientation.
   useEffect(() => {
     if (startingOrientation == "normal") {
@@ -173,6 +162,17 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
     }
 
   });
+
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const showAlert = () => {
+    setModalVisible(true);
+  };
+
+  const hideAlert = () => {
+    setModalVisible(false);
+  };
+
 
   // Spinning animation:
   const spinValue = new Animated.Value(0);
@@ -194,11 +194,6 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
             }
         )
     ).start();
-    const [isModalVisible, setModalVisible] = useState(false);
-
-  const toggleModal = () => {
-    setModalVisible(!isModalVisible);
-  };
 
   return ( 
     //returns the current view of the orientation buttons
@@ -219,13 +214,13 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
             let res = await pressNormal(devID, clientID);
             if (res == true) {
               onClickNormal();
-              Alert.alert('Successfully rotated screen');
+              showAlert();
             }
             else{
-              Alert.alert('Cannot rotate screen');
             }
             setOrientationLoading(false);
             }} title={'Normal'} faIcon={faArrowUp} greyed={upPressed}/>
+            <CustomAlert isVisible={isModalVisible} title="Rotation" message={"Successful"} onClose={hideAlert}></CustomAlert>
         </View>
         
         <View style={{flexDirection:"row", marginHorizontal: constants.FONTSIZE.EM/2}}>
@@ -235,13 +230,13 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
               let res = await pressLeft(devID, clientID);
               if (res == true) {
                 onClickLeft();
-                Alert.alert('Successfully rotated screen');
+                showAlert();
               }
               else{
-                Alert.alert('Cannot rotate screen');
               }
               setOrientationLoading(false);
             }} title={'Left '} faIcon={faArrowLeft} greyed={leftPressed}/>
+            <CustomAlert isVisible={isModalVisible} title="Rotation" message={"Successful"} onClose={hideAlert}></CustomAlert>
           </View>
 
           <View style={{flex: 1}}></View>
@@ -251,13 +246,13 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
               let res = await pressRight(devID, clientID);
               if (res == true) {
                 onClickRight();
-                Alert.alert('Successfully rotated screen');
+                showAlert();
               }
               else{
-                Alert.alert('Cannot rotate screen');
               }
               setOrientationLoading(false);
             }} title={'Right'} faIcon={faArrowRight} greyed={rightPressed}/>
+            <CustomAlert isVisible={isModalVisible} title="Rotation" message={"Successful"} onClose={hideAlert}></CustomAlert>
           </View>
         </View>
 
@@ -267,13 +262,13 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
             let res = await pressInverse(devID, clientID);
             if (res == true) {
               onClickInverted();
-              Alert.alert('Successfully rotated screen');
+              showAlert();
             }
             else{
-              Alert.alert('Cannot rotate screen');
             }
             setOrientationLoading(false);
             }} title={'Inverse'} faIcon={faArrowDown} greyed={downPressed}/>
+            <CustomAlert isVisible={isModalVisible} title="Rotation" message={"Successful"} onClose={hideAlert}></CustomAlert>
         </View>
         </>
       )}
