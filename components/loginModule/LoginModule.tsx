@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Image, Pressable, StyleSheet, Text, TextInput, ToastAndroid, View } from 'react-native';
+import { Button, Image, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import Req, { AuthMethod } from '../../request/Request';
 import { useNavigation } from '@react-navigation/native';

@@ -13,7 +13,6 @@ import { useNavigation } from '@react-navigation/native';
 import { faLinkSlash } from '@fortawesome/free-solid-svg-icons';
 import { faRightFromBracket} from '@fortawesome/free-solid-svg-icons'
 import Help from '../help/Help';
-import { ToastAndroid } from 'react-native';
 import { width } from '@fortawesome/free-solid-svg-icons/faArrowUp';
 import PingDetails from '../pingDetails/PingDetails';
 import ClientPlayerDetails from '../ClientPlayerDetails/ClientPlayerDetails';

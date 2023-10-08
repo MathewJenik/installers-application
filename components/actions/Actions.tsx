@@ -13,7 +13,6 @@ import {
     Text,
     useColorScheme,
     View,
-    Alert,
     Pressable,
     ToastAndroid,
     Animated,
@@ -122,13 +121,11 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
             {
                 console.log("Marking Device Installation Success", sessionID);
                 showAlert();
-                <CustomAlert isVisible={isModalVisible} title="Alert Title" message="Hello, World!" onClose={hideAlert} />
-                Alert.alert("Device Marked as Installed.");
+                <CustomAlert isVisible={isModalVisible} title="Mark Installer" message="Successful" onClose={hideAlert} />
             }
             else
             {
                 console.log("Device Failed to Marked", results.errorMsg);
-                Alert.alert(results.errorMsg);
             }
 
 
@@ -172,10 +169,6 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
 
     return (
         <View style={styling.Styles.Card_Style as ViewStyle}>
-            
-            {/* <CustomButton title="Show Alert" onPress={showAlert} rgbaColour={MIButtonColour} faIcon={faWrench}/>
-            <CustomAlert isVisible={isModalVisible} title="Alert Title" message="Hello, World!" onClose={hideAlert} /> */}
-
             <ViewContainer title={'Actions'} colour='white' titleColour='white'>
                 
             {actionsLoading ? (
