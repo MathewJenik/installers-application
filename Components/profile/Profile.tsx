@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View, Text, TextInput, ScrollView, SafeAreaView, Image, TouchableOpacity } from "react-native";
 import CustomButton from "../customButton/CustomButton";
 import { Alert } from "react-native";
@@ -8,28 +8,66 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../loginModule/LoginModule";
 import ViewContainer from "../viewContainer/ViewContainer";
 import constants from "../../constants";
-import { faChevronLeft, faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
+import EncryptedStorage from 'react-native-encrypted-storage';
+
+
+/**
+ * Props for the MonitoringInformation component.
+ * 
+ * @interface MonitoringInformationProps
+ * @property {string} userFullName - The full name of the user.
+ * @property {string} userEmail - The email of the user.
+ * @property {string} userPhoneNumber - The phone number of the user.
+ */
 interface MonitoringInformationProps {
-  userFullName : string;
-  userEmailAddr: string;
+  userFullName: string;
+  userEmail: string;
+  userPhoneNumber: string;
 }
 
-const Profile = () => {
-    const [userFullName, setUserFullName] = useState('');
-    const [userEmailAddr, setUserEmailAddr] = useState('');
+/**
+ * This function displays the profile details of the user.
+ * 
+ * @param {MonitoringInformationProps} props - The props of the component.
+ * @param {string} props.userFullName - The full name of the user.
+ * @param {string} props.userEmail - The email of the user.
+ * @param {string} props.userPhoneNumber - The phone number of the user.
+ */
+const Profile: React.FunctionComponent<MonitoringInformationProps> = ({userFullName = '', userEmail = '', userPhoneNumber = ''}) => {
+    // Define the state variables for the component and used to store the user's details.
+    const [storedFullName, setStoredFullName] = useState('');
+    const [storedEmail, setStoredEmail] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [password, setPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [isSecureEntry, setIsSecureEntry] = useState([true, true, true]);
-  
+
+    /**
+     * Toggles the secure entry for the password fields.
+     * 
+     * @param {number} index - The index of the password field.
+     */
     const toggleSecureEntry = (index: number) => {
       const updatedSecureEntry = [...isSecureEntry];
       updatedSecureEntry[index] = !updatedSecureEntry[index];
       setIsSecureEntry(updatedSecureEntry);
     };
+
+    useEffect(() => {
+      // Retrieve data from EncryptedStorage to show the user's details.
+      EncryptedStorage.getItem('user_email')
+        .then(userEmail => setStoredEmail(userEmail))
+        .catch(error => console.log(error));
+      EncryptedStorage.getItem('user_full_name')
+        .then(userFullName => setStoredFullName(userFullName))
+        .catch(error => console.log(error));
+      EncryptedStorage.getItem('user_phone_number')
+        .then(userPhoneNumber => setPhoneNumber(userPhoneNumber))
+        .catch(error => console.log(error));
+    }, []);
+  
     
     type navProp = StackNavigationProp<RootStackParamList, "Admin">;
     const navigation = useNavigation<navProp>();
@@ -57,23 +95,29 @@ const Profile = () => {
                     <View style = {styles.container}>
                       <Text style = {styles.labelName}>Full Name</Text>
                       <View style = {styles.inputWrapper}>
-                        <Text></Text>
+                        <Text style = {styles.profileText}>{storedFullName || userFullName}</Text>
                       </View>
                     <Text style = {styles.labelName}>Email Address</Text>
                       <View style = {styles.inputWrapper}>
-                        <Text></Text>
+                        <Text style = {styles.profileText}>{storedEmail || userEmail}</Text>
                       </View>
                     <Text style = {styles.labelName}>Phone Number</Text>
                      <View style = {styles.inputWrapper}>
-                      <Text></Text>
+                      <Text style = {styles.profileText}>{phoneNumber || userPhoneNumber}</Text>
                       </View>
                     </View>
                 </ViewContainer>
                 
                 <ViewContainer title={'Authentication Method'} colour="white" titleColour="white">
                   <View style={styles.bannerBorder}>
-                    <FontAwesomeIcon icon={faExclamationCircle} size={20} /> 
-                    <Text style={styles.bannerLabel}> This client account is using the adhoc authentication method</Text>
+
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                      <Icon name="exclamation-circle" size={20} style={{marginRight: 10, marginBottom: 45}}></Icon>
+                      <View style={{flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center', width: '90%'}}>
+                        <Text style={styles.bannerLabel}>This client account is using the Azure authentication method</Text>
+                      </View>
+                    </View>
+
                   </View>
                 </ViewContainer>
                 {/*
@@ -157,9 +201,6 @@ const styles = StyleSheet.create({
   inputWrapper:{
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 4,
     paddingHorizontal: constants.FONTSIZE.EM,
     paddingVertical: constants.FONTSIZE.EM/2,
   },
@@ -168,9 +209,14 @@ const styles = StyleSheet.create({
     paddingVertical: constants.FONTSIZE.EM/2,
   },
   labelName:{
-    fontSize: 14,
+    fontSize: 16,
     color: '#1f1f1f',
     paddingVertical: 10,
+    fontWeight: 'bold',
+  },
+  profileText:{
+    fontSize: 14,
+    color: '#484a48',
     fontWeight: 'bold',
   },
   bannerLabel:{
@@ -183,7 +229,8 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     borderColor: '#102940',
     marginHorizontal: constants.FONTSIZE.EM,
-    padding: constants.FONTSIZE.EM,
+    paddingVertical: constants.FONTSIZE.EM/2,
+    paddingHorizontal: constants.FONTSIZE.EM,
     marginBottom: constants.FONTSIZE.EM*2,
     backgroundColor: '#acedfc',
   },

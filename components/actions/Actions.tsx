@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCloudDownload, faHeartPulse, faSpinner, faWrench } from '@fortawesome/free-solid-svg-icons';
 import { faRotateLeft } from '@fortawesome/free-solid-svg-icons';
 import styling from "../../styling";
-import { ViewStyle } from "react-native";
+import { Button, ViewStyle } from "react-native";
 
 import {
     SafeAreaView,
@@ -13,7 +13,6 @@ import {
     Text,
     useColorScheme,
     View,
-    Alert,
     Pressable,
     ToastAndroid,
     Animated,
@@ -26,7 +25,7 @@ import { err } from 'react-native-svg/lib/typescript/xml';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import request from '../../request/Request';
 import constants from '../../constants';
-
+import CustomAlert from '../customAlert/CustomAlert';
 
 const styles = StyleSheet.create({
     text: {
@@ -119,12 +118,12 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
             if(results.error == false)
             {
                 console.log("Marking Device Installation Success", sessionID);
-                Alert.alert("Device Marked as Installed.");
+                showAlert();
+                <CustomAlert isVisible={isModalVisible} title="Mark Installer" message="Successful" onClose={hideAlert} />
             }
             else
             {
                 console.log("Device Failed to Marked", results.errorMsg);
-                Alert.alert(results.errorMsg);
             }
 
 
@@ -154,10 +153,20 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
         }
     }
 
+    const [isModalVisible, setModalVisible] = useState(false);
+
+    const showAlert = () => {
+      setModalVisible(true);
+    };
+  
+    const hideAlert = () => {
+      setModalVisible(false);
+    };
+
+
 
     return (
         <View style={styling.Styles.Card_Style as ViewStyle}>
-
             <ViewContainer title={'Actions'} colour='white' titleColour='white'>
                 
             {actionsLoading ? (
@@ -183,8 +192,9 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
                             let result = await Req.pingMediaPlayer((Number)(devID), (Number)(clientID), (String)(session));
                             console.log(result);
                             setActionsLoading(false);
-                        
+                            showAlert();
                         }} faIcon={faHeartPulse}/>
+                        <CustomAlert isVisible={isModalVisible} title="PING" message={"Successful"} onClose={hideAlert}></CustomAlert>
                     </View>
 
                 {
@@ -198,7 +208,6 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
                             let result = await Req.rebootMediaPlayer((Number)(devID), (Number)(clientID), (String)(session));
                             console.log(result);
                             setActionsLoading(false);
-
                         }} faIcon={faRotateLeft} enabled={interactionable} />
                     </View>
                 </View>
