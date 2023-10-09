@@ -305,7 +305,7 @@ class Requests {
         }
 
     }
-  }
+  
 
     /**
      * Function that marks the player as installed.
@@ -376,46 +376,20 @@ class Requests {
     searchRequest(searchValue: string , sessionId: string)  {
       const ReqOptions = {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + sessionId + '',
+      },
         body: JSON.stringify({search__value: searchValue, session_id:sessionId})
       };
   
       return fetch("https:api.lymlive.com.au/v1/installers/player/read.iris", ReqOptions)
-
       .then(response => response.json())
       .then(json => {
-        console.log("API DEVICE ID:", deviceID);
-        console.log("API CLIENT ID:", clientID);
-        console.log("API SESSION ID:", sessionID);
-        console.log(json.valid);
-        console.log("Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n valid: ", json.valid, "\n next: ", json.next, "\n Result: ", json.result);
-
         return json;
-
       });
   };
 
-  searchRequest(searchValue: string, sessionId: string) {
-    const ReqOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ search__value: searchValue, session_id: sessionId })
-    };
-
-    return fetch("https:api.lymlive.com.au/v1/installers/player/read.iris", ReqOptions)
-      .then(response => response.json())
-      .then(json => {
-
-        console.log(searchValue);
-        console.log("session ID:", sessionId);
-        console.log("Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n valid: ", json.loggedIn, "\n next: ", json.client, "\n Search: ", json.player);
-
-        return json;
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  };
 };
 
 const Req = new Requests();
