@@ -8,7 +8,9 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../loginModule/LoginModule";
 import ViewContainer from "../viewContainer/ViewContainer";
 import constants from "../../constants";
+
 import EncryptedStorage from 'react-native-encrypted-storage';
+
 
 /**
  * Props for the MonitoringInformation component.
@@ -72,12 +74,12 @@ const Profile: React.FunctionComponent<MonitoringInformationProps> = ({userFullN
 
     return (
       <View>
-      <SafeAreaView style={{backgroundColor: '#e0e0e0'}}>
+        <SafeAreaView style={{backgroundColor: '#e0e0e0'}}>
           <ScrollView>
 
               <View style={{display: 'flex', justifyContent: 'space-between', flexDirection: 'column', margin: 'auto'}}>
                 <View style={{backgroundColor: "#cccccc", flexDirection: 'row', alignItems: 'center'}}>
-                    <CustomButton color={'#ffe500'} iconName='chevron-left' onPress={async () => {
+                    <CustomButton color={constants.NAVIGATIONCOLOUR} faIcon={faChevronLeft} onPress={async () => {
                         navigation.navigate("Admin");
                     }
                     } title={null} flexRow={true} type="small"></CustomButton>
@@ -108,12 +110,14 @@ const Profile: React.FunctionComponent<MonitoringInformationProps> = ({userFullN
                 
                 <ViewContainer title={'Authentication Method'} colour="white" titleColour="white">
                   <View style={styles.bannerBorder}>
+
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
                       <Icon name="exclamation-circle" size={20} style={{marginRight: 10, marginBottom: 45}}></Icon>
                       <View style={{flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center', width: '90%'}}>
                         <Text style={styles.bannerLabel}>This client account is using the Azure authentication method</Text>
                       </View>
                     </View>
+
                   </View>
                 </ViewContainer>
                 {/*

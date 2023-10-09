@@ -17,6 +17,9 @@ import { ToastAndroid } from 'react-native';
 import { width } from '@fortawesome/free-solid-svg-icons/faArrowUp';
 import PingDetails from '../pingDetails/PingDetails';
 import ClientPlayerDetails from '../ClientPlayerDetails/ClientPlayerDetails';
+import { Alert } from 'react-native';
+import { faUser} from '@fortawesome/free-solid-svg-icons'
+
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import constants from '../../constants';
@@ -74,7 +77,7 @@ function AdminModule() {
             var response = await Req.searchRequest(search, session);
 
             if (response.error==true) {
-              ToastAndroid.show(response.errorMsg,ToastAndroid.LONG);
+              Alert.alert(response.errorMsg);
               setShowingData(false);
               
             } else {
@@ -123,7 +126,7 @@ function AdminModule() {
                 <Image style={{width: 80, height: 50, display: 'flex'}} source={require('../../Images/Iris_logo.png')} />
                 <View style={{flex: 1}}></View>
                 <View style={{display: 'flex'}}>
-                  <CustomButton color={constants.NAVIGATIONCOLOUR} type={'small'} iconName='user' onPress={async () => {
+                  <CustomButton color={constants.NAVIGATIONCOLOUR} type={'small'} faIcon={faUser} onPress={async () => {
                       
                       navigation.navigate("Profile");
                       setShowingData(false);

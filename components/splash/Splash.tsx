@@ -58,6 +58,8 @@ async function retrieveUserSession() {
                 // if there is no session token, go straight to the login page.
                 navigation.navigate("Login");
             }
+        } else {
+            navigation.navigate("Login");
         } 
     } catch (error) {
         // There was an error on the native side

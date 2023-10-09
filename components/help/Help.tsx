@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View, ViewComponent } from "react-native";
 import CustomButton from "../customButton/CustomButton";
 import constants from "../../constants";
+import { Alert } from 'react-native';
+import { faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
+
 
 function Help(): any {
     const [showHelp, setShowHelp] = useState(false);
@@ -9,7 +12,7 @@ function Help(): any {
         <View >
             {showHelp ? (
                 <View style={styles.container}>
-                    <CustomButton onPress={() => {setShowHelp(false);}} title={"Hide Help"} iconName="question-circle" />
+                    <CustomButton onPress={() => {setShowHelp(false);}} title={"Hide Help"} faIcon={faQuestionCircle} />
                     <View style={styles.helpContainer}>
                         <Text style={styles.text}>On the media player (generally the base), there is a lymlive sticker that contains the name of the client and the name of the screen.{'\n'}
                         Within the top right hand corner of the sticker there is some moretext. The IP address and the MPID are located here. The IP address is recorded next to VIP, and the MPID is recorded next to BID.
@@ -19,7 +22,7 @@ function Help(): any {
                 </View>
             ):(
                 <View style={styles.container}>
-                    <CustomButton onPress={() => {setShowHelp(true);}} title={"Show Help"} iconName="question-circle" />
+                    <CustomButton onPress={() => {setShowHelp(true);}} title={"Show Help"} faIcon={faQuestionCircle} />
                 </View>
             )}
             
