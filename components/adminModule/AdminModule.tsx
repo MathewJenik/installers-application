@@ -13,13 +13,11 @@ import { useNavigation } from '@react-navigation/native';
 import { faLinkSlash } from '@fortawesome/free-solid-svg-icons';
 import { faRightFromBracket} from '@fortawesome/free-solid-svg-icons'
 import Help from '../help/Help';
-import { ToastAndroid } from 'react-native';
 import { width } from '@fortawesome/free-solid-svg-icons/faArrowUp';
 import PingDetails from '../pingDetails/PingDetails';
 import ClientPlayerDetails from '../ClientPlayerDetails/ClientPlayerDetails';
-import { Alert } from 'react-native';
 import { faUser} from '@fortawesome/free-solid-svg-icons'
-
+import CustomAlert from '../customAlert/CustomAlert';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import constants from '../../constants';
@@ -61,6 +59,15 @@ function AdminModule() {
   const [ipAddres, setipAddress] = useState("");
   const [mpbid, setmpbid] = useState("");
 
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const showAlert = () => {
+    setModalVisible(true);
+  };
+
+  const hideAlert = () => {
+    setModalVisible(false);
+  };
 
   /**
    * Function that completes the check for the media player based off input
@@ -77,7 +84,8 @@ function AdminModule() {
             var response = await Req.searchRequest(search, session);
 
             if (response.error==true) {
-              Alert.alert(response.errorMsg);
+              showAlert();
+              <CustomAlert isVisible={isModalVisible} title="Response error" message={response} onClose={hideAlert}></CustomAlert>
               setShowingData(false);
               
             } else {

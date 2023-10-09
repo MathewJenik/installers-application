@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Button, Image, Pressable, StyleSheet, Text, TextInput, ToastAndroid, View } from 'react-native';
+import { Button, Image, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import Req, { AuthMethod } from '../../request/Request';
 import { useNavigation } from '@react-navigation/native';
 import {StackNavigationProp, useCardAnimation} from '@react-navigation/stack';
 import CustomButton from '../customButton/CustomButton';
 import EncryptedStorage from 'react-native-encrypted-storage';
+import CustomAlert from '../customAlert/CustomAlert';
 
 export type RootStackParamList = {
   Login: undefined;
@@ -29,6 +30,16 @@ function LoginModule(): any {
   
   const [userChecked, setUserChecked] = useState(false);
   
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const showAlert = () => {
+    setModalVisible(true);
+  };
+
+  const hideAlert = () => {
+    setModalVisible(false);
+  };
+
   return (
     <View style={styles.container}>
       
@@ -57,14 +68,13 @@ function LoginModule(): any {
             navigation.navigate('Admin');
 
           } else {
-            // if login failed, show toast message
-            ToastAndroid.show('Incorrect Password or Email', ToastAndroid.SHORT);
-      
+            // if login failed, show alert message
+            showAlert();
           }
         }
         
         }} title={'Login'} />
-        
+        <CustomAlert isVisible={isModalVisible} title="Failed Login" message={"Either the password or the username was incorrect"} onClose={hideAlert}></CustomAlert>
     </View>
   );
 
