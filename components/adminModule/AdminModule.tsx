@@ -21,6 +21,7 @@ import CustomAlert from '../customAlert/CustomAlert';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import constants from '../../constants';
+import Profile from '../profile/Profile';
 
 type navProp = StackNavigationProp<RootStackParamList, "Admin">;
 
@@ -37,10 +38,6 @@ async function LogOut() {
 
 function AdminModule() {
   const [showingData, setShowingData] = useState(false);
-
-  const [text, setText] = useState('');
-  const [email, setEmail] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
 
   const navigation = useNavigation<navProp>();
 
@@ -215,4 +212,3 @@ const styles = StyleSheet.create({
 });
 
 export default AdminModule;
-

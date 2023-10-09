@@ -29,7 +29,7 @@ function LoginModule(): any {
   const [password, setPassword] = useState('');
   
   const [userChecked, setUserChecked] = useState(false);
-
+  
   const [isModalVisible, setModalVisible] = useState(false);
 
   const showAlert = () => {
@@ -68,9 +68,8 @@ function LoginModule(): any {
             navigation.navigate('Admin');
 
           } else {
-            // if login failed, show toast message
+            // if login failed, show alert message
             showAlert();
-
           }
         }
         

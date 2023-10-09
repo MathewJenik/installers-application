@@ -26,7 +26,6 @@ class Requests {
     return session;
   }
 
-
   /**
    * Function that sends orientation request to the API and get handles a response 
    * @param {Number} playerID 
@@ -254,89 +253,135 @@ class Requests {
       }
     }
   
+    /**
+     * Function that logs the user in based off the provided email and password.
+     * 
+     *
+     * @param {string} userEmail
+     * @param {string} userPasword
+     * @memberof Requests
+     * @returns Boolean (True = successful login, False = Unseccessful login)
+     */
+    loginAdhoc = async (userEmail: string, userPasword: string) => {
 
+      var results = await Req.loginAdhocAPI(userEmail, userPasword);
 
-  /**
-   * Function that logs the user in based off the provided email and password.
-   * 
-   *
-   * @param {string} userEmail
-   * @param {string} userPasword
-   * @memberof Requests
-   * @returns Boolean (True = successful login, False = Unseccessful login)
-   */
-  loginAdhoc = async (userEmail: string, userPasword: string) => {
+      console.log("EMAIL:", userEmail);
 
-    var results = await Req.loginAdhocAPI(userEmail, userPasword);
+      console.log("Password:", userPasword);
 
-    console.log("EMAIL:", userEmail);
+      console.log("ADHOC RESTULTS: ", results);
 
-    console.log("Password:", userPasword);
+      // if there isnt an error, store the required details
+      if (results.error == false) {
+        
+        try {
+          await EncryptedStorage.setItem(
+            "session_id",
+            results.session_id
+          );
+          await EncryptedStorage.setItem(
+            "user_email",
+            userEmail
+          );
+          await EncryptedStorage.setItem(
+            "user_password",
+            userPasword
+          );
+          await EncryptedStorage.setItem(
+            "user_full_name",
+            results.user.logins_actual_name
+          );
+          await EncryptedStorage.setItem(
+            "user_phone_number",
+            results.user.logins_contact_number
+          )
+        } catch (error) {
+            // There was an error on the native side
+        }
+          return true;
+        } else {
+          return false;
+        }
 
-    console.log("ADHOC RESTULTS: ", results);
-
-    // if there isnt an error, store the required details
-    if (results.error == false) {
-
-      try {
-        await EncryptedStorage.setItem(
-          "session_id",
-          results.session_id
-        );
-        await EncryptedStorage.setItem(
-          "user_email",
-          userEmail
-        );
-        await EncryptedStorage.setItem(
-          "user_password",
-          userPasword
-        );
-
-      } catch (error) {
-        // There was an error on the native side
-      }
-
-      return true;
-    } else {
-      return false;
     }
   }
 
-  markAsInstalled(deviceID: number, clientID: number, sessionID: string) {
-    const ReqOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        player_id: deviceID,
-        client_id: clientID, session_id: sessionID
-      })
-    };
-
-    return fetch("https://api.lymlive.com.au/v1/installers/actions/install__player.iris", ReqOptions)
+    /**
+     * Function that marks the player as installed.
+     * 
+     * @param {number} deviceID : The ID of the device
+     * @param {number} clientID : The ID of the client
+     * @param {string} sessionID : The session ID of the user
+     * @returns JSON response from the API
+     */
+    markAsInstalled(deviceID: number, clientID: number, sessionID: string) {
+      // Set the request options
+      const ReqOptions = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({player_id: deviceID, 
+        client_id: clientID, session_id: sessionID })
+      };
+      
+      // Send the request to the Lymlive API and return the response as JSON
+      return fetch("https://api.lymlive.com.au/v1/installers/actions/install__player.iris", ReqOptions)
       .then(response => response.json())
-      .then(json => {
-        console.log("API DEVICE ID:", deviceID);
-        console.log("API CLIENT ID:", clientID);
-        console.log("API SESSION ID:", sessionID);
-        console.log(json.valid);
-        console.log("Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n valid: ", json.valid, "\n next: ", json.next, "\n Logged In: ", json.loggedIn);
+        .then(json => { 
+          // Log the API response
+          console.log("API DEVICE ID:", deviceID);
+          console.log("API CLIENT ID:", clientID);
+          console.log("API SESSION ID:", sessionID);
+          console.log(json.valid);
+          console.log("Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n valid: ", json.valid, "\n next: ", json.next, "\n Logged In: ", json.loggedIn);
+          
+          // Return the response
+          return json;
+        });
+      };    
 
-        return json;
 
-      });
-  };
+      /**
+       * Function that resyncs the player to update details of the player
+       * 
+       * @param {number} deviceID : The ID of the device
+       * @param {number} clientID : The ID of the client
+       * @param {string} sessionID : The session ID of the user
+       * @returns JSON response from the API
+       */
+      resyncDevice(deviceID: number, clientID: number, sessionID: string)  {
+        // Set the request options
+        const ReqOptions = {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({player_id: deviceID, 
+          client_id: clientID, session_id: sessionID })
+        };
+        // Send the request to the Lymlive API and return the response as JSON
+        return fetch("https:api.lymlive.com.au/v1/admin/mediaplayer/sync.iris", ReqOptions)
+        .then(response => response.json())
+          .then(json => { 
+            // Log the API response
+            console.log("API DEVICE ID:", deviceID);
+            console.log("API CLIENT ID:", clientID);
+            console.log("API SESSION ID:", sessionID);
+            console.log(json.valid);
+            console.log("Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n valid: ", json.valid, "\n next: ", json.next, "\n Result: ", json.result);
+          
+            // Return the response
+            return json;
+          });   
+        };
 
-  resyncDevice(deviceID: number, clientID: number, sessionID: string) {
-    const ReqOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        player_id: deviceID,
-        client_id: clientID, session_id: sessionID
-      })
-    };
+    searchRequest(searchValue: string , sessionId: string)  {
+      const ReqOptions = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({search__value: searchValue, session_id:sessionId})
+      };
+  
+      return fetch("https:api.lymlive.com.au/v1/installers/player/read.iris", ReqOptions)
 
-    return fetch("https:api.lymlive.com.au/v1/admin/mediaplayer/sync.iris", ReqOptions)
       .then(response => response.json())
       .then(json => {
         console.log("API DEVICE ID:", deviceID);
