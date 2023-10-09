@@ -28,7 +28,7 @@ function LoginModule(): any {
   const [password, setPassword] = useState('');
   
   const [userChecked, setUserChecked] = useState(false);
-
+  
   return (
     <View style={styles.container}>
       
@@ -59,7 +59,7 @@ function LoginModule(): any {
           } else {
             // if login failed, show toast message
             ToastAndroid.show('Incorrect Password or Email', ToastAndroid.SHORT);
-
+      
           }
         }
         
