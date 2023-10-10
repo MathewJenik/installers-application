@@ -4,7 +4,7 @@ import { RootStackParamList } from "../loginModule/LoginModule";
 import { StackNavigationProp } from "@react-navigation/stack";
 import CustomButton from "../customButton/CustomButton";
 import { useNavigation } from "@react-navigation/native";
-import ViewContainer from "../viewContainer/ViewContainer";
+import CardContainer from "../cardContainer/CardContainer";
 import constants from "../../constants";
 import styling from "../../styling";
 
@@ -33,7 +33,7 @@ const ClientPlayerDetails: React.FunctionComponent<MonitoringInformationProps> =
 
     return (
         <View style={styling.Styles.Card_Style as ViewStyle}>
-            <ViewContainer title={'Client and Player Details'} colour='white' titleColour='white' >
+            <CardContainer title={'Client and Player Details'} colour='white' titleColour='white' >
                 {
                     // Displays all the text headers and to the right displays the
                 }
@@ -44,7 +44,7 @@ const ClientPlayerDetails: React.FunctionComponent<MonitoringInformationProps> =
                 <Text style={styling.Styles.Text_Size_1}><Text style={styling.Styles.Bold_Text}>Name:</Text> {mediaName}</Text>
                 <Text style={styling.Styles.Text_Size_1}><Text style={styling.Styles.Bold_Text}>IP Address:</Text> {ipAddres}</Text>
                 <Text style={styling.Styles.Text_Size_1}><Text style={styling.Styles.Bold_Text}>MPBID:</Text> {mpbid}</Text>
-            </ViewContainer>
+            </CardContainer>
 
         </View>
     );

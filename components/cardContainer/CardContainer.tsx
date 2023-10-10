@@ -6,7 +6,7 @@ import constants from "../../constants";
 import { width } from "@fortawesome/free-solid-svg-icons/faArrowUp";
  
 
-interface ViewContainerProps {
+interface CardContainerProps {
     title: string;
     colour?: string;
     titleColour?: string;
@@ -14,7 +14,7 @@ interface ViewContainerProps {
     children: ReactNode;
 }
 
-const ViewContainer: FunctionComponent<ViewContainerProps> = ({title, colour ="white", titleColour='white', titleBackground=constants.HEX.CARDTITLEBACKGROUND, children}) => {
+const CardContainer: FunctionComponent<CardContainerProps> = ({title, colour ="white", titleColour='white', titleBackground=constants.HEX.CARDTITLEBACKGROUND, children}) => {
     return(
         <View style={[styles.container, {backgroundColor: colour}]}>
             {title && <Text style={[styles.title, {color: titleColour, backgroundColor: titleBackground}]}>{title}</Text>}
@@ -48,4 +48,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default ViewContainer;
+export default CardContainer;

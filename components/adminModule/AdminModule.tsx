@@ -2,20 +2,20 @@ import React, { useState } from 'react';
 import { Button, Image, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View, TouchableOpacity} from 'react-native';
 
 import Req from '../../request/Request';
-import SearchField from '../search/Search';
-import Actions from '../actions/Actions';
+import SearchField from './Search';
+import Actions from './Actions';
 import LoginModule, { RootStackParamList } from '../loginModule/LoginModule';
-import Orientation from '../orientation/Orientation';
+import Orientation from './Orientation';
 import CustomButton from '../customButton/CustomButton';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { faLinkSlash } from '@fortawesome/free-solid-svg-icons';
 import { faRightFromBracket} from '@fortawesome/free-solid-svg-icons'
-import Help from '../help/Help';
+import Help from './Help';
 import { width } from '@fortawesome/free-solid-svg-icons/faArrowUp';
-import PingDetails from '../pingDetails/PingDetails';
-import ClientPlayerDetails from '../ClientPlayerDetails/ClientPlayerDetails';
+import PingDetails from './PingDetails';
+import ClientPlayerDetails from './ClientPlayerDetails';
 import { faUser} from '@fortawesome/free-solid-svg-icons'
 import CustomAlert from '../customAlert/CustomAlert';
 

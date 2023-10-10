@@ -22,7 +22,7 @@ import {
 } from 'react-native';
 
 import CustomButton from '../customButton/CustomButton';
-import ViewContainer from '../viewContainer/ViewContainer';
+import CardContainer from '../cardContainer/CardContainer';
 import constants from '../../constants';
 import request from '../../request/Request';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
@@ -198,7 +198,7 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
   return ( 
     //returns the current view of the orientation buttons
     <View style={styling.Styles.Card_Style as ViewStyle}>
-      <ViewContainer title={'Orientations'} colour='white' titleColour='white' >
+      <CardContainer title={'Orientations'} colour='white' titleColour='white' >
       {orientationLoading ? (
         <View style={{minWidth: 320}}>
           <Animated.View style={{transform: [{rotateZ: spin}], width: constants.FONTSIZE.LOOPING_ANIMATION*2, marginLeft: 100, marginBottom: 70, marginTop: 50 }}>
@@ -272,7 +272,7 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
         </View>
         </>
       )}
-      </ViewContainer>
+      </CardContainer>
     </View>
   );
 }

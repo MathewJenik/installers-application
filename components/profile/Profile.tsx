@@ -6,10 +6,11 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../loginModule/LoginModule";
-import ViewContainer from "../viewContainer/ViewContainer";
+import CardContainer from "../cardContainer/CardContainer";
 import constants from "../../constants";
 
 import EncryptedStorage from 'react-native-encrypted-storage';
+import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 
 
 /**
@@ -91,7 +92,7 @@ const Profile: React.FunctionComponent<MonitoringInformationProps> = ({userFullN
               </View>
 
               <View style= {styles.boxSection}>
-                <ViewContainer title={'Profile Details'} colour='white' titleColour='white' >
+                <CardContainer title={'Profile Details'} colour='white' titleColour='white' >
                     <View style = {styles.container}>
                       <Text style = {styles.labelName}>Full Name</Text>
                       <View style = {styles.inputWrapper}>
@@ -106,9 +107,9 @@ const Profile: React.FunctionComponent<MonitoringInformationProps> = ({userFullN
                       <Text style = {styles.profileText}>{phoneNumber || userPhoneNumber}</Text>
                       </View>
                     </View>
-                </ViewContainer>
+                </CardContainer>
                 
-                <ViewContainer title={'Authentication Method'} colour="white" titleColour="white">
+                <CardContainer title={'Authentication Method'} colour="white" titleColour="white">
                   <View style={styles.bannerBorder}>
 
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -119,7 +120,7 @@ const Profile: React.FunctionComponent<MonitoringInformationProps> = ({userFullN
                     </View>
 
                   </View>
-                </ViewContainer>
+                </CardContainer>
                 {/*
                   <ViewContainer title={'Password Reset'} colour='white' titleColour='white' >
                     <View style = {styles.container}>

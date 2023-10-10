@@ -19,7 +19,7 @@ import {
     Easing,
 } from 'react-native';
 import CustomButton from '../customButton/CustomButton';
-import ViewContainer from '../viewContainer/ViewContainer';
+import CardContainer from '../cardContainer/CardContainer';
 import Req from '../../request/Request';
 import { err } from 'react-native-svg/lib/typescript/xml';
 import EncryptedStorage from 'react-native-encrypted-storage';
@@ -167,7 +167,7 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
 
     return (
         <View style={styling.Styles.Card_Style as ViewStyle}>
-            <ViewContainer title={'Actions'} colour='white' titleColour='white'>
+            <CardContainer title={'Actions'} colour='white' titleColour='white'>
                 
             {actionsLoading ? (
                 <View style={{minWidth: 320}}>
@@ -214,7 +214,7 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
                 </>
             )}
 
-            </ViewContainer>
+            </CardContainer>
 
         </View>
     );
