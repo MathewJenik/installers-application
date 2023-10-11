@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Image, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, Image, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import Req, { AuthMethod } from '../../request/Request';
 import { useNavigation } from '@react-navigation/native';
@@ -7,6 +7,8 @@ import {StackNavigationProp, useCardAnimation} from '@react-navigation/stack';
 import CustomButton from '../customButton/CustomButton';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import CustomAlert from '../customAlert/CustomAlert';
+import styling from '../../styling';
+import { ScreenContainerProps } from 'react-native-screens';
 
 export type RootStackParamList = {
   Login: undefined;
@@ -41,13 +43,13 @@ function LoginModule(): any {
   };
 
   return (
-    <View style={styles.container}>
-      
+    <View style={styling.Styles.Default_Container}>
+  
       <Image source={require('../../Images/Lymlive_Iris_login.png')} />
-      <TextInput onChangeText={t => setEmail(t)} style={styles.textInput} placeholder='Email'></TextInput>
+      <TextInput onChangeText={t => setEmail(t)} style={styling.Styles.Default_Text_Input} placeholder='Email'></TextInput>
       {userChecked ?
       (
-        <TextInput onChangeText={t => setPassword(t)} style={styles.textInput}  placeholder='Password' secureTextEntry={true}/>
+        <TextInput onChangeText={t => setPassword(t)} style={styling.Styles.Default_Text_Input}  placeholder='Password' secureTextEntry={true}/>
       ) : null}
     
       <CustomButton onPress={async () => {
@@ -74,61 +76,10 @@ function LoginModule(): any {
         }
         
         }} title={'Login'} />
-        <CustomAlert isVisible={isModalVisible} title="Failed Login" message={"Either the password or the username was incorrect"} onClose={hideAlert}></CustomAlert>
+
+      <CustomAlert isVisible={isModalVisible} title="Failed Login" message={"Either the password or the username was incorrect"} onClose={hideAlert}></CustomAlert>
     </View>
   );
 
 }
 export default LoginModule;
-
-
-const styles = StyleSheet.create({
-  textInput: {
-    borderColor: 'lightblue',
-    borderStyle: 'solid',
-    borderRadius: 10,
-    borderWidth: 2,
-    width: 300,
-    padding: 10,
-    marginBottom: 10,
-    marginTop: 20,
-    
-
-  },
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingVertical: 150,
-    backgroundColor: 'white'
-  },
-
-  loginButton: {
-    elevation: 10,
-    backgroundColor: "#2196F3",
-    borderRadius: 5,
-
-    flex:1,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: 13,
-    paddingBottom: 0
-
-
-
-  },
-
-  loginText: {
-    color: 'white',
-    alignSelf: 'center',
-    verticalAlign: 'auto',
-    flex: 1,
-    flexDirection: 'column',
-    margin: 'auto',
-    fontSize: 15,
-    paddingHorizontal: 100,
-    paddingTop: 20
-
-  }
-
-});

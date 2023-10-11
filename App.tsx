@@ -25,9 +25,6 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import Orientations from './components/orientation/Orientation';
-import Actions from './components/actions/Actions';
-import SearchField from './components/search/Search';
 
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -37,30 +34,16 @@ import Splash from './components/splash/Splash';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 import LoginModule from './components/loginModule/LoginModule';
-import ProfileModule from './components/profileModule/ProfileModule';
 import Profile from './components/profile/Profile';
-
-
 
 const Stack = createNativeStackNavigator();
 
 function App(): JSX.Element {
-
-
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  let session = null;
   
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
-        {/*<Stack.Screen name="Splash" component={Splash} />*/}
-        {/*
-        <Stack.Screen name="Login" >{(props) => <LoginModule password={password} email={email} {...props} />}</Stack.Screen>
-        <Stack.Screen name="Admin" >{(props) => <AdminModule password={password} email={email} {...props} />}</Stack.Screen>
-        */}
-        <Stack.Screen name="Splash" component={Splash} />
+        <Stack.Screen name="Splash" component={Splash} options={{cardStyle: 'white'}}/>
         <Stack.Screen name="Admin" component={AdminModule} />
         <Stack.Screen name="Login" component={LoginModule} />
         <Stack.Screen name="Profile" component={Profile} />
