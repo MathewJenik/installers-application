@@ -10,6 +10,7 @@ import CustomAlert from '../customAlert/CustomAlert';
 import styling from '../../styling';
 import { ScreenContainerProps } from 'react-native-screens';
 
+
 export type RootStackParamList = {
   Login: undefined;
   Admin: undefined;

@@ -49,26 +49,36 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
     const [actionsLoading, setActionsLoading] = useState(false);
     const [data, setData] = useState('');
     var alpha = 1.0;
-    // The colours for each of the interactable buttons
-    const [MIButtonColour, setMIButtonColour] = useState('rgba('+constants.RGB.GREENBUTTONCOLOUR.RED+',' + constants.RGB.GREENBUTTONCOLOUR.GREEN +',' + constants.RGB.GREENBUTTONCOLOUR.BLUE+' , '+ alpha + ')');
-    const [RSButtonColour, setRSButtonColour] = useState('rgba('+constants.RGB.BLUEBUTTONCOLOUR.RED+',' + constants.RGB.BLUEBUTTONCOLOUR.GREEN +',' + constants.RGB.BLUEBUTTONCOLOUR.BLUE+' , '+ alpha + ')');
-    const [RBButtonColour, setRBButtonColour] = useState('rgba('+constants.RGB.FADEDBLUEBUTTONCOLOUR.RED+',' + constants.RGB.FADEDBLUEBUTTONCOLOUR.GREEN +',' + constants.RGB.FADEDBLUEBUTTONCOLOUR.BLUE+' , '+ alpha + ')');
-    
 
+    var MIColourString = "rgba("+constants.RGB.GREENBUTTONCOLOUR.RED+"," + constants.RGB.GREENBUTTONCOLOUR.GREEN +"," + constants.RGB.GREENBUTTONCOLOUR.BLUE + ", "
+    var RSColourString = "rgba("+constants.RGB.BLUEBUTTONCOLOUR.RED+"," + constants.RGB.BLUEBUTTONCOLOUR.GREEN +"," + constants.RGB.BLUEBUTTONCOLOUR.BLUE + ", "
+    var RBColourString = "rgba("+constants.RGB.FADEDBLUEBUTTONCOLOUR.RED+"," + constants.RGB.FADEDBLUEBUTTONCOLOUR.GREEN +"," + constants.RGB.FADEDBLUEBUTTONCOLOUR.BLUE + ", "
+
+    // The colours for each of the interactable buttons
+    const [MIButtonColour, setMIButtonColour] = useState(MIColourString + alpha + ")");
+    const [RSButtonColour, setRSButtonColour] = useState(RSColourString + alpha + ")");
+    const [RBButtonColour, setRBButtonColour] = useState(RBColourString + ")");
+    const [PingButtonColour, setPingButtonColour] = useState(constants.HEX.REDBUTTON);
 
     function makeOpaque() {
         alpha = 0.5;
-        setMIButtonColour('rgba('+constants.RGB.GREENBUTTONCOLOUR.RED+',' + constants.RGB.GREENBUTTONCOLOUR.GREEN +',' + constants.RGB.GREENBUTTONCOLOUR.BLUE+' , '+ alpha + ')');
-        setRSButtonColour('rgba('+constants.RGB.BLUEBUTTONCOLOUR.RED+',' + constants.RGB.BLUEBUTTONCOLOUR.GREEN +',' + constants.RGB.BLUEBUTTONCOLOUR.BLUE+' , '+ alpha + ')');
-        setRBButtonColour('rgba('+constants.RGB.FADEDBLUEBUTTONCOLOUR.RED+',' + constants.RGB.FADEDBLUEBUTTONCOLOUR.GREEN +',' + constants.RGB.FADEDBLUEBUTTONCOLOUR.BLUE+' , '+ alpha + ')');
+        setMIButtonColour(MIColourString + alpha + ")");
+        setRSButtonColour(RSColourString + alpha + ")");
+        setRBButtonColour(RBColourString + alpha + ")");
+        setPingButtonColour(constants.HEX.REDBUTTON);
         console.log("COLOUR: ", MIButtonColour);
     }
     
     function removeOpaque() {
         alpha = 1.0;
-        setMIButtonColour('rgba('+constants.RGB.GREENBUTTONCOLOUR.RED+',' + constants.RGB.GREENBUTTONCOLOUR +',' + constants.RGB.GREENBUTTONCOLOUR+' , '+ alpha + ')');
-        setRSButtonColour('rgba('+constants.RGB.BLUEBUTTONCOLOUR.RED+',' + constants.RGB.BLUEBUTTONCOLOUR +',' + constants.RGB.BLUEBUTTONCOLOUR+' , '+ alpha + ')');
-        setRBButtonColour('rgba('+constants.RGB.FADEDBLUEBUTTONCOLOUR.RED+',' + constants.RGB.FADEDBLUEBUTTONCOLOUR +',' + constants.RGB.FADEDBLUEBUTTONCOLOUR+' , '+ alpha + ')');
+        setMIButtonColour(MIColourString + alpha + ")");
+        setRSButtonColour(RSColourString + alpha + ")");
+        setRBButtonColour(RBColourString + alpha + ")");
+        setPingButtonColour(constants.HEX.GREENBUTTONCOLOUR);
+        console.log("COLOURS: ");
+        console.log(MIButtonColour);
+        console.log(RSButtonColour);
+        console.log(RBButtonColour);
     }
 
     // Used for onload selection of the current orientation.
@@ -185,12 +195,26 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
                     // Displays ping button and handles functionality when clicked.
                 }
                     <View>
-                        <CustomButton color='#d32f2f' title="Ping" onPress={async () => {
+                        <CustomButton color={PingButtonColour} title="Ping" onPress={async () => {
                             setActionsLoading(true);
                             var session = await EncryptedStorage.getItem("session_id");
                             console.log((Number)(devID), (Number)(clientID));
                             let result = await Req.pingMediaPlayer((Number)(devID), (Number)(clientID), (String)(session));
                             console.log(result);
+
+                            if (result.result == true) {
+                                removeOpaque();
+                            } else {
+                                makeOpaque();
+                            }
+
+                            // currently the api does not mark the ping result as true if it is successfull, so for now only check if theres an error.
+                            if (result.error == false) {
+                                removeOpaque()
+                            } else {
+                                makeOpaque();
+                            }
+    
                             setActionsLoading(false);
                             showAlert();
                         }} faIcon={faHeartPulse}/>
@@ -200,7 +224,7 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
                 {
                     // Displays reboot button and handles functionality when clicked. 
                 }
-                    <View>
+                    <View style={{flex: 1}}>
                         <CustomButton color={RBButtonColour}  title="Reboot" onPress={async () => {
                             setActionsLoading(true);
                             var session = await EncryptedStorage.getItem("session_id");

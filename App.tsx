@@ -17,7 +17,6 @@ import {
 } from 'react-native';
 
 
-
 import {
   Colors,
   DebugInstructions,
@@ -43,7 +42,7 @@ function App(): JSX.Element {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
-        <Stack.Screen name="Splash" component={Splash} options={{cardStyle: 'white'}}/>
+        <Stack.Screen name="Splash" component={Splash} />
         <Stack.Screen name="Admin" component={AdminModule} />
         <Stack.Screen name="Login" component={LoginModule} />
         <Stack.Screen name="Profile" component={Profile} />

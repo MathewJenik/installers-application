@@ -18,7 +18,8 @@ export default {
       CARDTITLEBACKGROUND: "#83898f",
       GREENBUTTONCOLOUR: "#36bf00",
       BLUEBUTTONCOLOUR: "#03abde",
-      FADEDBLUEBUTTONCOLOUR: "#85c1f9"
+      FADEDBLUEBUTTONCOLOUR: "#85c1f9",
+      REDBUTTON: "#d32f2f"
     },
     RGB: {
       NAVIGATIONCOLOUR: {

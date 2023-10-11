@@ -35,7 +35,6 @@ async function LogOut() {
   }
 }
 
-
 function AdminModule() {
   const [showingData, setShowingData] = useState(false);
 
@@ -52,7 +51,6 @@ function AdminModule() {
   
   const [pingSuccessfull, setPingSuccessfull] = useState(false);
 
-
   const [clientName, setClientName] = useState("");
   const [clientNumber, setClientNumber] = useState("");
   const [mediaName, setMediaName] = useState("");
@@ -61,10 +59,20 @@ function AdminModule() {
 
   const [isModalVisible, setModalVisible] = useState(false);
 
+
+  /**
+   * Function to show the modal box.
+   * 
+   */
   const showAlert = () => {
     setModalVisible(true);
   };
 
+
+  /**
+   * Function to hide the modal box.
+   *
+   */
   const hideAlert = () => {
     setModalVisible(false);
   };
@@ -108,10 +116,14 @@ function AdminModule() {
               // ping the media player
               var pingResult = await Req.pingMediaPlayer((Number)(search), response.client.user_id, session);
 
-              console.log("PINGING PLAYER", pingResult);
-
               setPingSuccessfull(pingResult.result);
-             
+
+              // currently the api does not mark the ping result as true if it is successfull, so for now only check if theres an error.
+              if (pingResult.error == false) {
+                //setPingSuccessfull(true);
+              }
+
+
             }
           }
       }

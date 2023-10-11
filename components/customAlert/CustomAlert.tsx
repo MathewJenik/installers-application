@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import Modal from 'react-native-modal';
 import { TouchableWithoutFeedback, View, Text, StyleSheet } from 'react-native';
+import styling from '../../styling';
 
 interface AlertProps {
   isVisible: boolean;
@@ -26,8 +27,8 @@ const customAlert: React.FC<AlertProps> = ({ isVisible, title, message, onClose 
 
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.title}>{title}</Text>
-            <Text>{message}</Text>
+            <Text style={styling.Styles.Bold_Text}>{title}</Text>
+            <Text style={styling.Styles.Default_Text}>{message}</Text>
           </View>
         </View>
         
@@ -59,6 +60,7 @@ const styles = StyleSheet.create({
     elevation: 5
   },
   title: {
+    color: 'black',
     fontWeight: 'bold',
     fontSize: 20,
     marginBottom: 10,

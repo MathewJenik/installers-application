@@ -4,16 +4,18 @@ import constants from "./constants";
 export default {
 Styles: {
     Bold_Text: {
+      color: 'black' as TextStyle['color'],
       fontWeight: 'bold' as TextStyle['fontWeight'],
       fontSize: constants.FONTSIZE.EM
     },
 
     Text_Size_1: {
-        fontSize: constants.FONTSIZE.EM,
+      color: 'black' as TextStyle['color'],
+      fontSize: constants.FONTSIZE.EM,
     },
 
     Card_Style: {
-        alignItems: 'center',
+      alignItems: 'center',
     },
     Default_Text: {
       color: "black" as TextStyle['color'],
