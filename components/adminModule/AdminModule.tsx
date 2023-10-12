@@ -93,7 +93,6 @@ function AdminModule() {
 
             if (response.error==true) {
               showAlert();
-              <CustomAlert isVisible={isModalVisible} title="Response error" message={response} onClose={hideAlert}></CustomAlert>
               setShowingData(false);
               
             } else {
@@ -153,6 +152,7 @@ function AdminModule() {
                     }
 
                   } title={null} flexRow={true}></CustomButton>
+                  <CustomAlert isVisible={isModalVisible} title="Wrong input" message={"The entered field must be a valid IP or MPID"} onClose={hideAlert}></CustomAlert>
                 </View>
               </View>
             </View>
