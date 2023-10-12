@@ -27,30 +27,29 @@ const PingDetails: React.FunctionComponent<MonitoringInformationProps> = ({lastP
 
 
     return (    
-        <View style={styling.Styles.Card_Style as ViewStyle}>
+        <View style={[styling.Styles.Card_Style as ViewStyle]}>
             <CardContainer title={'Ping Details'} colour='white' titleColour='white'>
-                <Text style={styling.Styles.Bold_Text}>Last Ping:</Text>
-                <Text style={styling.Styles.Text_Size_1}> {
+                <Text style={[styling.Styles.Bold_Text, styling.Styles.Text_Size_3]}>Last Ping:</Text>
+                <Text style={[styling.Styles.Text_Size_2, {paddingLeft: constants.FONTSIZE.EM}]}>{
                 lastPingDate.getDate() + "/" + (lastPingDate.getMonth() + 1) + "/" + lastPingDate.getFullYear() + " " +
                 lastPingDate.getHours() + ":" + lastPingDate.getMinutes() + ":" + lastPingDate.getSeconds()
                  }</Text>  
-                <Text style={styling.Styles.Bold_Text}>Last Successfull Ping:</Text>
-                <Text style={styling.Styles.Text_Size_1}> {
+                <Text style={[styling.Styles.Bold_Text, styling.Styles.Text_Size_3, {paddingTop:constants.FONTSIZE.EM*0.5}]}>Last Successfull Ping:</Text>
+                <Text style={[styling.Styles.Text_Size_2, {paddingLeft: constants.FONTSIZE.EM}]}>{
                 lastPingSucDate.getDate() + "/" + (lastPingSucDate.getMonth() + 1) + "/" + lastPingSucDate.getFullYear() + " " +
                 lastPingSucDate.getHours() + ":" + lastPingSucDate.getMinutes() + ":" + lastPingSucDate.getSeconds()
                 }</Text>  
-                <Text style={styling.Styles.Bold_Text}>Last Sync:</Text>
-                <Text style={styling.Styles.Text_Size_1}> {
+                <Text style={[styling.Styles.Bold_Text, styling.Styles.Text_Size_3, {paddingTop:constants.FONTSIZE.EM*0.5}]}>Last Sync:</Text>
+                <Text style={[styling.Styles.Text_Size_2, {paddingLeft: constants.FONTSIZE.EM}]}>{
                 lastSyncDate.getDate() + "/" + (lastSyncDate.getMonth() + 1) + "/" + lastSyncDate.getFullYear() + " " +
                 lastSyncDate.getHours() + ":" + lastSyncDate.getMinutes() + ":" + lastSyncDate.getSeconds()
                 }</Text>  
-                <Text style={styling.Styles.Bold_Text}>Last Sync Update:</Text>
-                <Text style={styling.Styles.Text_Size_1}> {
+                <Text style={[styling.Styles.Bold_Text, styling.Styles.Text_Size_3, {paddingTop:constants.FONTSIZE.EM*0.5}]}>Last Sync Update:</Text>
+                <Text style={[styling.Styles.Text_Size_2, {paddingLeft: constants.FONTSIZE.EM}]}>{
                 lastSyncUpDate.getDate() + "/" + (lastSyncUpDate.getMonth() + 1) + "/" + lastSyncUpDate.getFullYear() + " " +
                 lastSyncUpDate.getHours() + ":" + lastSyncUpDate.getMinutes() + ":" + lastSyncUpDate.getSeconds()
                 }</Text>
-            </CardContainer>
-            
+            </CardContainer> 
         </View>
     );
 }

@@ -91,7 +91,7 @@ function AdminModule() {
 
             var response = await Req.searchRequest(search, session);
 
-            if (response.error==true) {
+            if (response.error == true) {
               showAlert();
               setShowingData(false);
               
@@ -119,7 +119,7 @@ function AdminModule() {
 
               // currently the api does not mark the ping result as true if it is successfull, so for now only check if theres an error.
               if (pingResult.error == false) {
-                //setPingSuccessfull(true);
+                setPingSuccessfull(true);
               }
 
 
