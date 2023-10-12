@@ -6,15 +6,8 @@ import styling from "../../styling";
 import { Button, ViewStyle } from "react-native";
 
 import {
-    SafeAreaView,
-    ScrollView,
-    StatusBar,
     StyleSheet,
-    Text,
-    useColorScheme,
     View,
-    Pressable,
-    ToastAndroid,
     Animated,
     Easing,
 } from 'react-native';
@@ -131,7 +124,6 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
             {
                 console.log("Marking Device Installation Success", sessionID);
                 showAlert();
-                <CustomAlert isVisible={isModalVisible} title="Mark Installer" message="Successful" onClose={hideAlert} />
             }
             else
             {
@@ -155,7 +147,7 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
             
             // Updating the results based what the player stands for
             setData(results);
-
+            showAlert();
             // Displays the updated data
             console.log("Updated Data", results)
         } catch {
@@ -190,7 +182,9 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
             ):(
                 <>
                 <CustomButton title="Mark player as installed" onPress={markInstaller} color={MIButtonColour} faIcon={faWrench} enabled={interactionable}/>
+                <CustomAlert isVisible={isModalVisible} title="SUCCESS" message={"The action has been successful"} onClose={hideAlert}></CustomAlert>
                 <CustomButton title="Re-sync" onPress={resyncDevice} faIcon={faCloudDownload} color={RSButtonColour} enabled={interactionable}/>
+                <CustomAlert isVisible={isModalVisible} title="SUCCESS" message={"The action has been successful"} onClose={hideAlert}></CustomAlert>
                 <View style={{ flexDirection: 'row' }}>
                 
                 {
@@ -220,7 +214,7 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
                             setActionsLoading(false);
                             showAlert();
                         }} faIcon={faHeartPulse}/>
-                        <CustomAlert isVisible={isModalVisible} title="PING" message={"Successful"} onClose={hideAlert}></CustomAlert>
+                        <CustomAlert isVisible={isModalVisible} title="SUCCESS" message={"The action has been successful"} onClose={hideAlert}></CustomAlert>
                     </View>
 
                 {
@@ -234,8 +228,10 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
                             let result = await Req.rebootMediaPlayer((Number)(devID), (Number)(clientID), (String)(session));
                             console.log(result);
                             setActionsLoading(false);
+                            showAlert();
                         }} faIcon={faRotateLeft} enabled={interactionable} />
                     </View>
+                    <CustomAlert isVisible={isModalVisible} title="SUCCESS" message={"The action has been successful"} onClose={hideAlert}></CustomAlert>
                 </View>
                 </>
             )}
