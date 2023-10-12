@@ -183,15 +183,7 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
                 <>
                 <CustomButton title="Mark player as installed" onPress={markInstaller} color={MIButtonColour} faIcon={faWrench} enabled={interactionable}/>
                 <CustomAlert isVisible={isModalVisible} title="SUCCESS" message={"The action has been successful"} onClose={hideAlert}></CustomAlert>
-                <CustomButton title="Re-sync" onPress={resyncDevice} faIcon={faCloudDownload} color={RSButtonColour} enabled={interactionable}/>
-                <CustomAlert isVisible={isModalVisible} title="SUCCESS" message={"The action has been successful"} onClose={hideAlert}></CustomAlert>
-                <View style={{ flexDirection: 'row' }}>
-                
-                {
-                    // Displays ping button and handles functionality when clicked.
-                }
-                    <View>
-                        <CustomButton color={PingButtonColour} title="Ping" onPress={async () => {
+                <CustomButton color={PingButtonColour} title="Ping" onPress={async () => {
                             setActionsLoading(true);
                             var session = await EncryptedStorage.getItem("session_id");
                             console.log((Number)(devID), (Number)(clientID));
@@ -214,6 +206,15 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
                             setActionsLoading(false);
                             showAlert();
                         }} faIcon={faHeartPulse}/>
+                <CustomAlert isVisible={isModalVisible} title="SUCCESS" message={"The action has been successful"} onClose={hideAlert}></CustomAlert>
+                <View style={{ flexDirection: 'row' }}>
+                
+                {
+                    // Displays ping button and handles functionality when clicked.
+                }
+                    <View style={{flex: 1}}>
+                        <CustomButton title="Re-sync" onPress={resyncDevice} faIcon={faCloudDownload} color={RSButtonColour} enabled={interactionable}/>
+                        
                         <CustomAlert isVisible={isModalVisible} title="SUCCESS" message={"The action has been successful"} onClose={hideAlert}></CustomAlert>
                     </View>
 
