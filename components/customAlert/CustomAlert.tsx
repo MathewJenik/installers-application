@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import Modal from 'react-native-modal';
 import { TouchableWithoutFeedback, View, Text, StyleSheet } from 'react-native';
+import styling from '../../styling';
 
 interface AlertProps {
   isVisible: boolean;
@@ -9,20 +10,12 @@ interface AlertProps {
   onClose: () => void;
 }
 
-/**
- * 
- * @param {boolean} isVisible
- * @param {string} title
- * @param {string} message
- * @param {void} onClose
- * @returns Modal (Modal alert view)
- */
 const customAlert: React.FC<AlertProps> = ({ isVisible, title, message, onClose }) => {
   useEffect(() => {
     if (isVisible) {
       const timer = setTimeout(() => {
         onClose();
-      }, 2000);
+      }, 8000);
 
       return () => clearTimeout(timer);
     }
@@ -34,8 +27,8 @@ const customAlert: React.FC<AlertProps> = ({ isVisible, title, message, onClose 
 
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.title}>{title}</Text>
-            <Text>{message}</Text>
+            <Text style={styling.Styles.Bold_Text}>{title}</Text>
+            <Text style={styling.Styles.Default_Text}>{message}</Text>
           </View>
         </View>
         
@@ -65,13 +58,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5
-  },
-  title: {
-    fontWeight: 'bold',
-    fontSize: 20,
-    marginBottom: 10,
-    marginHorizontal: 15,
-  },
+  }
 });
 
 export default customAlert;
