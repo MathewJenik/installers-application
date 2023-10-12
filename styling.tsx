@@ -6,12 +6,23 @@ Styles: {
     Bold_Text: {
       color: 'black' as TextStyle['color'],
       fontWeight: 'bold' as TextStyle['fontWeight'],
-      fontSize: constants.FONTSIZE.EM
+      fontSize: constants.FONTSIZE.EM,
     },
 
     Text_Size_1: {
       color: 'black' as TextStyle['color'],
       fontSize: constants.FONTSIZE.EM,
+    },
+    Text_Size_2: {
+      color: 'black' as TextStyle['color'],
+      fontSize: constants.FONTSIZE.EM * 1.2,
+    },
+    Text_Size_3: {
+      color: 'black' as TextStyle['color'],
+      fontSize: constants.FONTSIZE.EM * 1.4,
+    },
+    FlexContainerRow: {
+      flexDirection: 'col' as TextStyle['flexDirection'],
     },
 
     Card_Style: {

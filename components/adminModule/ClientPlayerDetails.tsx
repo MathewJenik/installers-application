@@ -32,18 +32,18 @@ const ClientPlayerDetails: React.FunctionComponent<MonitoringInformationProps> =
     const navigation = useNavigation<navProp>();
 
     return (
-        <View style={styling.Styles.Card_Style as ViewStyle}>
+        <View style={[styling.Styles.Card_Style as ViewStyle]}>
             <CardContainer title={'Client and Player Details'} colour='white' titleColour='white' >
                 {
                     // Displays all the text headers and to the right displays the
                 }
-                <Text style={styling.Styles.Bold_Text}>Client</Text>
-                <Text style={styling.Styles.Text_Size_1}><Text style={styling.Styles.Bold_Text}>Name:</Text> {clientName}</Text>
-                <Text style={styling.Styles.Text_Size_1}><Text style={styling.Styles.Bold_Text}>Client Number:</Text> {clientNumber}</Text>
-                <Text style={styling.Styles.Bold_Text}>Media Player</Text>
-                <Text style={styling.Styles.Text_Size_1}><Text style={styling.Styles.Bold_Text}>Name:</Text> {mediaName}</Text>
-                <Text style={styling.Styles.Text_Size_1}><Text style={styling.Styles.Bold_Text}>IP Address:</Text> {ipAddres}</Text>
-                <Text style={styling.Styles.Text_Size_1}><Text style={styling.Styles.Bold_Text}>MPBID:</Text> {mpbid}</Text>
+                <Text style={[styling.Styles.Bold_Text, styling.Styles.Text_Size_3]}>Client</Text>
+                <Text style={[styling.Styles.Text_Size_2, {paddingLeft: constants.FONTSIZE.EM}]}><Text style={[styling.Styles.Bold_Text, styling.Styles.Text_Size_2]}>Name:</Text> {clientName}</Text>
+                <Text style={[styling.Styles.Text_Size_2, {paddingLeft: constants.FONTSIZE.EM}]}><Text style={[styling.Styles.Bold_Text, styling.Styles.Text_Size_2]}>Client Number:</Text> {clientNumber}</Text>
+                <Text style={[styling.Styles.Bold_Text, styling.Styles.Text_Size_3, {paddingTop:constants.FONTSIZE.EM}]}>Media Player</Text>
+                <Text style={[styling.Styles.Text_Size_2, {paddingLeft: constants.FONTSIZE.EM}]}><Text style={[styling.Styles.Bold_Text, styling.Styles.Text_Size_2]}>Name:</Text> {mediaName}</Text>
+                <Text style={[styling.Styles.Text_Size_2, {paddingLeft: constants.FONTSIZE.EM}]}><Text style={[styling.Styles.Bold_Text, styling.Styles.Text_Size_2]}>IP Address:</Text> {ipAddres}</Text>
+                <Text style={[styling.Styles.Text_Size_2, {paddingLeft: constants.FONTSIZE.EM}]}><Text style={[styling.Styles.Bold_Text, styling.Styles.Text_Size_2]}>MPBID:</Text> {mpbid}</Text>
             </CardContainer>
 
         </View>
