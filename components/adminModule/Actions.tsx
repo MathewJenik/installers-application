@@ -47,7 +47,7 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
     // string variables for the button colours, used when changing the opacity.
     var MIColourString = "rgba("+constants.RGB.GREENBUTTONCOLOUR.RED+"," + constants.RGB.GREENBUTTONCOLOUR.GREEN +"," + constants.RGB.GREENBUTTONCOLOUR.BLUE + ", "
     var RSColourString = "rgba("+constants.RGB.BLUEBUTTONCOLOUR.RED+"," + constants.RGB.BLUEBUTTONCOLOUR.GREEN +"," + constants.RGB.BLUEBUTTONCOLOUR.BLUE + ", "
-    var RBColourString = "rgba("+constants.RGB.FADEDBLUEBUTTONCOLOUR.RED+"," + constants.RGB.FADEDBLUEBUTTONCOLOUR.GREEN +"," + constants.RGB.FADEDBLUEBUTTONCOLOUR.BLUE + ", "
+    var RBColourString = "rgba("+constants.RGB.BLUEBUTTONCOLOUR.RED+"," + constants.RGB.BLUEBUTTONCOLOUR.GREEN +"," + constants.RGB.BLUEBUTTONCOLOUR.BLUE + ", "
 
     // The colours for each of the interactable buttons
     const [MIButtonColour, setMIButtonColour] = useState(MIColourString + alpha + ")");
