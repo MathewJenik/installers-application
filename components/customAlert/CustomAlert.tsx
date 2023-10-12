@@ -10,6 +10,13 @@ interface AlertProps {
   onClose: () => void;
 }
 
+/**
+ * @param {boolean} isVisible 
+ * @param {string} title 
+ * @param {string} message 
+ * @param {void} onClose 
+ * @returns Modal (Modal Alert view)
+ */
 const customAlert: React.FC<AlertProps> = ({ isVisible, title, message, onClose }) => {
   useEffect(() => {
     if (isVisible) {
