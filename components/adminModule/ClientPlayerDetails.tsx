@@ -41,21 +41,21 @@ const ClientPlayerDetails: React.FunctionComponent<MonitoringInformationProps> =
                 <Text style={[styling.Styles.Bold_Text, styling.Styles.Text_Size_3]}>Client</Text>
                 <View style={{paddingLeft: constants.FONTSIZE.EM}}>
                     <Text style={[styling.Styles.Bold_Text, styling.Styles.Text_Size_2]}>Name:</Text> 
-                    <Text style={[styling.Styles.Text_Size_2, {paddingLeft: constants.FONTSIZE.EM}]}>{clientName}</Text>
+                    <Text style={[styling.Styles.Text_Size_2]}>{clientName}</Text>
 
                     <Text style={[styling.Styles.Bold_Text, styling.Styles.Text_Size_2]}>Client Number:</Text> 
-                    <Text style={[styling.Styles.Text_Size_2, {paddingLeft: constants.FONTSIZE.EM}]}>{clientNumber}</Text>
+                    <Text style={[styling.Styles.Text_Size_2]}>{clientNumber}</Text>
                 </View>
 
                 <Text style={[styling.Styles.Bold_Text, styling.Styles.Text_Size_3, {paddingTop:constants.FONTSIZE.EM}]}>Media Player</Text>
                 <View style={{paddingLeft: constants.FONTSIZE.EM}}>
                     
                     <Text style={[styling.Styles.Bold_Text, styling.Styles.Text_Size_2]}>Name:</Text> 
-                    <Text style={[styling.Styles.Text_Size_2, {paddingLeft: constants.FONTSIZE.EM}]}>{mediaName}</Text>
+                    <Text style={[styling.Styles.Text_Size_2]}>{mediaName}</Text>
                     <Text style={[styling.Styles.Bold_Text, styling.Styles.Text_Size_2]}>IP Address:</Text>
-                    <Text style={[styling.Styles.Text_Size_2, {paddingLeft: constants.FONTSIZE.EM}]}> {ipAddres}</Text>
+                    <Text style={[styling.Styles.Text_Size_2]}> {ipAddres}</Text>
                     <Text style={[styling.Styles.Bold_Text, styling.Styles.Text_Size_2]}>MPID:</Text> 
-                    <Text style={[styling.Styles.Text_Size_2, {paddingLeft: constants.FONTSIZE.EM}]}>{mpbid}</Text>
+                    <Text style={[styling.Styles.Text_Size_2]}>{mpbid}</Text>
                 </View>
             </CardContainer>
 
