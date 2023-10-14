@@ -53,7 +53,7 @@ const ClientPlayerDetails: React.FunctionComponent<MonitoringInformationProps> =
                     <Text style={[styling.Styles.Bold_Text, styling.Styles.Text_Size_2]}>Name:</Text> 
                     <Text style={[styling.Styles.Text_Size_2]}>{mediaName}</Text>
                     <Text style={[styling.Styles.Bold_Text, styling.Styles.Text_Size_2]}>IP Address:</Text>
-                    <Text style={[styling.Styles.Text_Size_2]}> {ipAddres}</Text>
+                    <Text style={[styling.Styles.Text_Size_2]}>{ipAddres}</Text>
                     <Text style={[styling.Styles.Bold_Text, styling.Styles.Text_Size_2]}>MPID:</Text> 
                     <Text style={[styling.Styles.Text_Size_2]}>{mpbid}</Text>
                 </View>
