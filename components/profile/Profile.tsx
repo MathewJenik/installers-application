@@ -58,7 +58,10 @@ const Profile: React.FunctionComponent<MonitoringInformationProps> = ({userFullN
       setIsSecureEntry(updatedSecureEntry);
     };
 
-
+    /**
+     * The useEffect used to fetch the user's details from the storage and 
+     * set the state variables. It returns errors if there are any.
+     */
     useEffect(() => {
       async function fetchData() {
         try {
@@ -79,7 +82,13 @@ const Profile: React.FunctionComponent<MonitoringInformationProps> = ({userFullN
     
       fetchData();
     }, []);
-    
+
+    /**
+     * Function that checks the login type of the user.
+     * That will returns the login type of the user in the 
+     * banner.
+     * @param userEmail 
+     */
     async function loginCheck(userEmail) {
       console.log(userEmail);
       var results = await Req.loginTypeCheck(null, userEmail, false);
@@ -136,7 +145,7 @@ const Profile: React.FunctionComponent<MonitoringInformationProps> = ({userFullN
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
                       <Icon name="exclamation-circle" size={20} style={{marginRight: 10, marginBottom: 45}}></Icon>
                       <View style={{flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center', width: '90%'}}>
-                        <Text style={styles.bannerLabel}>This client account is using the Azure authentication method</Text>
+                        <Text style={styles.bannerLabel}>This client account is using the {accountType} authentication method</Text>
                       </View>
                     </View>
 
