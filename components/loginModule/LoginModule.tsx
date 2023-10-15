@@ -9,6 +9,8 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 import CustomAlert from '../customAlert/CustomAlert';
 import styling from '../../styling';
 import { ScreenContainerProps } from 'react-native-screens';
+import AzureAuth from 'react-native-azure-auth';
+import {APPID, DIRID, OBJID} from "@env"
 
 
 export type RootStackParamList = {
@@ -19,6 +21,10 @@ export type RootStackParamList = {
 };
 
 type loginProp = StackNavigationProp<RootStackParamList, "Login">;
+
+// Azure login
+const CLIENT_ID = APPID;
+const TENTANT_ID = DIRID;
 
 /**
  * Component for managing the login screen
@@ -43,6 +49,44 @@ function LoginModule(): any {
     setModalVisible(false);
   };
 
+
+  const azureAuth = new AzureAuth({
+    clientId: CLIENT_ID,
+    tenant: TENTANT_ID,
+    //redirectUri: "installers-application://installers-application/android/callback",
+    
+  });
+
+  var state = { accessToken: null, user: '' , mails: [], userId: ''};
+  
+
+  const azureLogin = async () => {
+    try {
+      let tokens = await azureAuth.webAuth.authorize({scope: 'openid profile User.Read' })
+      console.log('CRED>>>', tokens)
+      state.accessToken = tokens.accessToken;
+      let info = await azureAuth.auth.msGraphRequest({token: tokens.accessToken, path: 'me'})
+      console.log('info', info)
+      state.user = info.displayName;
+      state.userId = tokens.userId;
+
+      // now navigate to the admin page upon success
+      navigation.navigate('Admin');
+    } catch (error) {
+      console.log('Error during Azure operation', error)
+    }
+  };
+
+
+  const _onLogout = () => {
+    azureAuth.webAuth
+      .clearSession()
+      .then(success => {
+        this.setState({ accessToken: null, user: null });
+      })
+      .catch(error => console.log(error));
+  };
+
   return (
     <View style={styling.Styles.Default_Container}>
   
@@ -62,6 +106,12 @@ function LoginModule(): any {
           userCheckState = true;
         }
         setUserChecked(userCheckState);
+
+        // Login Using Azure
+        if (loginTypeCheckRes == AuthMethod.azure) {
+          azureLogin();
+        }
+
 
         if (userChecked == true) {
           var response = Req.loginAdhoc(email, password);
