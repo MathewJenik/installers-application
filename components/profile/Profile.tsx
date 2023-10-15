@@ -12,7 +12,7 @@ import constants from "../../constants";
 import EncryptedStorage from 'react-native-encrypted-storage';
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import Req, { AuthMethod } from "../../request/Request";
-
+import styling from "../../styling";
 
 /**
  * Props for the MonitoringInformation component.
@@ -124,17 +124,17 @@ const Profile: React.FunctionComponent<MonitoringInformationProps> = ({userFullN
               <View style= {styles.boxSection}>
                 <CardContainer title={'Profile Details'} colour='white' titleColour='white' >
                     <View style = {styles.container}>
-                      <Text style = {styles.labelName}>Full Name</Text>
+                      <Text style = {[styling.Styles.Bold_Text, styling.Styles.Text_Size_2]}>Full Name</Text>
                       <View style = {styles.inputWrapper}>
-                        <Text style = {styles.profileText}>{storedFullName || userFullName}</Text>
+                        <Text style = {[styling.Styles.Text_Size_1]}>{storedFullName || userFullName}</Text>
                       </View>
-                    <Text style = {styles.labelName}>Email Address</Text>
+                    <Text style = {[styling.Styles.Bold_Text, styling.Styles.Text_Size_2]}>Email Address</Text>
                       <View style = {styles.inputWrapper}>
-                        <Text style = {styles.profileText}>{storedEmail || userEmail}</Text>
+                        <Text style = {[styling.Styles.Text_Size_1]}>{storedEmail || userEmail}</Text>
                       </View>
-                    <Text style = {styles.labelName}>Phone Number</Text>
+                    <Text style = {[styling.Styles.Bold_Text, styling.Styles.Text_Size_2]}>Phone Number</Text>
                      <View style = {styles.inputWrapper}>
-                      <Text style = {styles.profileText}>{phoneNumber || userPhoneNumber}</Text>
+                      <Text style = {[styling.Styles.Text_Size_1]}>{phoneNumber || userPhoneNumber}</Text>
                       </View>
                     </View>
                 </CardContainer>
@@ -145,7 +145,7 @@ const Profile: React.FunctionComponent<MonitoringInformationProps> = ({userFullN
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
                       <Icon name="exclamation-circle" size={20} style={{marginRight: 10, marginBottom: 45}}></Icon>
                       <View style={{flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center', width: '90%'}}>
-                        <Text style={styles.bannerLabel}>This client account is using the {accountType} authentication method</Text>
+                        <Text style={[styling.Styles.Text_Size_2]}>This client account is using the {accountType} authentication method</Text>
                       </View>
                     </View>
 
@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
     marginHorizontal: constants.FONTSIZE.EM,
     paddingVertical: constants.FONTSIZE.EM/2,
     paddingHorizontal: constants.FONTSIZE.EM,
-    marginBottom: constants.FONTSIZE.EM*2,
+    marginBottom: constants.FONTSIZE.EM,
     backgroundColor: '#acedfc',
   },
   boxSection:{
