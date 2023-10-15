@@ -138,7 +138,7 @@ const Profile: React.FunctionComponent<MonitoringInformationProps> = ({userFullN
                       </View>
                     </View>
                 </CardContainer>
-                
+
                 <CardContainer title={'Authentication Method'} colour="white" titleColour="white">
                   <View style={styles.bannerBorder}>
 
