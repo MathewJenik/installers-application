@@ -11,6 +11,7 @@ import constants from "../../constants";
 
 import EncryptedStorage from 'react-native-encrypted-storage';
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import Req, { AuthMethod } from "../../request/Request";
 
 
 /**
@@ -44,6 +45,7 @@ const Profile: React.FunctionComponent<MonitoringInformationProps> = ({userFullN
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [isSecureEntry, setIsSecureEntry] = useState([true, true, true]);
+    const [accountType, setAccountType] = useState("");
 
     /**
      * Toggles the secure entry for the password fields.
@@ -56,18 +58,46 @@ const Profile: React.FunctionComponent<MonitoringInformationProps> = ({userFullN
       setIsSecureEntry(updatedSecureEntry);
     };
 
+    /**
+     * The useEffect used to fetch the user's details from the storage and 
+     * set the state variables. It returns errors if there are any.
+     */
     useEffect(() => {
-      // Retrieve data from EncryptedStorage to show the user's details.
-      EncryptedStorage.getItem('user_email')
-        .then(userEmail => setStoredEmail(userEmail))
-        .catch(error => console.log(error));
-      EncryptedStorage.getItem('user_full_name')
-        .then(userFullName => setStoredFullName(userFullName))
-        .catch(error => console.log(error));
-      EncryptedStorage.getItem('user_phone_number')
-        .then(userPhoneNumber => setPhoneNumber(userPhoneNumber))
-        .catch(error => console.log(error));
+      async function fetchData() {
+        try {
+          const userEmail = await EncryptedStorage.getItem('user_email');
+          const userFullName = await EncryptedStorage.getItem('user_full_name');
+          const userPhoneNumber = await EncryptedStorage.getItem('user_phone_number');
+          
+          setStoredEmail(userEmail);
+          setStoredFullName(userFullName);
+          setPhoneNumber(userPhoneNumber);
+    
+          // Call loginCheck after setting userEmail
+          loginCheck(userEmail);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    
+      fetchData();
     }, []);
+
+    /**
+     * Function that checks the login type of the user.
+     * That will returns the login type of the user in the 
+     * banner.
+     * @param userEmail 
+     */
+    async function loginCheck(userEmail) {
+      console.log(userEmail);
+      var results = await Req.loginTypeCheck(null, userEmail, false);
+      if (results === AuthMethod.adhoc) {
+        setAccountType("adhoc");
+      } else if (results === AuthMethod.azure) {
+       setAccountType("azure");
+      }
+    }
   
     
     type navProp = StackNavigationProp<RootStackParamList, "Admin">;
@@ -115,7 +145,7 @@ const Profile: React.FunctionComponent<MonitoringInformationProps> = ({userFullN
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
                       <Icon name="exclamation-circle" size={20} style={{marginRight: 10, marginBottom: 45}}></Icon>
                       <View style={{flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center', width: '90%'}}>
-                        <Text style={styles.bannerLabel}>This client account is using the Azure authentication method</Text>
+                        <Text style={styles.bannerLabel}>This client account is using the {accountType} authentication method</Text>
                       </View>
                     </View>
 
