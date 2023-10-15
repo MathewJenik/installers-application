@@ -115,7 +115,7 @@ const Profile: React.FunctionComponent<MonitoringInformationProps> = ({userFullN
                         navigation.navigate("Admin");
                     }
                     } title={null} flexRow={true} type="small"></CustomButton>
-                    <View style={{flex: 1.25}}></View>
+                    <View style={{flex: 1}}></View>
                     <Image style={{width: 80, height: 50}} source={require('../../Images/Iris_logo.png')} />
                     <View style={{flex: 1}}></View>
                     <View style={{flex: 1}}></View>
