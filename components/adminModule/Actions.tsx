@@ -110,51 +110,63 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
             }
         )
     ).start();
-
-    const markInstaller = async () => {
-        try{
-            console.log("DEVICE ID: ", devID);
-            const sessionID = await EncryptedStorage.getItem("session_id");
-            
-            console.log("Session ID: ", (String)(sessionID));
-            let results = await Req.markAsInstalled(Number(devID), Number(clientID), (String)(sessionID));
-            
-            // Assuming the API responding the button if the device is installed and ready to be marked
-            if(results.error == false)
-            {
-                console.log("Marking Device Installation Success", sessionID);
-                showAlert();
-            }
-            else
-            {
-                console.log("Device Failed to Marked", results.errorMsg);
-            }
-
-
-        } catch {
-            console.log("Error!");
-        }
-    }
     
     const resyncDevice = async () => {
-        try{
-            setActionsLoading(true);
-            console.log("DEVICE ID: ", devID);
-            const sessionID = await EncryptedStorage.getItem("session_id");
-            
-            console.log("Session ID: ", (String)(sessionID));
-            let results = await Req.resyncDevice(Number(devID), Number(clientID), (String)(sessionID));
-            
-            // Updating the results based what the player stands for
-            setData(results);
+        setActionsLoading(true);
+        console.log("DEVICE ID: ", devID);
+        const sessionID = await EncryptedStorage.getItem("session_id");
+        
+        console.log("Session ID: ", (String)(sessionID));
+        let results = await Req.resyncDevice(Number(devID), Number(clientID), (String)(sessionID));
+        
+        // Updating the results based what the player stands for
+        setData(results);
+        showAlert();
+        // Displays the updated data
+        console.log("Updated Data", results)
+    }
+
+    const markInstaller = async () => {
+        console.log("DEVICE ID: ", devID);
+        const sessionID = await EncryptedStorage.getItem("session_id");
+        
+        console.log("Session ID: ", (String)(sessionID));
+        let results = await Req.markAsInstalled(Number(devID), Number(clientID), (String)(sessionID));
+        
+        // Assuming the API responding the button if the device is installed and ready to be marked
+        if(results.results == false)
+        {
+            console.log("Marking Device Installation Success", sessionID);
             showAlert();
-            // Displays the updated data
-            console.log("Updated Data", results)
-        } catch {
-            console.log("Error!");
-        } finally{
-            setActionsLoading(false);
         }
+        else
+        {
+            console.log("Device Failed to Marked", results.errorMsg);
+        }
+    }
+
+    const ping = async () => {
+        setActionsLoading(true);
+        var session = await EncryptedStorage.getItem("session_id");
+        console.log((Number)(devID), (Number)(clientID));
+        let result = await Req.pingMediaPlayer((Number)(devID), (Number)(clientID), (String)(session));
+        console.log(result);
+
+        if (result.result == true) {
+            showAlert();
+            removeOpaque();
+        } else {
+            makeOpaque();
+        }
+
+        // currently the api does not mark the ping result as true if it is successfull, so for now only check if theres an error.
+        if (result.error == false) {
+            removeOpaque()
+        } else {
+            makeOpaque();
+        }
+
+        setActionsLoading(false);
     }
 
     const [isModalVisible, setModalVisible] = useState(false);
@@ -182,31 +194,7 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
             ):(
                 <>
                 <CustomButton title="Mark player as installed" onPress={markInstaller} color={MIButtonColour} faIcon={faWrench} enabled={interactionable}/>
-                <CustomAlert isVisible={isModalVisible} title="SUCCESS" message={"The action has been successful"} onClose={hideAlert}></CustomAlert>
-                <CustomButton color={PingButtonColour} title="Ping" onPress={async () => {
-                            setActionsLoading(true);
-                            var session = await EncryptedStorage.getItem("session_id");
-                            console.log((Number)(devID), (Number)(clientID));
-                            let result = await Req.pingMediaPlayer((Number)(devID), (Number)(clientID), (String)(session));
-                            console.log(result);
-
-                            if (result.result == true) {
-                                removeOpaque();
-                            } else {
-                                makeOpaque();
-                            }
-
-                            // currently the api does not mark the ping result as true if it is successfull, so for now only check if theres an error.
-                            if (result.error == false) {
-                                removeOpaque()
-                            } else {
-                                makeOpaque();
-                            }
-    
-                            setActionsLoading(false);
-                            showAlert();
-                        }} faIcon={faHeartPulse}/>
-                <CustomAlert isVisible={isModalVisible} title="SUCCESS" message={"The action has been successful"} onClose={hideAlert}></CustomAlert>
+                <CustomButton color={PingButtonColour} title="Ping" onPress={ping} faIcon={faHeartPulse}/>
                 <View style={{ flexDirection: 'row' }}>
                 
                 {
@@ -214,8 +202,6 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
                 }
                     <View style={{flex: 1}}>
                         <CustomButton title="Re-sync" onPress={resyncDevice} faIcon={faCloudDownload} color={RSButtonColour} enabled={interactionable}/>
-                        
-                        <CustomAlert isVisible={isModalVisible} title="SUCCESS" message={"The action has been successful"} onClose={hideAlert}></CustomAlert>
                     </View>
 
                 {
@@ -232,13 +218,12 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
                             showAlert();
                         }} faIcon={faRotateLeft} enabled={interactionable} />
                     </View>
-                    <CustomAlert isVisible={isModalVisible} title="SUCCESS" message={"The action has been successful"} onClose={hideAlert}></CustomAlert>
                 </View>
                 </>
             )}
 
             </CardContainer>
-
+            <CustomAlert isVisible={isModalVisible} title="SUCCESS" message={"The action has been successful"} onClose={hideAlert}></CustomAlert>
         </View>
     );
 }
