@@ -127,6 +127,7 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
     }
 
     const markInstaller = async () => {
+        setActionsLoading(true);
         console.log("DEVICE ID: ", devID);
         const sessionID = await EncryptedStorage.getItem("session_id");
         
@@ -143,6 +144,25 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
         {
             console.log("Device Failed to Marked", results.errorMsg);
         }
+    }
+
+
+    var procured = true;
+
+    async function procurementDate(): Promise<boolean>{
+        //Get procurement date
+        const date = await EncryptedStorage.getItem("procurement_date");
+        console.log("Procured date on actions: ", date);
+
+        if(date == null){
+            procured = false;
+            return false;
+        }
+        else{
+            procured = true;
+            return true;
+        }
+        
     }
 
     const ping = async () => {
@@ -178,9 +198,8 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
     const hideAlert = () => {
       setModalVisible(false);
     };
-
-
-
+    procurementDate();
+    
     return (
         <View style={styling.Styles.Card_Style as ViewStyle}>
             <CardContainer title={'Actions'} colour='white' titleColour='white'>
@@ -193,7 +212,15 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
                 </View>
             ):(
                 <>
-                <CustomButton title="Mark player as installed" onPress={markInstaller} color={MIButtonColour} faIcon={faWrench} enabled={interactionable}/>
+
+                { procurementDate() ?
+                    (
+                        <CustomButton title="Mark player as installed" onPress={markInstaller} color={MIButtonColour} faIcon={faWrench} enabled={interactionable}/>
+                    ):(
+                        <></>
+                    )
+                }
+                
                 <CustomButton color={PingButtonColour} title="Ping" onPress={ping} faIcon={faHeartPulse}/>
                 <View style={{ flexDirection: 'row' }}>
                 

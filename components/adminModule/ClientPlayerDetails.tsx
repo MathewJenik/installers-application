@@ -7,6 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 import CardContainer from "../cardContainer/CardContainer";
 import constants from "../../constants";
 import styling from "../../styling";
+import EncryptedStorage from "react-native-encrypted-storage";
 
 interface MonitoringInformationProps {
     clientName: string;
@@ -15,6 +16,7 @@ interface MonitoringInformationProps {
     mediaName: string;
     ipAddres: string;
     mpbid: string;
+    procurement: string;
 }
 
 /**
@@ -26,7 +28,11 @@ interface MonitoringInformationProps {
  * @param {string} mpbid MPBID
  * @returns view with client and player details.
  */
-const ClientPlayerDetails: React.FunctionComponent<MonitoringInformationProps> = ({ clientName = "", clientNumber = "", mediaName = "", ipAddres = "", mpbid = "" }) => {
+
+
+const ClientPlayerDetails: React.FunctionComponent<MonitoringInformationProps> = ({ clientName = "", clientNumber = "", mediaName = "", ipAddres = "", mpbid = "" , procurement = ""}) => {
+
+
 
     type navProp = StackNavigationProp<RootStackParamList, "Admin">;
     const navigation = useNavigation<navProp>();
@@ -56,6 +62,8 @@ const ClientPlayerDetails: React.FunctionComponent<MonitoringInformationProps> =
                     <Text style={[styling.Styles.Text_Size_2]}>{ipAddres}</Text>
                     <Text style={[styling.Styles.Bold_Text, styling.Styles.Text_Size_2]}>MPID:</Text> 
                     <Text style={[styling.Styles.Text_Size_2]}>{mpbid}</Text>
+                    <Text style={[styling.Styles.Bold_Text, styling.Styles.Text_Size_2]}>Procurement Date:</Text> 
+                    <Text style={[styling.Styles.Text_Size_2]}>{procurement}</Text>
                 </View>
             </CardContainer>
 

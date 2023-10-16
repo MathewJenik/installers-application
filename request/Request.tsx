@@ -401,14 +401,20 @@ class Requests {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + sessionId,
       },
-        body: JSON.stringify({search__value: searchValue, session_id:sessionId})
+        body: JSON.stringify({search__value: searchValue, session_id: sessionId})
       };
   
       return fetch("https:api.lymlive.com.au/v1/installers/player/read.iris", ReqOptions)
       .then(response => response.json())
-      .then(json => {
+      .then(async json => {
+
+        const date = json.player.procurement_date;
+        await EncryptedStorage.setItem("procurement_date",date);
+        console.log("Procurement date: ", date);
+
         return json;
       });
+      
   };
 
 };
