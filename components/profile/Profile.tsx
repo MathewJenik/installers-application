@@ -13,6 +13,7 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import Req, { AuthMethod } from "../../request/Request";
 import styling from "../../styling";
+import profileStyling from "./profileStyling";
 
 /**
  * Props for the MonitoringInformation component.
@@ -114,33 +115,33 @@ const Profile: React.FunctionComponent<MonitoringInformationProps> = ({userFullN
                         navigation.navigate("Admin");
                     }
                     } title={null} flexRow={true} type="small"></CustomButton>
-                    <View style={{flex: 1.25}}></View>
-                    <Image style={{width: 80, height: 50}} source={require('../../Images/Iris_logo.png')} />
-                    <View style={{flex: 1}}></View>
+                    <View style={{flex: 1.05}}></View>
+                    <Image style={{width: 80, height: 50, display: 'flex'}} source={require('../../Images/Iris_logo.png')} />
+                    <View style={{flex: 1.05}}></View>
                     <View style={{flex: 1}}></View>
                 </View>
               </View>
 
-              <View style= {styles.boxSection}>
+              <View style= {[profileStyling.boxSection]}>
                 <CardContainer title={'Profile Details'} colour='white' titleColour='white' >
-                    <View style = {styles.container}>
+                    <View style = {[profileStyling.container]}>
                       <Text style = {[styling.Styles.Bold_Text, styling.Styles.Text_Size_2]}>Full Name</Text>
-                      <View style = {styles.inputWrapper}>
+                      <View style = {[profileStyling.inputWrapper]}>
                         <Text style = {[styling.Styles.Text_Size_1]}>{storedFullName || userFullName}</Text>
                       </View>
                     <Text style = {[styling.Styles.Bold_Text, styling.Styles.Text_Size_2]}>Email Address</Text>
-                      <View style = {styles.inputWrapper}>
+                      <View style = {[profileStyling.inputWrapper]}>
                         <Text style = {[styling.Styles.Text_Size_1]}>{storedEmail || userEmail}</Text>
                       </View>
                     <Text style = {[styling.Styles.Bold_Text, styling.Styles.Text_Size_2]}>Phone Number</Text>
-                     <View style = {styles.inputWrapper}>
+                     <View style = {[profileStyling.inputWrapper]}>
                       <Text style = {[styling.Styles.Text_Size_1]}>{phoneNumber || userPhoneNumber}</Text>
                       </View>
                     </View>
                 </CardContainer>
-                
+
                 <CardContainer title={'Authentication Method'} colour="white" titleColour="white">
-                  <View style={styles.bannerBorder}>
+                  <View style={[profileStyling.bannerBorder]}>
 
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
                       <Icon name="exclamation-circle" size={20} style={{marginRight: 10, marginBottom: 45}}></Icon>
@@ -153,11 +154,11 @@ const Profile: React.FunctionComponent<MonitoringInformationProps> = ({userFullN
                 </CardContainer>
                 {/*
                   <ViewContainer title={'Password Reset'} colour='white' titleColour='white' >
-                    <View style = {styles.container}>
-                    <Text style = {styles.labelName}>Current Password</Text>
-                    <View style = {styles.inputWrapper}>
+                    <View style = {profileStyling.container}>
+                    <Text style = {profileStyling.labelName}>Current Password</Text>
+                    <View style = {profileStyling.inputWrapper}>
                       <TextInput
-                        style={styles.input}
+                        style={profileStyling.input}
                         value={password}
                         onChangeText={setPassword}
                         secureTextEntry={isSecureEntry[0]}
@@ -170,10 +171,10 @@ const Profile: React.FunctionComponent<MonitoringInformationProps> = ({userFullN
                         />
                       </TouchableOpacity>
                     </View>
-                    <Text style = {styles.labelName}>New Password</Text>
-                      <View style = {styles.inputWrapper}>
+                    <Text style = {profileStyling.labelName}>New Password</Text>
+                      <View style = {profileStyling.inputWrapper}>
                       <TextInput
-                        style={styles.input}
+                        style={profileStyling.input}
                         value={newPassword}
                         onChangeText={setNewPassword}
                         secureTextEntry={isSecureEntry[1]}
@@ -186,15 +187,15 @@ const Profile: React.FunctionComponent<MonitoringInformationProps> = ({userFullN
                         />
                       </TouchableOpacity>
                     </View>
-                    <Text style = {styles.labelName}>New Password Confirmation</Text>
-                    <View style = {styles.inputWrapper}>
+                    <Text style = {profileStyling.labelName}>New Password Confirmation</Text>
+                    <View style = {profileStyling.inputWrapper}>
                     <TextInput
-                      style={styles.input}
+                      style={profileStyling.input}
                       value={confirmPassword}
                       onChangeText={setConfirmPassword}
                       secureTextEntry={isSecureEntry[2]}
                     />
-                      <TouchableOpacity onPress={() => toggleSecureEntry(2)} style={styles.icon}>
+                      <TouchableOpacity onPress={() => toggleSecureEntry(2)} style={profileStyling.icon}>
                         <Icon
                           name={isSecureEntry[2]? 'eye-slash' : 'eye'}
                           size={20}
@@ -203,13 +204,13 @@ const Profile: React.FunctionComponent<MonitoringInformationProps> = ({userFullN
                       </TouchableOpacity>
                     </View>
                     </View>
-                    <View style={styles.savePasswordButton}>
+                    <View style={profileStyling.savePasswordButton}>
                     <CustomButton onPress={() => Alert.alert('Password Changed!')} title="Password Change" color='#42b4ff' iconName='key' textPosition="center"></CustomButton>
                     </View>
                 </ViewContainer>
                 */}
               {/*
-              <View style={styles.buttonBackground}>
+              <View style={profileStyling.buttonBackground}>
                 <CustomButton onPress={() => Alert.alert('Changes Saved')} title="Save Changes" color='#56c924' iconName='floppy-o' textPosition="center"></CustomButton>
                 <CustomButton onPress={() => Alert.alert('Cancel')} title="Cancel" color='#ff5c33' iconName='times' textPosition="center"></CustomButton> 
               </View>
@@ -223,69 +224,4 @@ const Profile: React.FunctionComponent<MonitoringInformationProps> = ({userFullN
   </View>
     );
 }
-
-const styles = StyleSheet.create({
-  input: {
-      flex: 1,
-      padding: 10,
-  },
-  inputWrapper:{
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: constants.FONTSIZE.EM,
-    paddingVertical: constants.FONTSIZE.EM/2,
-  },
-  container: {
-    paddingHorizontal: constants.FONTSIZE.EM,
-    paddingVertical: constants.FONTSIZE.EM/2,
-  },
-  labelName:{
-    fontSize: 16,
-    color: '#1f1f1f',
-    paddingVertical: 10,
-    fontWeight: 'bold',
-  },
-  profileText:{
-    fontSize: 14,
-    color: '#484a48',
-    fontWeight: 'bold',
-  },
-  bannerLabel:{
-    fontSize: 20,
-    color: '#102940',
-    paddingVertical: constants.FONTSIZE.EM,
-  },
-  bannerBorder:{
-    borderWidth: 1,
-    borderRadius: 4,
-    borderColor: '#102940',
-    marginHorizontal: constants.FONTSIZE.EM,
-    paddingVertical: constants.FONTSIZE.EM/2,
-    paddingHorizontal: constants.FONTSIZE.EM,
-    marginBottom: constants.FONTSIZE.EM,
-    backgroundColor: '#acedfc',
-  },
-  boxSection:{
-    paddingHorizontal: 20,
-  },
-  icon: {
-    position: 'absolute', // Position the icon absolutely inside the input container
-    right: 10, // Adjust the right position as needed
-  },
-  buttonBackground:{
-    backgroundColor: 'white',
-    marginBottom: constants.FONTSIZE.EM,
-    marginTop: constants.FONTSIZE.EM*2,
-    paddingHorizontal: constants.FONTSIZE.EM/2,
-    paddingVertical: constants.FONTSIZE.EM*2,
-    borderRadius: 4,
-    borderLeftWidth: 2,
-    borderBottomWidth: 2,
-    borderColor: "grey",
-  },
-  savePasswordButton:{
-    marginBottom: 20,
-    paddingHorizontal: constants.FONTSIZE.EM/3,
-  },
-});
 export default Profile;
