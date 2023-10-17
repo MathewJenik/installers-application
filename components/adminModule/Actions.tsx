@@ -146,20 +146,15 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
         }
     }
 
-
-    var procured = true;
-
-    async function procurementDate(): Promise<boolean>{
+    function procurementDate(): boolean{
         //Get procurement date
-        const date = await EncryptedStorage.getItem("procurement_date");
+        const date = globalThis.procurementSaved;
         console.log("Procured date on actions: ", date);
 
-        if(date == null){
-            procured = false;
+        if(date == ""){
             return false;
         }
         else{
-            procured = true;
             return true;
         }
         

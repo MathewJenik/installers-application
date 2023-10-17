@@ -409,7 +409,7 @@ class Requests {
       .then(async json => {
 
         const date = json.player.procurement_date;
-        await EncryptedStorage.setItem("procurement_date",date);
+        globalThis.procurementSaved = date;
         console.log("Procurement date: ", date);
 
         return json;

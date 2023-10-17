@@ -24,6 +24,9 @@ import constants from '../../constants';
 import Profile from '../profile/Profile';
 
 type navProp = StackNavigationProp<RootStackParamList, "Admin">;
+declare global {
+  var procurementSaved: string;
+}
 
 async function LogOut() {  
   // clear the storage of all user details
@@ -129,9 +132,6 @@ function AdminModule() {
       
   }
 
-    const procurement = EncryptedStorage.getItem("procurement_bool");
-
-
   return (
     <View style={{backgroundColor: '#e0e0e0', height:"100%"}}>
       <SafeAreaView style={{backgroundColor: '#e0e0e0'}}>
@@ -168,7 +168,7 @@ function AdminModule() {
 
           {showingData ? (
               <>
-                <ClientPlayerDetails  clientName={clientName} clientNumber={clientNumber} mediaName={mediaName} ipAddres={ipAddres} mpbid={mpbid} procurement={"procurement"}></ClientPlayerDetails>
+                <ClientPlayerDetails  clientName={clientName} clientNumber={clientNumber} mediaName={mediaName} ipAddres={ipAddres} mpbid={mpbid}></ClientPlayerDetails>
                 <Actions devID={value} clientID={cID} interactionable={pingSuccessfull}></Actions>
 
                 <Orientation devID={value} clientID={cID} startingOrientation={startingOrientation}></Orientation>

@@ -30,7 +30,7 @@ interface MonitoringInformationProps {
  */
 
 
-const ClientPlayerDetails: React.FunctionComponent<MonitoringInformationProps> = ({ clientName = "", clientNumber = "", mediaName = "", ipAddres = "", mpbid = "" , procurement = ""}) => {
+const ClientPlayerDetails: React.FunctionComponent<MonitoringInformationProps> = ({ clientName = "", clientNumber = "", mediaName = "", ipAddres = "", mpbid = ""}) => {
 
 
 
@@ -63,7 +63,7 @@ const ClientPlayerDetails: React.FunctionComponent<MonitoringInformationProps> =
                     <Text style={[styling.Styles.Bold_Text, styling.Styles.Text_Size_2]}>MPID:</Text> 
                     <Text style={[styling.Styles.Text_Size_2]}>{mpbid}</Text>
                     <Text style={[styling.Styles.Bold_Text, styling.Styles.Text_Size_2]}>Procurement Date:</Text> 
-                    <Text style={[styling.Styles.Text_Size_2]}>{procurement}</Text>
+                    <Text style={[styling.Styles.Text_Size_2]}>{globalThis.procurementSaved}</Text>
                 </View>
             </CardContainer>
 
