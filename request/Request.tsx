@@ -37,7 +37,10 @@ class Requests {
   displayCheckValid(playerID: Number, clientID: Number, orient: ScreenOrientation, sessionID: string) {
     const orientationReq = {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + sessionID,
+    },
       body: JSON.stringify(
         {
           player__id: playerID,
@@ -70,7 +73,10 @@ class Requests {
   pingMediaPlayer(mpID: Number, clientID: Number, sessionID: string) {
     const ReqOptions = {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + sessionID,
+    },
       body: JSON.stringify(
         {
           mp__id: mpID,
@@ -108,7 +114,10 @@ class Requests {
   rebootMediaPlayer(mpID: Number, clientID: Number, sessionID: string) {
     const ReqOptions = {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + sessionID,
+    },
       body: JSON.stringify(
         {
           mp__id: mpID,
@@ -166,7 +175,6 @@ class Requests {
         saml: false,
         type: AuthMethod.adhoc,
         auth_token: ""
-
       })
     };
 
@@ -187,7 +195,10 @@ class Requests {
 
     const loginCheckOptions = {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + sessionID,
+    },
       body: JSON.stringify({
         session_id: sessionID,
       })
@@ -315,13 +326,20 @@ class Requests {
      * @param {string} sessionID : The session ID of the user
      * @returns JSON response from the API
      */
-    markAsInstalled(deviceID: number, clientID: number, sessionID: string) {
+    markAsInstalled(deviceID: Number, clientID: Number, sessionID: string) {
       // Set the request options
       const ReqOptions = {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({player_id: deviceID, 
-        client_id: clientID, session_id: sessionID })
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + sessionID,
+      },
+        body: JSON.stringify(
+          {
+            player_id: deviceID, 
+            client_id: clientID, 
+            session_id: sessionID 
+          })
       };
       
       // Send the request to the Lymlive API and return the response as JSON
@@ -332,8 +350,8 @@ class Requests {
           console.log("API DEVICE ID:", deviceID);
           console.log("API CLIENT ID:", clientID);
           console.log("API SESSION ID:", sessionID);
-          console.log(json.valid);
-          console.log("Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n valid: ", json.valid, "\n next: ", json.next, "\n Logged In: ", json.loggedIn);
+          console.log("Valid: ", json.valid);
+          console.log("Mark request : ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n valid: ", json.valid, "\n next: ", json.next, "\n Logged In: ", json.loggedIn);
           
           // Return the response
           return json;
@@ -353,7 +371,10 @@ class Requests {
         // Set the request options
         const ReqOptions = {
           method: 'POST',
-          headers: {'Content-Type': 'application/json'},
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + sessionID,
+        },
           body: JSON.stringify({player_id: deviceID, 
           client_id: clientID, session_id: sessionID })
         };
@@ -378,16 +399,22 @@ class Requests {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + sessionId + '',
+          'Authorization': 'Bearer ' + sessionId,
       },
-        body: JSON.stringify({search__value: searchValue, session_id:sessionId})
+        body: JSON.stringify({search__value: searchValue, session_id: sessionId})
       };
   
       return fetch("https:api.lymlive.com.au/v1/installers/player/read.iris", ReqOptions)
       .then(response => response.json())
-      .then(json => {
+      .then(async json => {
+
+        const date = json.player.procurement_date;
+        globalThis.procurementSaved = date;
+        console.log("Procurement date: ", date);
+
         return json;
       });
+      
   };
 
 };

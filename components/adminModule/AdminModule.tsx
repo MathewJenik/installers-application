@@ -24,6 +24,9 @@ import constants from '../../constants';
 import Profile from '../profile/Profile';
 
 type navProp = StackNavigationProp<RootStackParamList, "Admin">;
+declare global {
+  var procurementSaved: string;
+}
 
 async function LogOut() {  
   // clear the storage of all user details

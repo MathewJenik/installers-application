@@ -69,6 +69,7 @@ function LoginModule(): any {
       console.log('info', info)
       state.user = info.displayName;
       state.userId = tokens.userId;
+      console.log(azureAuth);
 
       // now navigate to the admin page upon success
       navigation.navigate('Admin');

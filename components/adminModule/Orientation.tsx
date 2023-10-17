@@ -220,7 +220,6 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
             }
             setOrientationLoading(false);
             }} title={'Normal'} faIcon={faArrowUp} greyed={upPressed}/>
-            <CustomAlert isVisible={isModalVisible} title="Rotation" message={"Successful"} onClose={hideAlert}></CustomAlert>
         </View>
         
         <View style={{flexDirection:"row", marginHorizontal: constants.FONTSIZE.EM/2}}>
@@ -236,7 +235,6 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
               }
               setOrientationLoading(false);
             }} title={'Left '} faIcon={faArrowLeft} greyed={leftPressed}/>
-            <CustomAlert isVisible={isModalVisible} title="Rotation" message={"Successful"} onClose={hideAlert}></CustomAlert>
           </View>
 
           <View style={{flex: 1}}></View>
@@ -252,7 +250,6 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
               }
               setOrientationLoading(false);
             }} title={'Right'} faIcon={faArrowRight} greyed={rightPressed}/>
-            <CustomAlert isVisible={isModalVisible} title="Rotation" message={"Successful"} onClose={hideAlert}></CustomAlert>
           </View>
         </View>
 
@@ -268,11 +265,11 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
             }
             setOrientationLoading(false);
             }} title={'Inverse'} faIcon={faArrowDown} greyed={downPressed}/>
-            <CustomAlert isVisible={isModalVisible} title="Rotation" message={"Successful"} onClose={hideAlert}></CustomAlert>
         </View>
         </>
       )}
       </CardContainer>
+      <CustomAlert isVisible={isModalVisible} title="Rotation" message={"Successful"} onClose={hideAlert}></CustomAlert>
     </View>
   );
 }
