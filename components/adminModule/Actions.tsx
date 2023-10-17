@@ -151,7 +151,7 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
         const date = globalThis.procurementSaved;
         console.log("Procured date on actions: ", date);
 
-        if(date == ""){
+        if(date == "" || date == null){
             return false;
         }
         else{
