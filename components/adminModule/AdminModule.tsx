@@ -24,9 +24,6 @@ import constants from '../../constants';
 import Profile from '../profile/Profile';
 
 type navProp = StackNavigationProp<RootStackParamList, "Admin">;
-declare global {
-  var procurementSaved: string;
-}
 
 async function LogOut() {  
   // clear the storage of all user details
@@ -62,6 +59,9 @@ function AdminModule() {
 
   const [isModalVisible, setModalVisible] = useState(false);
 
+  const [procDateSet, setProcDateSet] = useState(false);
+  const [procDate, setProcDate] = useState("");
+  const [MIHidden, setMIHidden] = useState(false);
 
   /**
    * Function to show the modal box.
@@ -114,6 +114,12 @@ function AdminModule() {
               setmpbid(response.player.id)
               
               setShowingData(true);
+
+              // check if the procurement date has been set:
+              setProcDate(response.player.procurement_date);
+              if (procDate != "NULL" || Date.toString() != procDate) {
+                setMIHidden(true);
+              }
 
               // ping the media player
               var pingResult = await Req.pingMediaPlayer((Number)(search), response.client.user_id, session);
@@ -168,8 +174,8 @@ function AdminModule() {
 
           {showingData ? (
               <>
-                <ClientPlayerDetails  clientName={clientName} clientNumber={clientNumber} mediaName={mediaName} ipAddres={ipAddres} mpbid={mpbid}></ClientPlayerDetails>
-                <Actions devID={value} clientID={cID} interactionable={pingSuccessfull}></Actions>
+                <ClientPlayerDetails procurement={procDate} clientName={clientName} clientNumber={clientNumber} mediaName={mediaName} ipAddres={ipAddres} mpbid={mpbid}></ClientPlayerDetails>
+                <Actions hideMarkInstaller={MIHidden} devID={value} clientID={cID} interactionable={pingSuccessfull}></Actions>
 
                 <Orientation devID={value} clientID={cID} startingOrientation={startingOrientation}></Orientation>
                 <PingDetails lastPing={lastPing} lastPingS={lastPingSuccess} lastSync={lastSync} lastSyncUpdate={lastSyncUpdate}></PingDetails>

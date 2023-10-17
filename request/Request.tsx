@@ -336,8 +336,8 @@ class Requests {
       },
         body: JSON.stringify(
           {
-            player_id: deviceID, 
-            client_id: clientID, 
+            player__id: deviceID, 
+            client__id: clientID, 
             session_id: sessionID 
           })
       };
@@ -391,7 +391,7 @@ class Requests {
           
             // Return the response
             return json;
-          });   
+          });  
         };
 
     searchRequest(searchValue: string , sessionId: string)  {
@@ -407,11 +407,6 @@ class Requests {
       return fetch("https:api.lymlive.com.au/v1/installers/player/read.iris", ReqOptions)
       .then(response => response.json())
       .then(async json => {
-
-        const date = json.player.procurement_date;
-        globalThis.procurementSaved = date;
-        console.log("Procurement date: ", date);
-
         return json;
       });
       

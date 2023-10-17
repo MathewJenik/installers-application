@@ -30,12 +30,14 @@ interface MonitoringInformationProps {
  */
 
 
-const ClientPlayerDetails: React.FunctionComponent<MonitoringInformationProps> = ({ clientName = "", clientNumber = "", mediaName = "", ipAddres = "", mpbid = ""}) => {
+const ClientPlayerDetails: React.FunctionComponent<MonitoringInformationProps> = ({ clientName = "", clientNumber = "", mediaName = "", ipAddres = "", mpbid = "", procurement=""}) => {
 
 
 
     type navProp = StackNavigationProp<RootStackParamList, "Admin">;
     const navigation = useNavigation<navProp>();
+
+    var pDate = new Date(procurement);
 
     return (
         <View style={[styling.Styles.Card_Style as ViewStyle]}>
@@ -56,14 +58,16 @@ const ClientPlayerDetails: React.FunctionComponent<MonitoringInformationProps> =
                 <Text style={[styling.Styles.Bold_Text, styling.Styles.Text_Size_3, {paddingTop:constants.FONTSIZE.EM}]}>Media Player</Text>
                 <View style={{paddingLeft: constants.FONTSIZE.EM}}>
                     
-                    <Text style={[styling.Styles.Bold_Text, styling.Styles.Text_Size_2]}>Name:</Text> 
+                    <Text style={[styling.Styles.Bold_Text, styling.Styles.Text_Size_2]}>Name:</Text>
                     <Text style={[styling.Styles.Text_Size_2]}>{mediaName}</Text>
                     <Text style={[styling.Styles.Bold_Text, styling.Styles.Text_Size_2]}>IP Address:</Text>
                     <Text style={[styling.Styles.Text_Size_2]}>{ipAddres}</Text>
-                    <Text style={[styling.Styles.Bold_Text, styling.Styles.Text_Size_2]}>MPID:</Text> 
+                    <Text style={[styling.Styles.Bold_Text, styling.Styles.Text_Size_2]}>MPID:</Text>
                     <Text style={[styling.Styles.Text_Size_2]}>{mpbid}</Text>
-                    <Text style={[styling.Styles.Bold_Text, styling.Styles.Text_Size_2]}>Procurement Date:</Text> 
-                    <Text style={[styling.Styles.Text_Size_2]}>{globalThis.procurementSaved}</Text>
+                    <Text style={[styling.Styles.Bold_Text, styling.Styles.Text_Size_2]}>Procurement Date:</Text>
+                    <Text style={[styling.Styles.Text_Size_2]}>
+                        {String(pDate.getDate()).padStart(2, "0")}/{String(pDate.getMonth()+1).padStart(2, "0")}/{pDate.getFullYear()} {String(pDate.getHours()).padStart(2, "0")}:{String(pDate.getMinutes()).padStart(2,"0")}:{String(pDate.getSeconds()).padStart(2, "0")}
+                    </Text>
                 </View>
             </CardContainer>
 

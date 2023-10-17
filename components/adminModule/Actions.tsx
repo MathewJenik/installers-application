@@ -35,9 +35,10 @@ interface ActionsProps {
     devID: string;
     clientID: string;
     interactionable: boolean;
+    hideMarkInstaller: boolean;
 }
 
-const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = "", interactionable=true})=> {
+const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = "", interactionable=true, hideMarkInstaller=false})=> {
     
     const [actionsLoading, setActionsLoading] = useState(false);
     const [data, setData] = useState('');
@@ -146,20 +147,6 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
         }
     }
 
-    function procurementDate(): boolean{
-        //Get procurement date
-        const date = globalThis.procurementSaved;
-        console.log("Procured date on actions: ", date);
-
-        if(date == "" || date == null){
-            return false;
-        }
-        else{
-            return true;
-        }
-        
-    }
-
     const ping = async () => {
         setActionsLoading(true);
         var session = await EncryptedStorage.getItem("session_id");
@@ -193,7 +180,7 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
     const hideAlert = () => {
       setModalVisible(false);
     };
-    procurementDate();
+
     
     return (
         <View style={styling.Styles.Card_Style as ViewStyle}>
@@ -208,7 +195,7 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
             ):(
                 <>
 
-                { procurementDate() ?
+                { !markInstaller ?
                     (
                         <CustomButton title="Mark player as installed" onPress={markInstaller} color={MIButtonColour} faIcon={faWrench} enabled={interactionable}/>
                     ):(
