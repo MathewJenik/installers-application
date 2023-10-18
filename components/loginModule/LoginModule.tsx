@@ -129,7 +129,7 @@ function LoginModule(): any {
         
         }} title={'Login'} />
 
-      <CustomAlert isVisible={isModalVisible} title="Failed Login" message={"Either the password or the username was incorrect"} onClose={hideAlert}></CustomAlert>
+      <CustomAlert isVisible={isModalVisible} title="Failed Login" message={"Incorrect username or password please try again!"} onClose={hideAlert}></CustomAlert>
     </View>
   );
 

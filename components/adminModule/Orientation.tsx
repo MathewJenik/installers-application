@@ -32,6 +32,10 @@ var normalPress = false;
 var inversePress = false;
 var leftPress = false;
 var rightPress = false;
+var alertTitle = "";
+var alertDesc = "";
+
+let invalidRequest = false;
 
 //Enum for screen orientation
 export enum ScreenOrientation {
@@ -51,7 +55,7 @@ export enum ScreenOrientation {
 async function pressNormal(devID: String, clientID: String): Promise<boolean> {
   normalPress = true;
   let session = await EncryptedStorage.getItem("session_id");
-  await request.displayCheckValid((Number)(devID), (Number)(clientID), ScreenOrientation.normal, (String)(session));
+  invalidRequest = await request.displayCheckValid((Number)(devID), (Number)(clientID), ScreenOrientation.normal, (String)(session));
   return normalPress;
 }
 /**
@@ -63,7 +67,7 @@ async function pressNormal(devID: String, clientID: String): Promise<boolean> {
 async function pressInverse(devID: String, clientID: String): Promise<boolean> {
   inversePress = true;
   let session = await EncryptedStorage.getItem("session_id");
-  await request.displayCheckValid((Number)(devID), (Number)(clientID), ScreenOrientation.inverted, (String)(session));
+  invalidRequest = await request.displayCheckValid((Number)(devID), (Number)(clientID), ScreenOrientation.inverted, (String)(session));
   return inversePress;
 }
 /**
@@ -75,7 +79,7 @@ async function pressInverse(devID: String, clientID: String): Promise<boolean> {
 async function pressLeft(devID: String, clientID: String): Promise<boolean> {
   leftPress = true;
   let session = await EncryptedStorage.getItem("session_id");
-  await request.displayCheckValid((Number)(devID), (Number)(clientID), ScreenOrientation.left, (String)(session));
+  invalidRequest = await request.displayCheckValid((Number)(devID), (Number)(clientID), ScreenOrientation.left, (String)(session));
   return leftPress;
 }
 /**
@@ -87,7 +91,7 @@ async function pressLeft(devID: String, clientID: String): Promise<boolean> {
 async function pressRight(devID: String, clientID: String): Promise<boolean> {
   rightPress = true;
   let session = await EncryptedStorage.getItem("session_id");
-  await request.displayCheckValid((Number)(devID), (Number)(clientID), ScreenOrientation.right, (String)(session));
+  invalidRequest = await request.displayCheckValid((Number)(devID), (Number)(clientID), ScreenOrientation.right, (String)(session));
   return rightPress;
 }
 /**
@@ -208,15 +212,19 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
       ):(
         //button layouts for normal, inverse, left, right
         <>
-        <View  style={styles.button}>
+        <View style={styles.button}>
           <CustomButton onPress={async () => {
             setOrientationLoading(true);
-            let res = await pressNormal(devID, clientID);
-            if (res == true) {
+            await pressNormal(devID, clientID);
+            if (global.rotate == "") {
               onClickNormal();
+              alertTitle = "Successfully rotated: Normal";
               showAlert();
             }
             else{
+              alertTitle = "Failed to rotate: Normal";
+              alertDesc = global.rotate;
+              showAlert();
             }
             setOrientationLoading(false);
             }} title={'Normal'} faIcon={faArrowUp} greyed={upPressed}/>
@@ -226,12 +234,16 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
           <View style={{flex: 4}}>
             <CustomButton onPress={async () => {
               setOrientationLoading(true);
-              let res = await pressLeft(devID, clientID);
-              if (res == true) {
+              await pressLeft(devID, clientID);
+              if (global.rotate == "") {
                 onClickLeft();
+                alertTitle = "Successfully rotated: Left";
                 showAlert();
               }
               else{
+                alertTitle = "Failed to rotate: Left";
+                alertDesc = global.rotate;
+                showAlert();
               }
               setOrientationLoading(false);
             }} title={'Left '} faIcon={faArrowLeft} greyed={leftPressed}/>
@@ -241,12 +253,16 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
           <View style={{flex: 4}}>
             <CustomButton onPress={async () => {
               setOrientationLoading(true);
-              let res = await pressRight(devID, clientID);
-              if (res == true) {
+              await pressRight(devID, clientID);
+              if (global.rotate == "") {
                 onClickRight();
+                alertTitle = "Successfully rotated: Right";
                 showAlert();
               }
               else{
+                alertTitle = "Failed to rotate: Right";
+                alertDesc = global.rotate;
+                showAlert();
               }
               setOrientationLoading(false);
             }} title={'Right'} faIcon={faArrowRight} greyed={rightPressed}/>
@@ -256,12 +272,16 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
         <View style={styles.button}>
           <CustomButton onPress={async () => {
             setOrientationLoading(true);
-            let res = await pressInverse(devID, clientID);
-            if (res == true) {
+            await pressInverse(devID, clientID);
+            if (global.rotate == "") {
               onClickInverted();
+              alertTitle = "Successfully rotated: Inverse";
               showAlert();
             }
             else{
+              alertTitle = "Failed to rotate: Inverse";
+              alertDesc = global.rotate;
+              showAlert();
             }
             setOrientationLoading(false);
             }} title={'Inverse'} faIcon={faArrowDown} greyed={downPressed}/>
@@ -269,7 +289,7 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
         </>
       )}
       </CardContainer>
-      <CustomAlert isVisible={isModalVisible} title="Rotation" message={"Successful"} onClose={hideAlert}></CustomAlert>
+      <CustomAlert isVisible={isModalVisible} title={alertTitle} message={alertDesc} onClose={hideAlert}></CustomAlert>
     </View>
   );
 }

@@ -37,13 +37,14 @@ interface ActionsProps {
     interactionable: boolean;
     hideMarkInstaller: boolean;
 }
+var alertTitle = "";
+var alertDesc = "";
 
 const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = "", interactionable=true, hideMarkInstaller=false})=> {
     
     const [actionsLoading, setActionsLoading] = useState(false);
     const [data, setData] = useState('');
     var alpha = 1.0;
-
 
     // string variables for the button colours, used when changing the opacity.
     var MIColourString = "rgba("+constants.RGB.GREENBUTTONCOLOUR.RED+"," + constants.RGB.GREENBUTTONCOLOUR.GREEN +"," + constants.RGB.GREENBUTTONCOLOUR.BLUE + ", "
@@ -119,10 +120,19 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
         
         console.log("Session ID: ", (String)(sessionID));
         let results = await Req.resyncDevice(Number(devID), Number(clientID), (String)(sessionID));
-        
+
+        if(results.results == false){
+            alertTitle = "Successfully resynced device";
+            showAlert();
+        }
+        else{
+            alertDesc = global.sync;
+            alertTitle = "Failed to sync device";
+            showAlert();
+        }
+
         // Updating the results based what the player stands for
         setData(results);
-        showAlert();
         // Displays the updated data
         console.log("Updated Data", results)
     }
@@ -139,11 +149,15 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
         if(results.results == false)
         {
             console.log("Marking Device Installation Success", sessionID);
+            alertTitle = "Successfully marked player installed";
             showAlert();
         }
         else
         {
+            alertDesc = global.mark;
+            alertTitle = "Failed to mark player installed";
             console.log("Device Failed to Marked", results.errorMsg);
+            showAlert();
         }
     }
 
@@ -152,22 +166,49 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
         var session = await EncryptedStorage.getItem("session_id");
         console.log((Number)(devID), (Number)(clientID));
         let result = await Req.pingMediaPlayer((Number)(devID), (Number)(clientID), (String)(session));
-        console.log(result);
+        console.log("PING:",result);
 
         if (result.result == true) {
+            alertTitle = "Successfully pinged media player";
             showAlert();
             removeOpaque();
         } else {
+            alertDesc = global.ping;
+            alertTitle = "Failed to ping media player";
+            showAlert();
             makeOpaque();
         }
 
         // currently the api does not mark the ping result as true if it is successfull, so for now only check if theres an error.
         if (result.error == false) {
+            alertTitle = "Successfully pinged media player";
+            showAlert();
             removeOpaque()
         } else {
+            alertDesc = global.ping;
+            alertTitle = "Failed to ping media player";
+            showAlert();
             makeOpaque();
         }
 
+        setActionsLoading(false);
+    }
+
+    const reboot = async () => {
+        setActionsLoading(true);
+        var session = await EncryptedStorage.getItem("session_id");
+        console.log((Number)(devID), (Number)(clientID));
+        let result = await Req.rebootMediaPlayer((Number)(devID), (Number)(clientID), (String)(session));
+
+        if(result.result == false){
+            alertTitle = "Successfully resynced device";
+            showAlert();
+        } else {    
+            alertDesc = global.sync;
+            alertTitle = "Failed to resync device";
+            showAlert();
+        }
+        console.log(result);
         setActionsLoading(false);
     }
 
@@ -217,22 +258,14 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
                     // Displays reboot button and handles functionality when clicked. 
                 }
                     <View style={{flex: 1}}>
-                        <CustomButton color={RBButtonColour}  title="Reboot" onPress={async () => {
-                            setActionsLoading(true);
-                            var session = await EncryptedStorage.getItem("session_id");
-                            console.log((Number)(devID), (Number)(clientID));
-                            let result = await Req.rebootMediaPlayer((Number)(devID), (Number)(clientID), (String)(session));
-                            console.log(result);
-                            setActionsLoading(false);
-                            showAlert();
-                        }} faIcon={faRotateLeft} enabled={interactionable} />
+                        <CustomButton color={RBButtonColour}  title="Reboot" onPress={reboot} faIcon={faRotateLeft} enabled={interactionable} />
                     </View>
                 </View>
                 </>
             )}
 
             </CardContainer>
-            <CustomAlert isVisible={isModalVisible} title="SUCCESS" message={"The action has been successful"} onClose={hideAlert}></CustomAlert>
+            <CustomAlert isVisible={isModalVisible} title={alertTitle} message={alertDesc} onClose={hideAlert}></CustomAlert>
         </View>
     );
 }

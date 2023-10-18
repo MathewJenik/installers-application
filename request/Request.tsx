@@ -49,11 +49,11 @@ class Requests {
           session_id: sessionID
         })
     };
-
     return fetch("https:api.lymlive.com.au/v1/installers/actions/screen__rotate.iris", orientationReq)
       .then(response => response.json())
       .then(json => {
 
+        global.rotate = json.errorMsg;
         console.log(json.valid);
         console.log("\nDisplay Request = \n", "Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n valid: ", json.loggedIn);
         return json;
@@ -89,12 +89,13 @@ class Requests {
       .then(response => response.json())
       .then(json => {
 
+        global.ping = json.errorMsg;
         // Logs all the variables and any errors
         console.log(mpID);
         console.log(clientID);
         console.log(sessionID);
 
-        console.log("\nDisplay Request = \n", "Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n Result: ", json.result);
+        console.log("\Ping Request = \n", "Error: ", json.error, "\n ErrorMessage: ", json.errorMsg, "\n Result: ", json.result);
         return json;
 
       })
@@ -129,6 +130,8 @@ class Requests {
     return fetch("https:api.lymlive.com.au/v1/admin/mediaplayer/reboot.iris", ReqOptions)
       .then(response => response.json())
       .then(json => {
+
+        global.reboot = json.errorMsg;
 
         // Logs all the variables and any errors
         console.log(mpID);
@@ -346,6 +349,8 @@ class Requests {
       return fetch("https://api.lymlive.com.au/v1/installers/actions/install__player.iris", ReqOptions)
       .then(response => response.json())
         .then(json => { 
+
+          global.mark = json.errorMsg;
           // Log the API response
           console.log("API DEVICE ID:", deviceID);
           console.log("API CLIENT ID:", clientID);
@@ -382,6 +387,8 @@ class Requests {
         return fetch("https:api.lymlive.com.au/v1/admin/mediaplayer/sync.iris", ReqOptions)
         .then(response => response.json())
           .then(json => { 
+
+            global.sync = json.errorMsg;
             // Log the API response
             console.log("API DEVICE ID:", deviceID);
             console.log("API CLIENT ID:", clientID);
