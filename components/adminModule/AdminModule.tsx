@@ -18,7 +18,6 @@ import PingDetails from './PingDetails';
 import ClientPlayerDetails from './ClientPlayerDetails';
 import { faUser} from '@fortawesome/free-solid-svg-icons'
 import CustomAlert from '../customAlert/CustomAlert';
-
 import Icon from 'react-native-vector-icons/FontAwesome';
 import constants from '../../constants';
 import Profile from '../profile/Profile';
@@ -34,6 +33,15 @@ async function LogOut() {
     // There was an error on the native side
   }
 }
+
+declare global {
+  var ping: string;
+  var sync: string;
+  var reboot: string;
+  var mark: string;
+  var rotate: string;
+}
+
 
 function AdminModule() {
   const [showingData, setShowingData] = useState(false);

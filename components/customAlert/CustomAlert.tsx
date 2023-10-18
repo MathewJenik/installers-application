@@ -31,14 +31,12 @@ const customAlert: React.FC<AlertProps> = ({ isVisible, title, message, onClose 
   return (
     <Modal isVisible={isVisible}>
       <TouchableWithoutFeedback onPress={onClose}>
-
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styling.Styles.Bold_Text}>{title}</Text>
             <Text style={styling.Styles.Default_Text}>{message}</Text>
           </View>
         </View>
-        
       </TouchableWithoutFeedback>
     </Modal>
   );
