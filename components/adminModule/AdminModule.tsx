@@ -113,6 +113,7 @@ function AdminModule() {
               setLastPing(response.player.last_ping);
               setLastSyncUpdate(response.player.last_sync_update);
               setStartingOrientation(response.player.screen_orientation);
+              console.log("STARTING ORIENTATION: ", startingOrientation);
               
                             
               setClientName(response.client.user_business_name);
@@ -177,7 +178,7 @@ function AdminModule() {
 
           <SearchField textChangeEvent={(t) => {setValue(t);}} onPress={() => {
             searchMediaplay(value);
-          } } clearTextEvent={() => {setShowingData(false);}} title={''} />
+          } } clearTextEvent={() => {setShowingData(false); setValue("")}} title={''} />
 
 
           {showingData ? (

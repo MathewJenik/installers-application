@@ -414,6 +414,9 @@ class Requests {
       return fetch("https:api.lymlive.com.au/v1/installers/player/read.iris", ReqOptions)
       .then(response => response.json())
       .then(async json => {
+        console.log("SEARCH API START");
+        console.log(json);
+        console.log("SEARCH API END");
         return json;
       });
       
