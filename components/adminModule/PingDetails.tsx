@@ -35,7 +35,7 @@ const PingDetails: React.FunctionComponent<MonitoringInformationProps> = ({lastP
                 String(lastPingDate.getHours()).padStart(2, "0") + ":" + String(lastPingDate.getMinutes()).padStart(2, "0") + ":" + String(lastPingDate.getSeconds()).padStart(2, "0")
 
                  }</Text>  
-                <Text style={[styling.Styles.Bold_Text, styling.Styles.Text_Size_3, {paddingTop:constants.FONTSIZE.EM*0.5}]}>Last Successfull Ping:</Text>
+                <Text style={[styling.Styles.Bold_Text, styling.Styles.Text_Size_3, {paddingTop:constants.FONTSIZE.EM*0.5}]}>Last Successful Ping:</Text>
                 <Text style={[styling.Styles.Text_Size_2, {paddingLeft: constants.FONTSIZE.EM}]}>{
                 String(lastPingSucDate.getDate()).padStart(2, "0") + "/" + String(lastPingSucDate.getMonth() + 1).padStart(2, "0") + "/" + lastPingSucDate.getFullYear() + " " +
                 String(lastPingSucDate.getHours()).padStart(2, "0") + ":" + String(lastPingSucDate.getMinutes()).padStart(2, "0") + ":" + String(lastPingSucDate.getSeconds()).padStart(2, "0")
