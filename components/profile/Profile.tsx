@@ -110,14 +110,16 @@ const Profile: React.FunctionComponent<MonitoringInformationProps> = ({userFullN
           <ScrollView>
 
               <View style={{display: 'flex', justifyContent: 'space-between', flexDirection: 'column', margin: 'auto'}}>
-                <View style={{backgroundColor: "#cccccc", flexDirection: 'row', alignItems: 'center'}}>
+                <View style={{backgroundColor: "#cccccc", flexDirection: 'row', alignItems: 'center', flex: 1}}>
                     <CustomButton color={constants.HEX.NAVIGATIONCOLOUR} faIcon={faChevronLeft} onPress={async () => {
                         navigation.navigate("Admin");
                     }
                     } title={null} flexRow={true} type="small"></CustomButton>
-                    <View style={{flex: 1.05}}></View>
-                    <Image style={{width: 80, height: 50, display: 'flex'}} source={require('../../Images/Iris_logo.png')} />
-                    <View style={{flex: 1.05}}></View>
+                    <View style={{flex: 1}}></View>
+                    <View style={{display: 'flex'}}>
+                      <Image style={{width: 80, height: 50}} source={require('../../Images/Iris_logo.png')} />
+                    </View>
+                    <View style={{flex: 1}}></View>
                     <View style={{flex: 1}}></View>
                 </View>
               </View>
