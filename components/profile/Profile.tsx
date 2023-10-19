@@ -10,10 +10,11 @@ import CardContainer from "../cardContainer/CardContainer";
 import constants from "../../constants";
 
 import EncryptedStorage from 'react-native-encrypted-storage';
-import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import { faChevronLeft, faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import Req, { AuthMethod } from "../../request/Request";
 import styling from "../../styling";
 import profileStyling from "./profileStyling";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
 /**
  * Props for the MonitoringInformation component.
@@ -145,7 +146,7 @@ const Profile: React.FunctionComponent<MonitoringInformationProps> = ({userFullN
                   <View style={[profileStyling.bannerBorder]}>
 
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                      <Icon name="exclamation-circle" size={20} style={{marginRight: 10, marginBottom: 45}}></Icon>
+                    <FontAwesomeIcon icon={faExclamationCircle} size={20} style={{marginRight: 10, marginBottom: 45}}></FontAwesomeIcon>
                       <View style={{flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center', width: '90%'}}>
                         <Text style={[styling.Styles.Text_Size_2]}>This client account is using the {accountType} authentication method</Text>
                       </View>
