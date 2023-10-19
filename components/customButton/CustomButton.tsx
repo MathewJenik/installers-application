@@ -85,12 +85,17 @@ const CustomButton: React.FC<CustomButtonProps> = ({onPress, title=null, color =
             
             {(faIcon != null) ? ( 
               (color != undefined) ? (
-              <FontAwesomeIcon size={20} icon={faIcon} style={styles.icon} color={iconColor}/>):
-              ( <FontAwesomeIcon size={20} icon={faIcon} style={styles.icon} color={iconColor}/>)
+                (title != null) ? (<FontAwesomeIcon size={20} icon={faIcon} style={styles.icon, {marginRight: 10}} color={iconColor}/>) 
+                : (<FontAwesomeIcon size={20} icon={faIcon} style={styles.icon, {marginLeft: 10, marginRight: 10}} color={iconColor}/>) 
+              ):
+              (<FontAwesomeIcon size={20} icon={faIcon} style={styles.icon} color={iconColor}/>)
             ) : (
               (null)
             )}
-            {(title != null) ? (<Text style={[styles.word, {color: textColour, marginLeft:0}]}>{title}</Text>) : (null)}
+            {(title != null) ? (
+            <Text style={[styles.word, {color: textColour, marginLeft:0}]}>{title}</Text>) : (null)
+            
+            }
           </View>
         </TouchableOpacity>
     );
@@ -108,8 +113,8 @@ const styles = StyleSheet.create({
       fontSize: 20,
     },
     icon:{
-      marginRight: 10,
-      marginLeft: 10,
+      marginRight: 0,
+      marginLeft: 0,
       color: 'white'
     },
     buttonContent: {
