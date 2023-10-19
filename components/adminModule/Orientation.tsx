@@ -110,6 +110,7 @@ interface OrientationProps {
   devID: string;
   clientID: string;
   startingOrientation: string;
+  onClick: () => void;
 }
 /**
  * 
@@ -118,7 +119,7 @@ interface OrientationProps {
  * @param {string} startingOrientation (orientation value)
  * @returns view (All orientation button layout and states)
  */
-const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", clientID = "", startingOrientation="normal"}) => { 
+const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", clientID = "", startingOrientation="normal", onClick}) => { 
 
   const [leftPressed, setLeftPressed] = useState(false);
   const [rightPressed, setRightPressed] = useState(false);
@@ -129,27 +130,31 @@ const Orientation: React.FunctionComponent<OrientationProps> = ({devID = "", cli
   // functions to set the selected button state
   function onClickNormal() {
     setUpPressed(false);
-    setDownPressed(true)
+    setDownPressed(true);
     setLeftPressed(true);
-    setRightPressed(true)
+    setRightPressed(true);
+    onClick;
   }
   function onClickInverted() {
     setUpPressed(true);
-    setDownPressed(false)
+    setDownPressed(false);
     setLeftPressed(true);
-    setRightPressed(true)
+    setRightPressed(true);
+    onClick;
   }
   function onClickLeft() {
     setUpPressed(true);
-    setDownPressed(true)
+    setDownPressed(true);
     setLeftPressed(false);
-    setRightPressed(true)
+    setRightPressed(true);
+    onClick;
   }
   function onClickRight() {
     setUpPressed(true);
-    setDownPressed(true)
+    setDownPressed(true);
     setLeftPressed(true);
-    setRightPressed(false)
+    setRightPressed(false);
+    onClick;
   }
 
 

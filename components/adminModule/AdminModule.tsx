@@ -186,7 +186,7 @@ function AdminModule() {
                 <ClientPlayerDetails procurement={procDate} clientName={clientName} clientNumber={clientNumber} mediaName={mediaName} ipAddres={ipAddres} mpbid={mpbid}></ClientPlayerDetails>
                 <Actions hideMarkInstaller={MIHidden} devID={value} clientID={cID} interactionable={pingSuccessfull}></Actions>
 
-                <Orientation devID={value} clientID={cID} startingOrientation={startingOrientation}></Orientation>
+                <Orientation devID={value} clientID={cID} startingOrientation={startingOrientation} onClick={() => {searchMediaplay(value);}}></Orientation>
                 <PingDetails lastPing={lastPing} lastPingS={lastPingSuccess} lastSync={lastSync} lastSyncUpdate={lastSyncUpdate}></PingDetails>
               </>
 
