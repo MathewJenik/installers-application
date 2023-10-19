@@ -15,6 +15,7 @@ import Req, { AuthMethod } from "../../request/Request";
 import styling from "../../styling";
 import profileStyling from "./profileStyling";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { Button } from "../adminModule/Orientation";
 
 /**
  * Props for the MonitoringInformation component.
@@ -119,8 +120,8 @@ const Profile: React.FunctionComponent<MonitoringInformationProps> = ({userFullN
                     <View style={{display: 'flex'}}>
                       <Image style={{width: 80, height: 50}} source={require('../../Images/Iris_logo.png')} />
                     </View>
-                    <View style={{flex: 1, marginHorizontal: 7}}></View>
                     <View style={{flex: 1}}></View>
+                    <View style={{display: 'flex', marginHorizontal: 46}}></View>
                 </View>
               </View>
 
