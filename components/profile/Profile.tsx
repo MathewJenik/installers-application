@@ -116,10 +116,10 @@ const Profile: React.FunctionComponent<MonitoringInformationProps> = ({userFullN
                     }
                     } title={null} flexRow={true} type="small"></CustomButton>
                     <View style={{flex: 1}}></View>
-                    <View style={{display: 'flex', marginHorizontal: 7}}>
+                    <View style={{display: 'flex'}}>
                       <Image style={{width: 80, height: 50}} source={require('../../Images/Iris_logo.png')} />
                     </View>
-                    <View style={{flex: 1}}></View>
+                    <View style={{flex: 1, marginHorizontal: 7}}></View>
                     <View style={{flex: 1}}></View>
                 </View>
               </View>
