@@ -5,6 +5,7 @@ import { StyleSheet, View, Text, TextInput, Pressable } from 'react-native';
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import {faSquareXmark} from "@fortawesome/free-solid-svg-icons";
 import CustomButton from "../customButton/CustomButton";
+import styling from "../../styling";
 
 /**
  * The function initialte the variables that when the buttons either seach or clear are pressed
@@ -40,7 +41,7 @@ const SearchField: React.FC<CustomButtonProps> = ({onPress, title, color ='white
          */
         <View >
 
-            <Text style={styles.mytext}>MP Ip address/MPID</Text>
+            <Text style={[styling.Styles.Text_Size_1, {marginLeft:10}]}>MP IP Address/MPID</Text>
             <View style={styles.container}>
             <TextInput 
                 placeholder="Search by IP or MPID"
