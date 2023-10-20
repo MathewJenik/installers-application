@@ -141,7 +141,7 @@ function AdminModule() {
               }
 
               if (startingOrientation == "") {
-                searchMediaplay(value);
+                //searchMediaplay(value);
               }
 
             }
