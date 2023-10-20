@@ -43,7 +43,8 @@ export default StyleSheet.create({
       backgroundColor: '#acedfc',
     },
     boxSection:{
-      marginHorizontal: '8%',
+      marginHorizontal: 'auto',
+      marginLeft: '4%',
     },
     icon: {
       position: 'absolute', // Position the icon absolutely inside the input container

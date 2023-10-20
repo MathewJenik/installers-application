@@ -108,7 +108,7 @@ const Profile: React.FunctionComponent<MonitoringInformationProps> = ({userFullN
 
     return (
       <View>
-        <SafeAreaView style={{backgroundColor: '#e0e0e0'}}>
+        <SafeAreaView style={{backgroundColor: '#e0e0e0', height:"100%"}}>
           <ScrollView>
               <View style={{display: 'flex', justifyContent: 'space-between', flexDirection: 'column', margin: 'auto'}}>
                 <View style={{backgroundColor: "#cccccc", flexDirection: 'row', alignItems: 'center', flex: 1}}>
