@@ -9,7 +9,7 @@ import Orientation from './Orientation';
 import CustomButton from '../customButton/CustomButton';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { useNavigation } from '@react-navigation/native';
+import { getStateFromPath, useNavigation } from '@react-navigation/native';
 import { faLinkSlash } from '@fortawesome/free-solid-svg-icons';
 import { faRightFromBracket} from '@fortawesome/free-solid-svg-icons'
 import Help from './Help';
@@ -113,7 +113,7 @@ function AdminModule() {
               setLastPing(response.player.last_ping);
               setLastSyncUpdate(response.player.last_sync_update);
               setStartingOrientation(response.player.screen_orientation);
-              console.log("STARTING ORIENTATION: ", startingOrientation);
+              //console.log("STARTING ORIENTATION: ", startingOrientation);
               
                             
               setClientName(response.client.user_business_name);
@@ -140,6 +140,9 @@ function AdminModule() {
                 setPingSuccessfull(true);
               }
 
+              if (startingOrientation == "") {
+                searchMediaplay(value);
+              }
 
             }
           }
