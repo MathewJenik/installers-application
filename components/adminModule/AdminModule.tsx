@@ -120,7 +120,7 @@ function AdminModule() {
               setClientNumber(response.client.user_id);
               setMediaName(response.player.user_screens_name);
               setipAddress(response.player.ipAddr);
-              setmpbid(response.player.id)
+              setmpbid(response.player.id);
               
               setShowingData(true);
 
