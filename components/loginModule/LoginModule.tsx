@@ -49,7 +49,8 @@ function LoginModule(): any {
     setModalVisible(false);
   };
 
-
+  // Commented out due to MSAL backend Active Directory problems.
+  /*
   const azureAuth = new AzureAuth({
     clientId: CLIENT_ID,
     tenant: TENTANT_ID,
@@ -87,7 +88,7 @@ function LoginModule(): any {
       })
       .catch(error => console.log(error));
   };
-
+*/
   return (
     <View style={styling.Styles.Default_Container}>
   
@@ -110,7 +111,7 @@ function LoginModule(): any {
 
         // Login Using Azure
         if (loginTypeCheckRes == AuthMethod.azure) {
-          azureLogin();
+          //azureLogin();
         }
 
 

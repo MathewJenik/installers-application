@@ -139,7 +139,7 @@ function AdminModule() {
               if (pingResult.error == false) {
                 setPingSuccessfull(true);
               }
-
+              console.log("Starting Orientaiton:", response.player.starting_orientation);
               if (startingOrientation == "") {
                 //searchMediaplay(value);
               }
