@@ -121,6 +121,7 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
         console.log("Session ID: ", (String)(sessionID));
         let results = await Req.resyncDevice(Number(devID), Number(clientID), (String)(sessionID));
 
+        alertDesc = "";
         if(results.results == false){
             alertTitle = "Successfully resynced device";
             showAlert();
@@ -135,6 +136,7 @@ const Actions: React.FunctionComponent<ActionsProps> = ({devID = "", clientID = 
         setData(results);
         // Displays the updated data
         console.log("Updated Data", results)
+        setActionsLoading(false);
     }
 
     const markInstaller = async () => {
